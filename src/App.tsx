@@ -6,9 +6,9 @@ function App() {
   console.log(import.meta.env);
 
   return (
-    <>
-      <p>{import.meta.env.VITE_APP_TITLE}</p>
-    </>
+    <div>
+      <h1>こんにちは</h1>
+    </div>
   );
 }
 
