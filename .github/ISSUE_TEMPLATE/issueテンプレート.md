@@ -4,7 +4,6 @@ about: 実装の概要と目的、それを達成するために必要なタス�
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
 ## 概要
