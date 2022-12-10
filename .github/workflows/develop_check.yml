@@ -41,6 +41,8 @@ jobs:
       - name: Format
         run: yarn format
 
+      - name: Test
+        run: yarn test
       - name: Slack Notification by NonSuccess
         uses: 8398a7/action-slack@v3
         if: success() != true
