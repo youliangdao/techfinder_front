@@ -1,5 +1,6 @@
 name: Develop Check
-on: push
+on:
+  pull_request:
 
 env:
   project-name: ga-test
