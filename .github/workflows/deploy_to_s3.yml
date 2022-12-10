@@ -11,9 +11,6 @@ jobs:
   deploy:
     name: Build & Deploy
     runs-on: ubuntu-20.04
-    # 実行条件（今回の場合は事前のワークフローが成功していること）
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    timeout-minutes: 5
 
     steps:
       - name: Checkout
