@@ -1,12 +1,8 @@
 name: Deploy
 on:
-  workflow_run:
-    workflows:
-      - 'Develop Check'
+  push:
     branches:
       - master
-    types:
-      - completed
 
 env:
   project-name: ga-test
