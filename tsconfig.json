@@ -15,7 +15,13 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["vitest/globals"]
+    "types": [
+      "node",
+      "jest",
+      "@testing-library/jest-dom",
+      "vite-plugin-svgr/client",
+      "vitest/globals"
+    ]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
