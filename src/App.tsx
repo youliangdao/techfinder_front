@@ -3,17 +3,21 @@ import './lib/tailwind.css';
 import { MantineProvider } from '@mantine/core';
 import React from 'react';
 
-import FilterableCategoryItems from './components/Category/FilterableCategoryItems';
 import MainLayout from './components/Layout/MainLayout';
+import FilterableArticleItems from './features/articles/FilterableArticleItems';
 
 const App = () => {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-      {/* <MainLayout>
+      {/* <HomeLayout>
         <Home />
-      </MainLayout> */}
-      <MainLayout>
+      </HomeLayout> */}
+      {/* <MainLayout>
         <FilterableCategoryItems />
+      </MainLayout> */}
+
+      <MainLayout>
+        <FilterableArticleItems />
       </MainLayout>
       {/* <SearchInput />
       <ArticleItem {...articleItem} />
