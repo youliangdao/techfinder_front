@@ -125,12 +125,12 @@ const FooterLinks = ({ data }: FooterLinksProps) => {
   ));
 
   return (
-    <footer className="bg-m_gray-0 border-t-m_gray-2 mt-32 border-0 border-t border-solid py-12">
-      <Container className="flex items-center justify-between max-sm:flex-col sm:mx-24">
+    <footer className="bg-m_gray-0 border-t-m_gray-2 mt-0 border-0 border-t border-solid py-12">
+      <Container className="flex items-center justify-between max-sm:flex-col">
         <MantineLogo size={28} />
         <Group className="max-sm:mt-4">{links}</Group>
       </Container>
-      <Container className="border-t-m_gray-2 mt-6 flex items-center justify-between border-0 border-t border-solid py-6 px-4 max-sm:flex-col sm:mx-24">
+      <Container className="border-t-m_gray-2 mt-6 flex items-center justify-between border-0 border-t border-solid py-6 px-4 max-sm:flex-col">
         <Text color="dimmed" size="sm">
           © 2023 All rights reserved.
         </Text>
