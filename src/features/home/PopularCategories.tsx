@@ -1,7 +1,7 @@
 import { Container } from '@mantine/core';
 import React from 'react';
 
-import PopularCategoryItems from '../Category/PopularCategoryItems';
+import PopularCategoryItems from '../categories/PopularCategoryItems';
 
 const PopularCategories = () => {
   return (

@@ -1,7 +1,7 @@
 import { Container } from '@mantine/core';
 import React from 'react';
 
-import TrendArticleItems from '../Article/TrendArticleItems';
+import TrendArticleItems from '../articles/TrendArticleItems';
 
 const TrendArticles = () => {
   return (
