@@ -14,7 +14,7 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": "yarn lint",
+    "src/**/*.{ts,tsx}": "yarn lint:fix",
     "src/**/*.{js,jsx,ts,tsx,json,css,scss}": "yarn format"
   },
   "dependencies": {

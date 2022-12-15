@@ -13,6 +13,7 @@
     "plugin:tailwindcss/recommended",
     "prettier"
   ],
+  "ignorePatterns": ["/node_modules/**", "/dist/**", "/vite.config.ts"],
   "overrides": [],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

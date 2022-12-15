@@ -4,6 +4,7 @@ import {
   createStyles,
   Group,
   Image,
+  Stack,
   Text,
 } from '@mantine/core';
 import { IconBookmark, IconHeart, IconShare } from '@tabler/icons';
@@ -36,7 +37,7 @@ interface ArticleItemProps {
   media: string;
 }
 
-const ArticleItem = ({
+const ArticleDetail = ({
   image,
   categories,
   title,
@@ -45,8 +46,17 @@ const ArticleItem = ({
 }: ArticleItemProps) => {
   const { classes, theme } = useStyles();
   return (
-    <Card radius="md" className="max-w-md bg-white py-0" withBorder>
-      <Group noWrap spacing={0} className="">
+    <Card
+      radius="md"
+      className="hover:bg-m_gray-1 bg-m_gray-0 max-w-md py-0"
+      component="a"
+      href="https://zenn.dev/"
+      target="_blank"
+    >
+      <Stack>
+        <div className="pt-4">
+          <Image src={image} />
+        </div>
         <div className="">
           <div className="flex space-x-2">
             {categories.map((category) => (
@@ -58,39 +68,40 @@ const ArticleItem = ({
           <Text className={classes.title} mt="xs" mb="md">
             {title}
           </Text>
-          <Group noWrap spacing="xs">
+          <Group noWrap spacing="xs" className="justify-between">
             <Group spacing="xs" noWrap>
               <ActionIcon size="md">
                 <Zenn style={{ color: '#3EA8FF' }} />
               </ActionIcon>
               <Text size="xs">{media}</Text>
+              <Text size="xs" color="dimmed">
+                {date}
+              </Text>
             </Group>
-            <Text size="xs" color="dimmed">
-              {date}
-            </Text>
+            <Group className="">
+              <ActionIcon>
+                <IconHeart size={18} color={theme.colors.red[6]} stroke={1.5} />
+              </ActionIcon>
+              <ActionIcon>
+                <IconBookmark
+                  size={18}
+                  color={theme.colors.yellow[6]}
+                  stroke={1.5}
+                />
+              </ActionIcon>
+              <ActionIcon>
+                <IconShare
+                  size={16}
+                  color={theme.colors.blue[6]}
+                  stroke={1.5}
+                />
+              </ActionIcon>
+            </Group>
           </Group>
         </div>
-        <div className="pt-4">
-          <Image src={image} height={100} width={140} />
-          <Group className="justify-between px-2">
-            <ActionIcon>
-              <IconHeart size={18} color={theme.colors.red[6]} stroke={1.5} />
-            </ActionIcon>
-            <ActionIcon>
-              <IconBookmark
-                size={18}
-                color={theme.colors.yellow[6]}
-                stroke={1.5}
-              />
-            </ActionIcon>
-            <ActionIcon>
-              <IconShare size={16} color={theme.colors.blue[6]} stroke={1.5} />
-            </ActionIcon>
-          </Group>
-        </div>
-      </Group>
+      </Stack>
     </Card>
   );
 };
 
-export default ArticleItem;
+export default ArticleDetail;

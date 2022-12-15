@@ -157,7 +157,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
 
     if (menuItems) {
       return (
-        <Menu key={link.label} trigger="hover" exitTransitionDuration={0}>
+        <Menu key={link.label} exitTransitionDuration={0}>
           <Menu.Target>
             <a
               href={link.link}
@@ -191,7 +191,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
   });
 
   return (
-    <Header height={HEADER_HEIGHT} className="myborder mb-32 sm:mx-20">
+    <Header height={HEADER_HEIGHT} className="sticky top-0 z-50">
       <Container className="flex h-14 items-center justify-between" fluid>
         <Group>
           {!largerThanSm && (
@@ -224,7 +224,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
           )}
           <MantineLogo className="h-8" />
         </Group>
-        <Group>
+        <Group className="mr-5">
           {largerThanSm && <Group spacing={5}>{items}</Group>}
           {!isLogin ? (
             <Button radius="xl" className="h-8">
@@ -242,7 +242,8 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                 </Menu.Target>
 
                 <Menu.Dropdown>
-                  <Menu.Label>Application</Menu.Label>
+                  <Menu.Item className="pb-0 font-bold">テストテスト</Menu.Item>
+                  <Menu.Label className="pt-0">@youliangdao</Menu.Label>
                   <Menu.Item
                     icon={<IconSettings size={14} />}
                     component="a"
