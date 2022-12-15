@@ -3,20 +3,19 @@ import './lib/tailwind.css';
 import { MantineProvider } from '@mantine/core';
 import React from 'react';
 
-import HomeContents from './components/Home/HomeContents';
-
-const genres = ['すべての記事', '人気記事'];
+import FilterableCategoryItems from './components/Category/FilterableCategoryItems';
+import MainLayout from './components/Layout/MainLayout';
 
 const App = () => {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-      <HomeContents />
+      {/* <MainLayout>
+        <Home />
+      </MainLayout> */}
+      <MainLayout>
+        <FilterableCategoryItems />
+      </MainLayout>
       {/* <SearchInput />
-      <HomeContentsHeader
-        leftTitle="人気のカテゴリ"
-        rightTitle="すべてのカテゴリを見る"
-      />
-      <ArticleItemsGenreHeader {...{ genres }} />
       <ArticleItem {...articleItem} />
       <Space h="md" />
       <ArticleDetail {...articleItem} />
