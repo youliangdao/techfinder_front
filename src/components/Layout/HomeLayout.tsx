@@ -1,4 +1,3 @@
-import { Container } from '@mantine/core';
 import React, { FC, ReactElement } from 'react';
 
 import FooterLinks from '../Footer';
@@ -51,14 +50,14 @@ type MainLayoutProps = {
   children: ReactElement;
 };
 
-const MainLayout: FC<MainLayoutProps> = ({ children }) => {
+const HomeLayout: FC<MainLayoutProps> = ({ children }) => {
   return (
     <>
       <HeaderAction {...{ links, isLogin }} />
-      <Container className="py-10">{children}</Container>
+      {children}
       <FooterLinks {...{ data }} />
     </>
   );
 };
 
-export default MainLayout;
+export default HomeLayout;
