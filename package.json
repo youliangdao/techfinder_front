@@ -29,7 +29,8 @@
     "@mantine/prism": "^5.8.2",
     "embla-carousel-react": "^7.0.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "zod": "^3.20.2"
   },
   "devDependencies": {
     "@tabler/icons": "^1.116.1",
