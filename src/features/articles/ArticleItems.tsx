@@ -6,7 +6,7 @@ import {
   SimpleGrid,
   Tabs,
 } from '@mantine/core';
-import React from 'react';
+import React, { FC } from 'react';
 
 import { useMediaQuery } from '../../lib/mantine/useMediaQuery';
 import ArticleDetail from './ArticleDetail';
@@ -48,7 +48,12 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const ArticleItems = () => {
+type ArticleItemsProps = {
+  leftGenre: string;
+  rightGenre: string;
+};
+
+const ArticleItems: FC<ArticleItemsProps> = ({ leftGenre, rightGenre }) => {
   const { classes } = useStyles();
   const largerThanXs = useMediaQuery('xs');
   const largerThanSm = useMediaQuery('sm');
@@ -67,10 +72,10 @@ const ArticleItems = () => {
 
   return (
     <Card radius="md">
-      <Tabs defaultValue="すべての記事">
+      <Tabs defaultValue={leftGenre}>
         <Tabs.List className="flex justify-around">
-          <Tabs.Tab value="すべての記事">すべての記事</Tabs.Tab>
-          <Tabs.Tab value="人気記事">人気記事</Tabs.Tab>
+          <Tabs.Tab value={leftGenre}>{leftGenre}</Tabs.Tab>
+          <Tabs.Tab value={rightGenre}>{rightGenre}</Tabs.Tab>
         </Tabs.List>
       </Tabs>
       {largerThanSm ? (
