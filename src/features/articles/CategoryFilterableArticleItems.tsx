@@ -12,7 +12,7 @@ const CategoryFilterableArticleItems = () => {
       <Space h="lg" />
       <SearchInput />
       <Space h="lg" />
-      <ArticleItems />
+      <ArticleItems leftGenre="すべての記事" rightGenre="人気記事" />
     </>
   );
 };
