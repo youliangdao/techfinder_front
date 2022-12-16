@@ -22,8 +22,9 @@ import {
   IconHeart,
   IconLogout,
 } from '@tabler/icons';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 
+import LoginForm from '../features/auth/LoginForm';
 import { useMediaQuery } from '../lib/mantine/useMediaQuery';
 
 const HEADER_HEIGHT = 60;
@@ -147,7 +148,8 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
   const largerThanLg = useMediaQuery('lg');
   const largerThanXl = useMediaQuery('xl');
 
-  const [opened, { toggle }] = useDisclosure(false);
+  const [burgerOpened, { toggle }] = useDisclosure(false);
+  const [opened, setOpened] = useState(false);
   const { classes, theme } = useStyles();
   const items = links.map((link) => {
     const menuItems = link.links?.map((item) => (
@@ -191,7 +193,10 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
 
   return (
     <Header height={HEADER_HEIGHT} className="sticky top-0 z-50">
-      <Container className="flex h-14 items-center justify-between px-10" fluid>
+      <Container
+        className="flex h-14 items-center justify-between sm:px-10"
+        fluid
+      >
         <Group>
           {!largerThanSm && (
             <>
@@ -223,10 +228,10 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
           )}
           <MantineLogo className="h-8" />
         </Group>
-        <Group className="mr-5">
+        <Group className="mr-2 sm:mr-4">
           {largerThanSm && <Group spacing={5}>{items}</Group>}
           {!isLogin ? (
-            <Button radius="xl" className="h-8">
+            <Button radius="xl" className="h-8" onClick={() => setOpened(true)}>
               Login
             </Button>
           ) : (
@@ -272,6 +277,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
               </Menu>
             </Group>
           )}
+          <LoginForm {...{ opened, setOpened }} />
         </Group>
       </Container>
     </Header>
