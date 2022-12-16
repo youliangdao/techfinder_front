@@ -16,12 +16,11 @@ import {
 import { MantineLogo } from '@mantine/ds';
 import { useDisclosure } from '@mantine/hooks';
 import {
+  IconBookmark,
   IconChevronDown,
   IconChevronRight,
+  IconHeart,
   IconLogout,
-  IconPhoto,
-  IconSearch,
-  IconSettings,
 } from '@tabler/icons';
 import React, { forwardRef } from 'react';
 
@@ -149,7 +148,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
   const largerThanXl = useMediaQuery('xl');
 
   const [opened, { toggle }] = useDisclosure(false);
-  const { classes, cx } = useStyles();
+  const { classes, theme } = useStyles();
   const items = links.map((link) => {
     const menuItems = link.links?.map((item) => (
       <Menu.Item key={item.link}>{item.label}</Menu.Item>
@@ -232,7 +231,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
             </Button>
           ) : (
             <Group position="center">
-              <Menu withArrow width={150}>
+              <Menu withArrow>
                 <Menu.Target>
                   <UserButton
                     image="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80"
@@ -242,23 +241,32 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                 </Menu.Target>
 
                 <Menu.Dropdown>
-                  <Menu.Item className="pb-0 font-bold">テストテスト</Menu.Item>
-                  <Menu.Label className="pt-0">@youliangdao</Menu.Label>
-                  <Menu.Item
+                  <Menu.Item className="pb-0 font-bold">
+                    テストテスト
+                    <Menu.Label className="px-0 pt-0">@youliangdao</Menu.Label>
+                  </Menu.Item>
+                  <Menu.Divider />
+
+                  {/* <Menu.Item
                     icon={<IconSettings size={14} />}
                     component="a"
                     href="#"
                     target="_blank"
                   >
                     Settings
+                  </Menu.Item> */}
+                  <Menu.Item icon={<IconHeart size={14} stroke={1.5} />}>
+                    いいねした記事
                   </Menu.Item>
-                  <Menu.Item icon={<IconPhoto size={14} />}>Gallery</Menu.Item>
-                  <Menu.Item icon={<IconSearch size={14} />}>Search</Menu.Item>
+                  <Menu.Item icon={<IconBookmark size={14} stroke={1.5} />}>
+                    ストックした記事
+                  </Menu.Item>
+                  {/* <Menu.Item icon={<IconSearch size={14} />}>Search</Menu.Item> */}
 
                   <Menu.Divider />
 
                   <Menu.Item color="red" icon={<IconLogout size={14} />}>
-                    Logout
+                    ログアウト
                   </Menu.Item>
                 </Menu.Dropdown>
               </Menu>
