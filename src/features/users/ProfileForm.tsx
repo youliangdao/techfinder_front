@@ -49,12 +49,12 @@ const ProfileForm = () => {
             ) : (
               <Avatar src="/src/assets/avatar.png" size="xl" />
             )}
-            <FileButton
-              onChange={setFile}
-              accept="image/png,image/jpeg"
-              variant="outline"
-            >
-              {(props) => <Button {...props}>画像をアップロード</Button>}
+            <FileButton onChange={setFile} accept="image/png,image/jpeg">
+              {(props) => (
+                <Button variant="outline" {...props}>
+                  画像をアップロード
+                </Button>
+              )}
             </FileButton>
           </Group>
           <TextInput
