@@ -8,7 +8,7 @@ const FilterableArticleItems = () => {
     <>
       <SearchInput />
       <br />
-      <ArticleItems />
+      <ArticleItems leftGenre="すべての記事" rightGenre="人気記事" />
     </>
   );
 };
