@@ -4,7 +4,7 @@ import { MantineProvider } from '@mantine/core';
 import React from 'react';
 
 import MainLayout from './components/Layout/MainLayout';
-import CategoryFilterableArticleItems from './features/articles/CategoryFilterableArticleItems';
+import ArticleDetailCategories from './features/articles/ArticleDetailCategories';
 
 const App = () => {
   return (
@@ -19,9 +19,13 @@ const App = () => {
       {/* <MainLayout>
         <FilterableArticleItems />
       </MainLayout> */}
-
+      {/* 
       <MainLayout>
         <CategoryFilterableArticleItems />
+      </MainLayout> */}
+
+      <MainLayout>
+        <ArticleDetailCategories />
       </MainLayout>
       {/* <SearchInput />
       <ArticleItem {...articleItem} />
