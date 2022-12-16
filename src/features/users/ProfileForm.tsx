@@ -4,9 +4,11 @@ import {
   Button,
   FileButton,
   Group,
+  Space,
   Stack,
   Textarea,
   TextInput,
+  Title,
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
 import React, { useState } from 'react';
@@ -41,6 +43,8 @@ const ProfileForm = () => {
   const [file, setFile] = useState<File | null>(null);
   return (
     <Box sx={{ maxWidth: 500 }} mx="auto">
+      <Title className="max-sm:text-xl sm:text-3xl">プロフィール</Title>
+      <Space h={40} />
       <form onSubmit={form.onSubmit((values) => console.log(values, file))}>
         <Stack spacing="lg">
           <Group position="left">
