@@ -1,39 +1,55 @@
 import './lib/tailwind.css';
 
-import { MantineProvider } from '@mantine/core';
+import TrendArticles from 'articles/containers/TrendArticles';
+import PopularCategories from 'categories/containers/PopularCategories';
+import HomeLayout from 'Layout/HomeLayout';
+import AppProvider from 'providers/app';
 import React from 'react';
-
-import RegisterForm from './features/auth/RegisterForm';
 
 const App = () => {
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
-      {/* <HomeLayout>
-        <Home />
-      </HomeLayout> */}
-      {/* <MainLayout>
-        <FilterableCategoryItems />
-      </MainLayout> */}
-
-      {/* <MainLayout>
-        <FilterableArticleItems />
-      </MainLayout> */}
-      {/* <MainLayout>
-        <CategoryFilterableArticleItems />
-      </MainLayout> */}
-
-      {/* <MainLayout>
-        <ArticleDetailCategories />
-      </MainLayout> */}
-      {/* <MainLayout>
-        <MyArticles />
-      </MainLayout> */}
-      {/* <MainLayout>
-        <Profile />
-      </MainLayout> */}
-      <RegisterForm />
-    </MantineProvider>
+    <AppProvider>
+      <HomeLayout>
+        <PopularCategories />
+        <TrendArticles />
+      </HomeLayout>
+    </AppProvider>
   );
+  {
+    /* <MainLayout>
+        <FilterableCategoryLists />
+      </MainLayout> */
+  }
+
+  {
+    /* <MainLayout>
+        <FilterableArticles />
+      </MainLayout> */
+  }
+  {
+    /* <MainLayout>
+        <CategoryFilterableArticles />
+      </MainLayout> */
+  }
+
+  {
+    /* <MainLayout>
+        <ArticleProfile />
+      </MainLayout> */
+  }
+  {
+    /* <MainLayout>
+        <MyArticles />
+      </MainLayout> */
+  }
+  {
+    /* <MainLayout>
+        <Profile />
+      </MainLayout> */
+  }
+  {
+    /* <RegisterForm /> */
+  }
 };
 
 export default App;
