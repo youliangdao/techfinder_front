@@ -9,8 +9,8 @@ const CategoryLists = ({ categories }: Categories) => {
   return (
     <Card radius="md">
       <SimpleGrid my="md" className="xs:grid-cols-4 grid-cols-3 sm:grid-cols-6">
-        {categories.map((item) => (
-          <CategoryItem key={item.title} {...item} />
+        {categories.map((category) => (
+          <CategoryItem key={category.title} {...category} />
         ))}
       </SimpleGrid>
     </Card>

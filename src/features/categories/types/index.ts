@@ -1,12 +1,6 @@
-import React from 'react';
-
 export type Category = {
   title: string;
-  Icon: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement> & {
-      title?: string | undefined;
-    }
-  > | null;
+  Icon: React.FunctionComponent;
 };
 
 export type Categories = {
