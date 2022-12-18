@@ -24,31 +24,10 @@ import {
 } from '@tabler/icons';
 import React, { forwardRef, useState } from 'react';
 
-import LoginForm from '../features/auth/LoginForm';
+import LoginForm from '../features/auth/components/LoginForm';
 import { useMediaQuery } from '../lib/mantine/useMediaQuery';
 
-const HEADER_HEIGHT = 60;
-
 const useStyles = createStyles((theme) => ({
-  //   inner: {
-  //     height: HEADER_HEIGHT,
-  //     display: 'flex',
-  //     justifyContent: 'space-between',
-  //     alignItems: 'center',
-  //   },
-
-  //   links: {
-  //     [theme.fn.smallerThan('sm')]: {
-  //       display: 'none',
-  //     },
-  //   },
-
-  //   burger: {
-  //     [theme.fn.largerThan('sm')]: {
-  //       display: 'none',
-  //     },
-  //   },
-
   link: {
     display: 'block',
     lineHeight: 1,
@@ -84,48 +63,24 @@ const useStyles = createStyles((theme) => ({
         .color,
     },
   },
-
-  //   linkLabel: {
-  //     marginRight: 5,
-  //   },
 }));
 
 interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {
-  name: string;
-  email: string;
-  icon?: React.ReactNode;
   image: string;
 }
 
 const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
-  function UserAvatarButton(
-    { image, name, email, icon, ...others }: UserButtonProps,
-    ref
-  ) {
+  function UserAvatarButton({ image, ...others }: UserButtonProps, ref) {
     return (
       <UnstyledButton
         ref={ref}
         className="hover:bg-m_gray-0 block w-full p-4 text-black"
-        // sx={(theme) => ({
-        //   display: 'block',
-        //   width: '100%',
-        //   padding: theme.spacing.md,
-        //   color:
-        //     theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-
-        //   '&:hover': {
-        //     backgroundColor:
-        //       theme.colorScheme === 'dark'
-        //         ? theme.colors.dark[8]
-        //         : theme.colors.gray[0],
-        //   },
-        // })}
         {...others}
       >
         <Group>
           <Avatar src={image} radius="xl" />
 
-          {icon || <IconChevronRight size={16} />}
+          <IconChevronRight size={16} />
         </Group>
       </UnstyledButton>
     );
@@ -142,15 +97,12 @@ type HeaderActionProps = {
 };
 
 const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
-  const largerThanXs = useMediaQuery('xs');
   const largerThanSm = useMediaQuery('sm');
-  const largerThanMd = useMediaQuery('md');
-  const largerThanLg = useMediaQuery('lg');
-  const largerThanXl = useMediaQuery('xl');
 
-  const [burgerOpened, { toggle }] = useDisclosure(false);
-  const [opened, setOpened] = useState(false);
-  const { classes, theme } = useStyles();
+  const [sidebarOpened, { toggle }] = useDisclosure(false);
+  const [loginOpened, setLoginOpened] = useState(false);
+  const { classes } = useStyles();
+
   const items = links.map((link) => {
     const menuItems = link.links?.map((item) => (
       <Menu.Item key={item.link}>{item.label}</Menu.Item>
@@ -164,7 +116,6 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
               href={link.link}
               // eslint-disable-next-line tailwindcss/no-custom-classname
               className="text-m_gray-7  hover:bg-m_gray-0 block rounded-sm py-2 px-3 text-sm font-medium leading-none no-underline"
-              // className={classes.link}
               onClick={(event) => event.preventDefault()}
             >
               <Center>
@@ -192,7 +143,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
   });
 
   return (
-    <Header height={HEADER_HEIGHT} className="sticky top-0 z-50">
+    <Header height={60} className="sticky top-0 z-50">
       <Container
         className="flex h-14 items-center justify-between sm:px-10"
         fluid
@@ -200,20 +151,20 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
         <Group>
           {!largerThanSm && (
             <>
-              <Burger opened={opened} onClick={toggle} size="sm" />
+              <Burger opened={sidebarOpened} onClick={toggle} size="sm" />
               <Transition
                 transition="pop-top-left"
                 duration={200}
-                mounted={opened}
+                mounted={sidebarOpened}
               >
                 {(styles) => (
                   <Paper
-                    className="absolute inset-x-0 top-16 z-0 overflow-hidden rounded-t-none border-t-0"
+                    className="border-t-1 absolute inset-x-0 top-14 z-0 overflow-hidden rounded-t-none"
                     withBorder
                     style={styles}
                   >
                     <a href="/about" className={classes.link}>
-                      About
+                      StackDeveloperについて
                     </a>
                     <a href="/about" className={classes.link}>
                       カテゴリから探す
@@ -231,18 +182,18 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
         <Group className="mr-2 sm:mr-4">
           {largerThanSm && <Group spacing={5}>{items}</Group>}
           {!isLogin ? (
-            <Button radius="xl" className="h-8" onClick={() => setOpened(true)}>
+            <Button
+              radius="xl"
+              className="h-8"
+              onClick={() => setLoginOpened(true)}
+            >
               Login
             </Button>
           ) : (
             <Group position="center">
               <Menu withArrow>
                 <Menu.Target>
-                  <UserButton
-                    image="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80"
-                    name="Harriette Spoonlicker"
-                    email="hspoonlicker@outlook.com"
-                  />
+                  <UserButton image="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80" />
                 </Menu.Target>
 
                 <Menu.Dropdown>
@@ -251,22 +202,12 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                     <Menu.Label className="px-0 pt-0">@youliangdao</Menu.Label>
                   </Menu.Item>
                   <Menu.Divider />
-
-                  {/* <Menu.Item
-                    icon={<IconSettings size={14} />}
-                    component="a"
-                    href="#"
-                    target="_blank"
-                  >
-                    Settings
-                  </Menu.Item> */}
                   <Menu.Item icon={<IconHeart size={14} stroke={1.5} />}>
                     いいねした記事
                   </Menu.Item>
                   <Menu.Item icon={<IconBookmark size={14} stroke={1.5} />}>
                     ストックした記事
                   </Menu.Item>
-                  {/* <Menu.Item icon={<IconSearch size={14} />}>Search</Menu.Item> */}
 
                   <Menu.Divider />
 
@@ -277,7 +218,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
               </Menu>
             </Group>
           )}
-          <LoginForm {...{ opened, setOpened }} />
+          <LoginForm opened={loginOpened} setOpened={setLoginOpened} />
         </Group>
       </Container>
     </Header>
