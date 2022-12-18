@@ -21,7 +21,23 @@
       "@testing-library/jest-dom",
       "vite-plugin-svgr/client",
       "vitest/globals"
-    ]
+    ],
+    "baseUrl": "./src",
+    "paths": {
+      "articles/*": ["features/articles/*"],
+      "auth/*": ["features/auth/*"],
+      "categories/*": ["features/categories/*"],
+      "comments/*": ["features/comments/*"],
+      "users/*": ["features/users/*"],
+      "Layout/*": ["components/Layout/*"],
+      "Article/*": ["components/Article/*"],
+      "Button/*": ["components/Button/*"],
+      "Category/*": ["components/Category/*"],
+      "components/*": ["compoentns/*"],
+      "hooks/*": ["hooks/*"],
+      "lib/*": ["lib/*"],
+      "store/*": ["store/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"],
