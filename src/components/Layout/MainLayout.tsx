@@ -2,7 +2,7 @@ import { Container } from '@mantine/core';
 import React, { FC, ReactElement } from 'react';
 
 import FooterLinks from '../Footer';
-import HeaderAction from '../Header';
+import HeaderAction from '../HeaderAction';
 
 const links = [
   {
