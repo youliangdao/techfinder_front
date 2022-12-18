@@ -1,6 +1,8 @@
 import { Avatar, createStyles, Group, Text } from '@mantine/core';
 import React from 'react';
 
+import { Comment } from '../types';
+
 const useStyles = createStyles((theme) => ({
   body: {
     paddingLeft: 54,
@@ -8,16 +10,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface CommentSimpleProps {
-  author: {
-    name: string;
-    image: string;
-  };
-  body: string;
-  postedAt: string;
-}
-
-const CommentItem = ({ postedAt, body, author }: CommentSimpleProps) => {
+const CommentItem = ({ postedAt, body, author }: Comment) => {
   const { classes } = useStyles();
   return (
     <div>
