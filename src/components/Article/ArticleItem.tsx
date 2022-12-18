@@ -7,9 +7,10 @@ import {
   Text,
 } from '@mantine/core';
 import { IconBookmark, IconHeart, IconShare } from '@tabler/icons';
+import { Article } from 'articles/types';
 import React from 'react';
 
-import { ReactComponent as Zenn } from '/src/zenn.svg';
+import { ReactComponent as Zenn } from '/src/assets/zenn.svg';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -28,21 +29,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface ArticleItemProps {
-  title: string;
-  categories: string[];
-  date: string;
-  image: string;
-  media: string;
-}
-
-const ArticleItem = ({
-  image,
-  categories,
-  title,
-  date,
-  media,
-}: ArticleItemProps) => {
+const ArticleItem = ({ image, categories, title, date, media }: Article) => {
   const { classes, theme } = useStyles();
   return (
     <Card

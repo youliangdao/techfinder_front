@@ -11,9 +11,9 @@ import {
 import { IconBookmark, IconHeart, IconShare } from '@tabler/icons';
 import React from 'react';
 
-import { ReactComponent as Zenn } from '/src/zenn.svg';
+import { ReactComponent as Zenn } from '/src/assets/zenn.svg';
 
-import { useMediaQuery } from '../../lib/mantine/useMediaQuery';
+import { useMediaQuery } from '../../../lib/mantine/useMediaQuery';
 
 const useStyles = createStyles((theme) => ({
   card: {

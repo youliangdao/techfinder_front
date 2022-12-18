@@ -6,20 +6,12 @@ import {
   SimpleGrid,
   Tabs,
 } from '@mantine/core';
-import React, { FC } from 'react';
+import React from 'react';
 
-import { useMediaQuery } from '../../lib/mantine/useMediaQuery';
-import ArticleDetail from './ArticleDetail';
-import ArticleItem from './ArticleItem';
-
-const articleItem = {
-  image:
-    'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-  categories: ['Rails', 'まとめ', 'AWS', 'React'],
-  title: 'ChatGPTはどのように学習を行なっているのか',
-  date: '1日前',
-  media: 'zenn.dev',
-};
+import ArticleDetail from '../../../components/Article/ArticleDetail';
+import ArticleItem from '../../../components/Article/ArticleItem';
+import { useMediaQuery } from '../../../lib/mantine/useMediaQuery';
+import { ArticleListsProps } from '../types';
 
 const useStyles = createStyles((theme) => ({
   title: {
@@ -48,27 +40,17 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-type ArticleItemsProps = {
-  leftGenre: string;
-  rightGenre: string;
-};
-
-const ArticleItems: FC<ArticleItemsProps> = ({ leftGenre, rightGenre }) => {
+const ArticleLists = ({
+  leftGenre,
+  rightGenre,
+  articleItems,
+}: ArticleListsProps) => {
   const { classes } = useStyles();
   const largerThanXs = useMediaQuery('xs');
   const largerThanSm = useMediaQuery('sm');
   const largerThanMd = useMediaQuery('md');
   const largerThanLg = useMediaQuery('lg');
   const largerThanXl = useMediaQuery('xl');
-
-  // const popularItems = popularMockdata.map((item) => (
-  //   <UnstyledButton key={item.title} className={classes.item}>
-  //     <item.icon />
-  //     <Text size="xs" mt={7}>
-  //       {item.title}
-  //     </Text>
-  //   </UnstyledButton>
-  // ));
 
   return (
     <Card radius="md">
@@ -80,25 +62,19 @@ const ArticleItems: FC<ArticleItemsProps> = ({ leftGenre, rightGenre }) => {
       </Tabs>
       {largerThanSm ? (
         <SimpleGrid mt="md" className="grid-cols-2">
-          <ArticleDetail {...articleItem} />
-          <ArticleDetail {...articleItem} />
-          <ArticleItem {...articleItem} />
-          <ArticleItem {...articleItem} />
-          <ArticleItem {...articleItem} />
-          <ArticleItem {...articleItem} />
-          <ArticleItem {...articleItem} />
-          <ArticleItem {...articleItem} />
+          {articleItems.map((articleItem, index) => {
+            if (index < 2) {
+              return <ArticleDetail key={articleItem.date} {...articleItem} />;
+            } else {
+              return <ArticleItem key={articleItem.date} {...articleItem} />;
+            }
+          })}
         </SimpleGrid>
       ) : (
         <SimpleGrid my="md" className="mx-auto grid-cols-1 place-items-center">
-          <ArticleItem {...articleItem} />
-          <ArticleItem {...articleItem} />
-          <ArticleItem {...articleItem} />
-          <ArticleItem {...articleItem} />
-          <ArticleItem {...articleItem} />
-          <ArticleItem {...articleItem} />
-          <ArticleItem {...articleItem} />
-          <ArticleItem {...articleItem} />
+          {articleItems.map((articleItem) => (
+            <ArticleItem key={articleItem.date} {...articleItem} />
+          ))}
         </SimpleGrid>
       )}
       <Card className="mt-10 flex items-center justify-center">
@@ -108,4 +84,4 @@ const ArticleItems: FC<ArticleItemsProps> = ({ leftGenre, rightGenre }) => {
   );
 };
 
-export default ArticleItems;
+export default ArticleLists;
