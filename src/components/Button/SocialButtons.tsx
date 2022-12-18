@@ -2,7 +2,7 @@ import { ActionIcon, Button, ButtonProps, Group } from '@mantine/core';
 import { GithubIcon, TwitterIcon } from '@mantine/ds';
 import React from 'react';
 
-import { ReactComponent as GoogleIcon } from '/src/google.svg';
+import { ReactComponent as GoogleIcon } from '/src/assets/google.svg';
 
 export function GoogleButton(props: ButtonProps) {
   return (
