@@ -11,33 +11,38 @@ import {
   Title,
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
+import { useMediaQuery } from 'lib/mantine/useMediaQuery';
 import React, { useState } from 'react';
 import { z } from 'zod';
 
-import { useMediaQuery } from '../../lib/mantine/useMediaQuery';
+import { User } from '../types';
 
 const schema = z.object({
   nickname: z.string().trim().min(1, { message: 'ニックネームは必須です' }),
   twitterUsername: z.string(),
   githubUsername: z.string(),
   description: z.string(),
+  avatar: z.string(),
 });
 
 type Form = z.infer<typeof schema>;
 
-const ProfileForm = () => {
-  const largerThanXs = useMediaQuery('xs');
+const ProfileForm = ({
+  nickname,
+  twitterUsername,
+  githubUsername,
+  description,
+  avatar,
+}: User) => {
   const largerThanSm = useMediaQuery('sm');
-  const largerThanMd = useMediaQuery('md');
-  const largerThanLg = useMediaQuery('lg');
-  const largerThanXl = useMediaQuery('xl');
   const form = useForm<Form>({
     validate: zodResolver(schema),
     initialValues: {
-      nickname: '',
-      twitterUsername: '',
-      githubUsername: '',
-      description: '',
+      nickname,
+      twitterUsername,
+      githubUsername,
+      description,
+      avatar,
     },
   });
   const [file, setFile] = useState<File | null>(null);
