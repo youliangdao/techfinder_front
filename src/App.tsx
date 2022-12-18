@@ -1,26 +1,22 @@
 import './lib/tailwind.css';
 
-import TrendArticles from 'articles/containers/TrendArticles';
-import PopularCategories from 'categories/containers/PopularCategories';
-import HomeLayout from 'Layout/HomeLayout';
+import FilterableCategoryLists from 'categories/containers/FilterableCategoryLists';
+import MainLayout from 'Layout/MainLayout';
 import AppProvider from 'providers/app';
 import React from 'react';
 
 const App = () => {
   return (
     <AppProvider>
-      <HomeLayout>
+      {/* <HomeLayout>
         <PopularCategories />
         <TrendArticles />
-      </HomeLayout>
+      </HomeLayout> */}
+      <MainLayout>
+        <FilterableCategoryLists />
+      </MainLayout>
     </AppProvider>
   );
-  {
-    /* <MainLayout>
-        <FilterableCategoryLists />
-      </MainLayout> */
-  }
-
   {
     /* <MainLayout>
         <FilterableArticles />

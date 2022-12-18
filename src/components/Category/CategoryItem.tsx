@@ -1,7 +1,6 @@
 import { createStyles, Text, UnstyledButton } from '@mantine/core';
+import { Category } from 'categories/types';
 import React from 'react';
-
-import { Category } from '../../features/categories/types';
 
 const useStyles = createStyles((theme) => ({
   item: {
