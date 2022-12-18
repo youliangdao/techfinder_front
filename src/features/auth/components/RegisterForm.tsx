@@ -15,6 +15,8 @@ import { useForm, zodResolver } from '@mantine/form';
 import React, { useState } from 'react';
 import { z } from 'zod';
 
+import avatar from '/src/assets/avatar.png';
+
 const schema = z.object({
   nickname: z.string().trim().min(1, { message: 'ニックネームは必須です' }),
   description: z.string(),
@@ -47,11 +49,7 @@ const RegisterForm = () => {
         <form onSubmit={form.onSubmit((values) => console.log(values, file))}>
           <Stack spacing="lg">
             <Group>
-              <Avatar
-                src="/src/assets/avatar.png"
-                size={150}
-                className="mx-auto"
-              />
+              <Avatar src={avatar} size={150} className="mx-auto" />
               <FileButton onChange={setFile} accept="image/png,image/jpeg">
                 {(props) => (
                   <Button

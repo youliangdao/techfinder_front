@@ -5,7 +5,7 @@ import React, { FC } from 'react';
 import {
   GoogleButton,
   TwitterButton,
-} from '../../components/Buttons/SocialButtons';
+} from '../../../components/Button/SocialButtons';
 
 type LoginFormProps = {
   opened: boolean;
