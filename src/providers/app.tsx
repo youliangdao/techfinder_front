@@ -1,6 +1,8 @@
 import { MantineProvider } from '@mantine/core';
 import React, { ReactNode } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { store } from 'store/store';
 
 type AppProviderProps = {
@@ -9,11 +11,13 @@ type AppProviderProps = {
 
 const AppProvider = ({ children }: AppProviderProps) => {
   return (
-    <Provider store={store}>
-      <MantineProvider withGlobalStyles withNormalizeCSS>
-        {children}
-      </MantineProvider>
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <MantineProvider withGlobalStyles withNormalizeCSS>
+          <Router>{children}</Router>
+        </MantineProvider>
+      </Provider>
+    </HelmetProvider>
   );
 };
 
