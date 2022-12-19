@@ -1,6 +1,6 @@
 export type Category = {
   title: string;
-  Icon: React.FunctionComponent | null;
+  Icon: any;
 };
 
 export type Categories = {
