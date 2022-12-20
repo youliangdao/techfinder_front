@@ -11,19 +11,19 @@ import HeaderAction from '../HeaderAction';
 
 const links = [
   {
-    link: '/pricing',
+    link: '/about',
     label: 'About',
   },
   {
-    link: '#2',
+    link: '',
     label: 'Search',
     links: [
       {
-        link: '/faq',
+        link: '/categories',
         label: 'カテゴリから探す',
       },
       {
-        link: '/demo',
+        link: '/articles/all',
         label: '記事から探す',
       },
     ],

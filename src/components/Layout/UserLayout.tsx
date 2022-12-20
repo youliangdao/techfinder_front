@@ -1,6 +1,5 @@
 import { Container } from '@mantine/core';
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { FC, ReactNode } from 'react';
 
 import FooterLinks from '../Footer';
 import HeaderAction from '../HeaderAction';
@@ -39,16 +38,18 @@ const data = [
 
 const isLogin = true;
 
-const MainLayout = () => {
+type UserLayoutProps = {
+  children: ReactNode;
+};
+
+const UserLayout: FC<UserLayoutProps> = ({ children }) => {
   return (
     <>
       <HeaderAction {...{ links, isLogin }} />
-      <Container className="py-10">
-        <Outlet />
-      </Container>
+      <Container className="py-10">{children}</Container>
       <FooterLinks {...{ data }} />
     </>
   );
 };
 
-export default MainLayout;
+export default UserLayout;
