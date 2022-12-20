@@ -1,6 +1,7 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { Anchor, Card, Group, SimpleGrid, Text } from '@mantine/core';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import CategoryItem from '../../../components/Category/CategoryItem';
 import { useMediaQuery } from '../../../lib/mantine/useMediaQuery';
@@ -8,12 +9,16 @@ import { Categories } from '../types';
 
 const PopularCategoryLists = ({ categories }: Categories) => {
   const largerThanSm = useMediaQuery('sm');
-
+  const navigate = useNavigate();
   return (
     <Card radius="md">
       <Group position="apart">
         <Text className="font-bold">人気のカテゴリ</Text>
-        <Anchor size="sm" sx={{ lineHeight: 1 }}>
+        <Anchor
+          size="sm"
+          sx={{ lineHeight: 1 }}
+          onClick={() => navigate('/categories')}
+        >
           すべてのカテゴリを見る
         </Anchor>
       </Group>
@@ -38,10 +43,9 @@ const PopularCategoryLists = ({ categories }: Categories) => {
         </SimpleGrid>
       )}
       <Card
-        className="hover:bg-m_gray-0 flex items-center justify-center border-x-0 py-2 font-semibold"
+        className="hover:bg-m_gray-0 flex items-center justify-center border-x-0 py-2 font-semibold hover:cursor-pointer"
         withBorder
-        component="a"
-        href="#"
+        onClick={() => navigate('/categories')}
       >
         すべてのカテゴリを見る
       </Card>
