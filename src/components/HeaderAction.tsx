@@ -23,6 +23,7 @@ import {
   IconLogout,
 } from '@tabler/icons';
 import React, { forwardRef, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import LoginForm from '../features/auth/components/LoginForm';
 import { useMediaQuery } from '../lib/mantine/useMediaQuery';
@@ -34,6 +35,7 @@ const useStyles = createStyles((theme) => ({
     padding: '8px 12px',
     borderRadius: theme.radius.sm,
     textDecoration: 'none',
+    cursor: 'pointer',
     color:
       theme.colorScheme === 'dark'
         ? theme.colors.dark[0]
@@ -98,6 +100,7 @@ type HeaderActionProps = {
 
 const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
   const largerThanSm = useMediaQuery('sm');
+  const navigate = useNavigate();
 
   const [sidebarOpened, { toggle }] = useDisclosure(false);
   const [loginOpened, setLoginOpened] = useState(false);
@@ -105,15 +108,21 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
 
   const items = links.map((link) => {
     const menuItems = link.links?.map((item) => (
-      <Menu.Item key={item.link}>{item.label}</Menu.Item>
+      <NavLink
+        key={item.label}
+        to={item.link}
+        className="text-m_gray-7  hover:bg-m_gray-0 no-underline"
+      >
+        <Menu.Item>{item.label}</Menu.Item>
+      </NavLink>
     ));
 
     if (menuItems) {
       return (
         <Menu key={link.label} exitTransitionDuration={0}>
           <Menu.Target>
-            <a
-              href={link.link}
+            <NavLink
+              to={link.link}
               // eslint-disable-next-line tailwindcss/no-custom-classname
               className="text-m_gray-7  hover:bg-m_gray-0 block rounded-sm py-2 px-3 text-sm font-medium leading-none no-underline"
               onClick={(event) => event.preventDefault()}
@@ -122,7 +131,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                 <span className="mr-3">{link.label}</span>
                 <IconChevronDown size={12} stroke={1.5} />
               </Center>
-            </a>
+            </NavLink>
           </Menu.Target>
           <Menu.Dropdown>{menuItems}</Menu.Dropdown>
         </Menu>
@@ -130,15 +139,15 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
     }
 
     return (
-      <a
+      <NavLink
         key={link.label}
-        href={link.link}
+        to={link.link}
         // eslint-disable-next-line tailwindcss/no-custom-classname
         className="text-m_gray-7  hover:bg-m_gray-0 block rounded-sm py-2 px-3 text-sm font-medium leading-none no-underline"
-        onClick={(event) => event.preventDefault()}
+        // onClick={(event) => event.preventDefault()}
       >
         {link.label}
-      </a>
+      </NavLink>
     );
   });
 
@@ -163,21 +172,33 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                     withBorder
                     style={styles}
                   >
-                    <a href="/about" className={classes.link}>
+                    <NavLink
+                      className={classes.link}
+                      to="/about"
+                      onClick={toggle}
+                    >
                       StackDeveloperについて
-                    </a>
-                    <a href="/about" className={classes.link}>
+                    </NavLink>
+                    <NavLink
+                      className={classes.link}
+                      to="/categories"
+                      onClick={toggle}
+                    >
                       カテゴリから探す
-                    </a>
-                    <a href="/about" className={classes.link}>
+                    </NavLink>
+                    <NavLink
+                      className={classes.link}
+                      to="/articles/all"
+                      onClick={toggle}
+                    >
                       記事から探す
-                    </a>
+                    </NavLink>
                   </Paper>
                 )}
               </Transition>
             </>
           )}
-          <MantineLogo className="h-8" />
+          <MantineLogo className="h-8" onClick={() => navigate('/')} />
         </Group>
         <Group className="mr-2 sm:mr-4">
           {largerThanSm && <Group spacing={5}>{items}</Group>}
@@ -197,16 +218,25 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                 </Menu.Target>
 
                 <Menu.Dropdown>
-                  <Menu.Item className="pb-0 font-bold">
+                  <Menu.Item
+                    className="pb-0 font-bold"
+                    onClick={() => navigate('/dashboards/all')}
+                  >
                     テストテスト
                     <Menu.Label className="px-0 pt-0">@youliangdao</Menu.Label>
                   </Menu.Item>
                   <Menu.Divider />
-                  <Menu.Item icon={<IconHeart size={14} stroke={1.5} />}>
+                  <Menu.Item
+                    icon={<IconHeart size={14} stroke={1.5} />}
+                    onClick={() => navigate('/dashboards/likes')}
+                  >
                     いいねした記事
                   </Menu.Item>
-                  <Menu.Item icon={<IconBookmark size={14} stroke={1.5} />}>
-                    ストックした記事
+                  <Menu.Item
+                    icon={<IconBookmark size={14} stroke={1.5} />}
+                    onClick={() => navigate('/dashboards/bookmarks')}
+                  >
+                    ブックマークした記事
                   </Menu.Item>
 
                   <Menu.Divider />

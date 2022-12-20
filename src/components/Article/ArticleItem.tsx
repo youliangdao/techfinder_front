@@ -1,5 +1,6 @@
 import {
   ActionIcon,
+  Anchor,
   Card,
   createStyles,
   Group,
@@ -9,10 +10,17 @@ import {
 import { IconBookmark, IconHeart, IconShare } from '@tabler/icons';
 import { Article } from 'articles/types';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as Zenn } from '/src/assets/zenn.svg';
 
 const useStyles = createStyles((theme) => ({
+  category: {
+    fontSize: theme.fontSizes.xs,
+    [theme.fn.smallerThan('xs')]: {
+      fontSize: '10px',
+    },
+  },
   card: {
     backgroundColor:
       theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
@@ -31,34 +39,39 @@ const useStyles = createStyles((theme) => ({
 
 const ArticleItem = ({ image, categories, title, date, media }: Article) => {
   const { classes, theme } = useStyles();
+  const navigate = useNavigate();
   return (
     <Card
       radius="md"
-      className="bg-m_gray-0 hover:bg-m_gray-1 max-w-md py-0"
-      component="a"
-      href="https://zenn.dev/"
-      target="_blank"
+      className="bg-m_gray-0 hover:bg-m_gray-1 max-w-md py-0 hover:cursor-pointer"
+      // component="a"
+      // href="https://zenn.dev/"
+      // target="_blank"
     >
       <Group noWrap spacing={0} className="">
         <div className="">
-          <div className="xs:space-x-2 flex space-x-1">
+          <div className="xs:space-x-2 mb-2 flex space-x-1">
             {categories.map((category) => (
-              <Text
-                key={category}
+              <Anchor
+                key={category.title}
                 color="dimmed"
                 weight={700}
-                className="xs:text-xs"
-                style={{
-                  fontSize: '8px',
-                }}
+                className={classes.category}
+                onClick={() => navigate(`/categories/${category.path}`)}
               >
-                #{category}
-              </Text>
+                #{category.title}
+              </Anchor>
             ))}
           </div>
-          <Text className={classes.title} mt="xs" mb="md">
+          <Anchor
+            className="max-xs:text-sm font-bold leading-tight text-black"
+            mt="xs"
+            mb="md"
+            href="https://zenn.dev/"
+            target="_blank"
+          >
             {title}
-          </Text>
+          </Anchor>
           <Group noWrap spacing="xs">
             <Group spacing="xs" noWrap>
               <ActionIcon size="md">
@@ -72,7 +85,9 @@ const ArticleItem = ({ image, categories, title, date, media }: Article) => {
           </Group>
         </div>
         <div className="pt-4">
-          <Image src={image} height={100} width={140} />
+          <a href="https://zenn.dev/" target="_blank" rel="noreferrer">
+            <Image src={image} height={100} width={140} />
+          </a>
           <Group className="justify-between px-2">
             <ActionIcon>
               <IconHeart size={18} color={theme.colors.red[6]} stroke={1.5} />

@@ -1,6 +1,8 @@
+import { Category } from 'categories/types';
+
 export type Article = {
   title: string;
-  categories: string[];
+  categories: Pick<Category, 'title' | 'path'>[];
   date: string;
   image: string;
   media: string;

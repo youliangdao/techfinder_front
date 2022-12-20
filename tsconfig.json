@@ -33,7 +33,7 @@
       "Article/*": ["components/Article/*"],
       "Button/*": ["components/Button/*"],
       "Category/*": ["components/Category/*"],
-      "components/*": ["compoentns/*"],
+      "components/*": ["components/*"],
       "hooks/*": ["hooks/*"],
       "lib/*": ["lib/*"],
       "store/*": ["store/*"]

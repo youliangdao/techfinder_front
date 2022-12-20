@@ -8,6 +8,7 @@ import {
   Text,
 } from '@mantine/core';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import ArticleDetail from '../../../components/Article/ArticleDetail';
 import ArticleItem from '../../../components/Article/ArticleItem';
@@ -42,23 +43,26 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const TrendArticleLists = ({
-  leftGenre,
-  rightGenre,
   articleItems,
-}: ArticleListsProps) => {
+}: Pick<ArticleListsProps, 'articleItems'>) => {
   const { classes } = useStyles();
   const largerThanXs = useMediaQuery('xs');
   const largerThanSm = useMediaQuery('sm');
   const largerThanMd = useMediaQuery('md');
   const largerThanLg = useMediaQuery('lg');
   const largerThanXl = useMediaQuery('xl');
+  const navigate = useNavigate();
 
   return (
     <Card radius="md">
       <Group position="apart">
-        <Text className="font-bold">{leftGenre}</Text>
-        <Anchor size="sm" sx={{ lineHeight: 1 }}>
-          {rightGenre}
+        <Text className="font-bold">急上昇中の記事</Text>
+        <Anchor
+          size="sm"
+          className="leading-none"
+          onClick={() => navigate('/articles/all')}
+        >
+          すべての記事を見る
         </Anchor>
       </Group>
       {largerThanSm ? (
@@ -79,10 +83,9 @@ const TrendArticleLists = ({
         </SimpleGrid>
       )}
       <Card
-        className="hover:bg-m_gray-0 mt-3 flex items-center justify-center border-x-0 py-2 font-semibold"
+        className="hover:bg-m_gray-0 mt-3 flex items-center justify-center border-x-0 py-2 font-semibold hover:cursor-pointer"
         withBorder
-        component="a"
-        href="#"
+        onClick={() => navigate('/articles/all')}
       >
         すべての記事を見る
       </Card>

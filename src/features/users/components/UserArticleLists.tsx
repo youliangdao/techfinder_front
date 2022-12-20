@@ -12,7 +12,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ArticleDetail from '../../../components/Article/ArticleDetail';
 import ArticleItem from '../../../components/Article/ArticleItem';
 import { useMediaQuery } from '../../../lib/mantine/useMediaQuery';
-import { ArticleListsProps } from '../types';
+import { ArticleListsProps } from '../../articles/types';
 
 const useStyles = createStyles((theme) => ({
   title: {
@@ -41,24 +41,27 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const ArticleLists = ({
+const UserArticleLists = ({
   leftGenre,
   rightGenre,
   articleItems,
 }: ArticleListsProps) => {
   const largerThanSm = useMediaQuery('sm');
   const navigate = useNavigate();
-  const { articleGenre } = useParams();
+  const { genre } = useParams();
+
+  console.log(genre);
 
   return (
     <Card radius="md">
       <Tabs
-        value={articleGenre}
-        onTabChange={(value) => navigate(`/articles/${value}`)}
+        value={genre}
+        onTabChange={(value) => navigate(`/dashboards/${value}`)}
       >
         <Tabs.List className="flex justify-around">
-          <Tabs.Tab value="all">{leftGenre}</Tabs.Tab>
-          <Tabs.Tab value="popular">{rightGenre}</Tabs.Tab>
+          <Tabs.Tab value="all">すべての記事</Tabs.Tab>
+          <Tabs.Tab value="likes">{leftGenre}</Tabs.Tab>
+          <Tabs.Tab value="bookmarks">{rightGenre}</Tabs.Tab>
         </Tabs.List>
       </Tabs>
       {largerThanSm ? (
@@ -85,4 +88,4 @@ const ArticleLists = ({
   );
 };
 
-export default ArticleLists;
+export default UserArticleLists;
