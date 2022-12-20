@@ -7,6 +7,7 @@ import {
   Tabs,
 } from '@mantine/core';
 import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import ArticleDetail from '../../../components/Article/ArticleDetail';
 import ArticleItem from '../../../components/Article/ArticleItem';
@@ -45,19 +46,19 @@ const ArticleLists = ({
   rightGenre,
   articleItems,
 }: ArticleListsProps) => {
-  const { classes } = useStyles();
-  const largerThanXs = useMediaQuery('xs');
   const largerThanSm = useMediaQuery('sm');
-  const largerThanMd = useMediaQuery('md');
-  const largerThanLg = useMediaQuery('lg');
-  const largerThanXl = useMediaQuery('xl');
+  const navigate = useNavigate();
+  const { articleGenre } = useParams();
 
   return (
     <Card radius="md">
-      <Tabs defaultValue={leftGenre}>
+      <Tabs
+        value={articleGenre}
+        onTabChange={(value) => navigate(`/articles/${value}`)}
+      >
         <Tabs.List className="flex justify-around">
-          <Tabs.Tab value={leftGenre}>{leftGenre}</Tabs.Tab>
-          <Tabs.Tab value={rightGenre}>{rightGenre}</Tabs.Tab>
+          <Tabs.Tab value="all">{leftGenre}</Tabs.Tab>
+          <Tabs.Tab value="popular">{rightGenre}</Tabs.Tab>
         </Tabs.List>
       </Tabs>
       {largerThanSm ? (

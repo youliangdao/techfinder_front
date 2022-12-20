@@ -1,5 +1,6 @@
 import {
   ActionIcon,
+  Anchor,
   Card,
   createStyles,
   Group,
@@ -10,6 +11,7 @@ import {
 import { IconBookmark, IconHeart, IconShare } from '@tabler/icons';
 import { Article } from 'articles/types';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as Zenn } from '/src/assets/zenn.svg';
 
@@ -30,40 +32,47 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface ArticleItemProps {
-  title: string;
-  categories: string[];
-  date: string;
-  image: string;
-  media: string;
-}
-
 const ArticleDetail = ({ image, categories, title, date, media }: Article) => {
   const { classes, theme } = useStyles();
+  const navigate = useNavigate();
   return (
     <Card
       radius="md"
-      className="hover:bg-m_gray-1 bg-m_gray-0 max-w-md py-0"
-      component="a"
-      href="https://zenn.dev/"
-      target="_blank"
+      className="hover:bg-m_gray-1 bg-m_gray-0 max-w-md py-0 hover:cursor-pointer"
+      // component="a"
+      // href="https://zenn.dev/"
+      // target="_blank"
     >
       <Stack>
         <div className="pt-4">
-          <Image src={image} />
+          <a href="https://zenn.dev/" target="_blank" rel="noreferrer">
+            <Image src={image} />
+          </a>
         </div>
         <div className="">
-          <div className="flex space-x-2">
+          <div className="mb-2 flex space-x-2">
             {categories.map((category) => (
-              <Text key={category} color="dimmed" weight={700} size="xs">
-                #{category}
-              </Text>
+              <Anchor
+                key={category.title}
+                color="dimmed"
+                weight={700}
+                size="xs"
+                onClick={() => navigate(`/categories/${category.path}`)}
+              >
+                #{category.title}
+              </Anchor>
             ))}
           </div>
-          <Text className={classes.title} mt="xs" mb="md">
+          <Anchor
+            className="font-bold leading-tight text-black"
+            mt="xs"
+            mb="md"
+            href="https://zenn.dev/"
+            target="_blank"
+          >
             {title}
-          </Text>
-          <Group noWrap spacing="xs" className="justify-between">
+          </Anchor>
+          <Group noWrap spacing="xs" className="mt-2 justify-between">
             <Group spacing="xs" noWrap>
               <ActionIcon size="md">
                 <Zenn style={{ color: '#3EA8FF' }} />

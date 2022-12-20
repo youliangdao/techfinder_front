@@ -1,5 +1,6 @@
 import { Space } from '@mantine/core';
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import { ReactComponent as ReactSVG } from '/src/assets/react.svg';
 import { ReactComponent as RailsSVG } from '/src/assets/rubyonrails.svg';
@@ -19,9 +20,9 @@ const articleItem = {
 };
 
 const categories = [
-  { title: 'Ruby on Rails', Icon: RailsSVG },
-  { title: 'React', Icon: ReactSVG },
-  { title: 'Vue.js', Icon: VueSVG },
+  { title: 'Ruby on Rails', Icon: RailsSVG, path: 'rails' },
+  { title: 'React', Icon: ReactSVG, path: 'react' },
+  { title: 'Vue.js', Icon: VueSVG, path: 'vue' },
 ];
 
 const commentLists = [
@@ -54,6 +55,9 @@ const commentLists = [
   },
 ];
 const ArticleProfile = () => {
+  const { articleId } = useParams();
+  console.log(articleId);
+
   return (
     <>
       <LargeArticleDetail {...articleItem} />
