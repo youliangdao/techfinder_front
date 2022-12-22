@@ -27,7 +27,10 @@ const AppRoutes = () => {
       </Route>
       <Route path="categories" element={<MainLayout />}>
         <Route path="" element={<FilterableCategoryLists />} />
-        <Route path=":categoryName" element={<CategoryFilterableArticles />} />
+        <Route
+          path=":categoryName/:articleGenre"
+          element={<CategoryFilterableArticles />}
+        />
         <Route path="*" element={<NotFoundTitle />} />
       </Route>
       <Route path="profile" element={<UserProfile />} />
