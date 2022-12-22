@@ -1,6 +1,7 @@
 export type Category = {
+  id: number;
   title: string;
-  Icon: any;
+  image: string;
   path: string;
 };
 

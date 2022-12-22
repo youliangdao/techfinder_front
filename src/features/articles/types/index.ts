@@ -1,6 +1,7 @@
 import { Category } from 'categories/types';
 
 export type Article = {
+  id: number;
   title: string;
   categories: Pick<Category, 'title' | 'path'>[];
   date: string;
