@@ -60,7 +60,7 @@ const ArticleProfile = () => {
 
   return (
     <div>
-      ArticleProfile
+      Hello World
       {/* <LargeArticleDetail {...articleItem} />
       <Space h={50} />
       <ArticleCategoryLists {...{ categories }} />
