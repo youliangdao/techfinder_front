@@ -9,6 +9,8 @@ import Home from 'routes/Home';
 import UserArticles from 'users/routes/UserArticles';
 import UserProfile from 'users/routes/UserProfile';
 
+import NotFound from './NotFound';
+
 const AppRoutes = () => {
   const { hash, pathname } = useLocation();
 
@@ -20,10 +22,13 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      <Route path="articles" element={<MainLayout />}>
-        <Route path=":articleGenre" element={<FilterableArticles />} />
+      <Route path="articles">
+        <Route path="" element={<Navigate to="/" replace />} />
+        <Route path=":articleGenre" element={<MainLayout />}>
+          <Route path="" element={<FilterableArticles />} />
+        </Route>
         {/* <Route path=":articleId" element={<ArticleProfile />} /> */}
-        <Route path="*" element={<NotFoundTitle />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
       <Route path="categories" element={<MainLayout />}>
         <Route path="" element={<FilterableCategoryLists />} />
@@ -34,8 +39,12 @@ const AppRoutes = () => {
         <Route path="*" element={<NotFoundTitle />} />
       </Route>
       <Route path="profile" element={<UserProfile />} />
-      <Route path="dashboards" element={<MainLayout />}>
-        <Route path=":genre" element={<UserArticles />} />
+      <Route path="dashboards">
+        <Route path="" element={<Navigate to="/" replace />} />
+        <Route path=":genre" element={<MainLayout />}>
+          <Route path="" element={<UserArticles />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
       </Route>
       <Route path="/" element={<Home />} />
       <Route path="*" element={<Navigate to="/" replace />} />
