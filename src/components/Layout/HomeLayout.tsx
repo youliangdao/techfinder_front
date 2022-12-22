@@ -41,8 +41,6 @@ const data = [
   },
 ];
 
-const isLogin = true;
-
 const HeroContents = () => {
   return (
     <div className="bg-m_gray-0">

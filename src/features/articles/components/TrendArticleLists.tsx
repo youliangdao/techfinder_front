@@ -1,56 +1,17 @@
 /* eslint-disable tailwindcss/no-custom-classname */
-import {
-  Anchor,
-  Card,
-  createStyles,
-  Group,
-  SimpleGrid,
-  Text,
-} from '@mantine/core';
+import { Anchor, Card, Group, SimpleGrid, Text } from '@mantine/core';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import ArticleDetail from '../../../components/Article/ArticleDetail';
-import ArticleItem from '../../../components/Article/ArticleItem';
 import { useMediaQuery } from '../../../lib/mantine/useMediaQuery';
 import { ArticleListsProps } from '../types';
-
-const useStyles = createStyles((theme) => ({
-  title: {
-    // fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    fontWeight: 700,
-  },
-
-  item: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    // textAlign: 'center',
-    borderRadius: theme.radius.md,
-    // height: 90,
-    backgroundColor:
-      theme.colorScheme === 'dark'
-        ? theme.colors.dark[7]
-        : theme.colors.gray[0],
-    transition: 'box-shadow 150ms ease, transform 100ms ease',
-
-    '&:hover': {
-      boxShadow: `${theme.shadows.md} !important`,
-      transform: 'scale(1.05)',
-    },
-  },
-}));
+import ArticleDetail from './ArticleDetail';
+import ArticleItem from './ArticleItem';
 
 const TrendArticleLists = ({
   articleItems,
 }: Pick<ArticleListsProps, 'articleItems'>) => {
-  const { classes } = useStyles();
-  const largerThanXs = useMediaQuery('xs');
   const largerThanSm = useMediaQuery('sm');
-  const largerThanMd = useMediaQuery('md');
-  const largerThanLg = useMediaQuery('lg');
-  const largerThanXl = useMediaQuery('xl');
   const navigate = useNavigate();
 
   return (
