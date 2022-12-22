@@ -1,178 +1,53 @@
 import { Space } from '@mantine/core';
-import React, { useState } from 'react';
+import CategoryArticleLists from 'articles/components/CategoryArticleLists';
+import { Article } from 'articles/types';
+import axios, { AxiosResponse } from 'axios';
+import { Category } from 'categories/types';
+import { endpoint } from 'config';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { ReactComponent as RailsSVG } from '/src/assets/rubyonrails.svg';
-
 import SearchInput from '../../../components/SearchInput';
-import ArticleLists from '../components/ArticleLists';
 import CategoryArticlesHeader from '../components/CategoryArticlesHeader';
-
-const articleItems = [
-  {
-    image:
-      'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    categories: [
-      {
-        title: 'Rails',
-        path: 'rails',
-      },
-      {
-        title: 'まとめ',
-        path: 'まとめ',
-      },
-      {
-        title: 'AWS',
-        path: 'aws',
-      },
-      {
-        title: 'React',
-        path: 'react',
-      },
-    ],
-    title: 'ChatGPTはどのように学習を行なっているのか',
-    date: '1日前',
-    media: 'zenn.dev',
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    categories: [
-      {
-        title: 'Rails',
-        path: 'rails',
-      },
-      {
-        title: 'まとめ',
-        path: 'まとめ',
-      },
-      {
-        title: 'AWS',
-        path: 'aws',
-      },
-      {
-        title: 'React',
-        path: 'react',
-      },
-    ],
-    title: 'ChatGPTはどのように学習を行なっているのか',
-    date: '1日前',
-    media: 'zenn.dev',
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    categories: [
-      {
-        title: 'Rails',
-        path: 'rails',
-      },
-      {
-        title: 'まとめ',
-        path: 'まとめ',
-      },
-      {
-        title: 'AWS',
-        path: 'aws',
-      },
-      {
-        title: 'React',
-        path: 'react',
-      },
-    ],
-    title: 'ChatGPTはどのように学習を行なっているのか',
-    date: '1日前',
-    media: 'zenn.dev',
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    categories: [
-      {
-        title: 'Rails',
-        path: 'rails',
-      },
-      {
-        title: 'まとめ',
-        path: 'まとめ',
-      },
-      {
-        title: 'AWS',
-        path: 'aws',
-      },
-      {
-        title: 'React',
-        path: 'react',
-      },
-    ],
-    title: 'ChatGPTはどのように学習を行なっているのか',
-    date: '1日前',
-    media: 'zenn.dev',
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    categories: [
-      {
-        title: 'Rails',
-        path: 'rails',
-      },
-      {
-        title: 'まとめ',
-        path: 'まとめ',
-      },
-      {
-        title: 'AWS',
-        path: 'aws',
-      },
-      {
-        title: 'React',
-        path: 'react',
-      },
-    ],
-    title: 'ChatGPTはどのように学習を行なっているのか',
-    date: '1日前',
-    media: 'zenn.dev',
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    categories: [
-      {
-        title: 'Rails',
-        path: 'rails',
-      },
-      {
-        title: 'まとめ',
-        path: 'まとめ',
-      },
-      {
-        title: 'AWS',
-        path: 'aws',
-      },
-      {
-        title: 'React',
-        path: 'react',
-      },
-    ],
-    title: 'ChatGPTはどのように学習を行なっているのか',
-    date: '1日前',
-    media: 'zenn.dev',
-  },
-];
 
 const CategoryFilterableArticles = () => {
   const [filterInput, setFilterInput] = useState<string>('');
-  const { categoryName } = useParams();
-  console.log(categoryName);
+  const [articleItems, setArticleItems] = useState<Article[]>([]);
+  const [category, setCategory] = useState<Pick<Category, 'title' | 'image'>>({
+    title: '',
+    image: '',
+  });
+  const { categoryName, articleGenre } = useParams();
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      const res: AxiosResponse<Article[]> = await axios.get(
+        `${endpoint}/categories/${categoryName}/${articleGenre}`
+      );
+      return res.data;
+    };
+    const fetchCategory = async () => {
+      const res: AxiosResponse<Category> = await axios.get(
+        `${endpoint}/categories/${categoryName}`
+      );
+      return res.data;
+    };
+    fetchArticles().then((data) => setArticleItems(data));
+    fetchCategory().then((data) =>
+      setCategory({
+        title: data.title,
+        image: data.image,
+      })
+    );
+  }, [categoryName, articleGenre]);
 
   return (
     <>
-      <CategoryArticlesHeader category="Ruby on Rails" Icon={RailsSVG} />
+      <CategoryArticlesHeader {...category} />
       <Space h="lg" />
       <SearchInput {...{ filterInput, setFilterInput }} />
       <Space h="lg" />
-      <ArticleLists
+      <CategoryArticleLists
         leftGenre="すべての記事"
         rightGenre="人気記事"
         articleItems={articleItems}
