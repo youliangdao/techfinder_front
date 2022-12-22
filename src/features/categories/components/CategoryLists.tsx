@@ -2,8 +2,8 @@
 import { Card, SimpleGrid } from '@mantine/core';
 import React from 'react';
 
-import CategoryItem from '../../../components/Category/CategoryItem';
 import { Categories } from '../types';
+import CategoryItem from './CategoryItem';
 
 const CategoryLists = ({ categories }: Categories) => {
   return (

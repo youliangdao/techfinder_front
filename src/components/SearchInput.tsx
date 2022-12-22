@@ -1,4 +1,4 @@
-import { TextInput, useMantineTheme } from '@mantine/core';
+import { TextInput } from '@mantine/core';
 import { IconSearch } from '@tabler/icons';
 import React, { Dispatch, SetStateAction } from 'react';
 
@@ -8,8 +8,6 @@ type SearchInputProps = {
 };
 
 const SearchInput = ({ filterInput, setFilterInput }: SearchInputProps) => {
-  const theme = useMantineTheme();
-
   return (
     <TextInput
       icon={<IconSearch size={18} stroke={1.5} />}

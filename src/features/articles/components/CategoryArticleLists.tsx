@@ -1,31 +1,35 @@
 /* eslint-disable tailwindcss/no-custom-classname */
-import { Anchor, Card, Group, SimpleGrid, Text } from '@mantine/core';
+import { Card, Pagination, SimpleGrid, Tabs } from '@mantine/core';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useMediaQuery } from '../../../lib/mantine/useMediaQuery';
 import { ArticleListsProps } from '../types';
 import ArticleDetail from './ArticleDetail';
 import ArticleItem from './ArticleItem';
 
-const TrendArticleLists = ({
+const CategoryArticleLists = ({
+  leftGenre,
+  rightGenre,
   articleItems,
-}: Pick<ArticleListsProps, 'articleItems'>) => {
+}: ArticleListsProps) => {
   const largerThanSm = useMediaQuery('sm');
   const navigate = useNavigate();
+  const { categoryName, articleGenre } = useParams();
 
   return (
     <Card radius="md">
-      <Group position="apart">
-        <Text className="font-bold">急上昇中の記事</Text>
-        <Anchor
-          size="sm"
-          className="leading-none"
-          onClick={() => navigate('/articles/all')}
-        >
-          すべての記事を見る
-        </Anchor>
-      </Group>
+      <Tabs
+        value={articleGenre}
+        onTabChange={(value) =>
+          navigate(`/categories/${categoryName}/${value}`)
+        }
+      >
+        <Tabs.List className="flex justify-around">
+          <Tabs.Tab value="all">{leftGenre}</Tabs.Tab>
+          <Tabs.Tab value="popular">{rightGenre}</Tabs.Tab>
+        </Tabs.List>
+      </Tabs>
       {largerThanSm ? (
         <SimpleGrid mt="md" className="grid-cols-2">
           {articleItems.map((articleItem, index) => {
@@ -43,15 +47,11 @@ const TrendArticleLists = ({
           ))}
         </SimpleGrid>
       )}
-      <Card
-        className="hover:bg-m_gray-0 mt-3 flex items-center justify-center border-x-0 py-2 font-semibold hover:cursor-pointer"
-        withBorder
-        onClick={() => navigate('/articles/all')}
-      >
-        すべての記事を見る
+      <Card className="mt-10 flex items-center justify-center">
+        <Pagination total={10} />
       </Card>
     </Card>
   );
 };
 
-export default TrendArticleLists;
+export default CategoryArticleLists;

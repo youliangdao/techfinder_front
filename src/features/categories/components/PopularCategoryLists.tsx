@@ -3,9 +3,9 @@ import { Anchor, Card, Group, SimpleGrid, Text } from '@mantine/core';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import CategoryItem from '../../../components/Category/CategoryItem';
 import { useMediaQuery } from '../../../lib/mantine/useMediaQuery';
 import { Categories } from '../types';
+import CategoryItem from './CategoryItem';
 
 const PopularCategoryLists = ({ categories }: Categories) => {
   const largerThanSm = useMediaQuery('sm');

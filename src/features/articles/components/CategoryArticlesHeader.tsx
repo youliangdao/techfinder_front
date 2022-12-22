@@ -1,25 +1,19 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Group, Text } from '@mantine/core';
+import { Image, Text } from '@mantine/core';
+import { Category } from 'categories/types';
 import React from 'react';
 
-type CategoryArticlesHeaderProps = {
-  category: string;
-  Icon: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement> & {
-      title?: string | undefined;
-    }
-  >;
-};
-
 const CategoryArticlesHeader = ({
-  category,
-  Icon,
-}: CategoryArticlesHeaderProps) => {
+  title,
+  image,
+}: Pick<Category, 'title' | 'image'>) => {
   return (
-    <Group spacing="lg" className="xs:px-3 sm:px-5">
-      <Icon className="h-20 sm:h-24" />
-      <Text className="font-bold sm:text-2xl">"{category}"に関する記事</Text>
-    </Group>
+    <div className="xs:px-3 flex items-center justify-center space-x-3 sm:justify-start sm:px-5">
+      <div className="flex h-20 items-center justify-center sm:h-24">
+        <Image src={image} height={100} fit="contain" />
+      </div>
+      <Text className="text-2xl font-bold">"{title}"に関する記事</Text>
+    </div>
   );
 };
 

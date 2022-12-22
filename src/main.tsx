@@ -10,7 +10,7 @@ const prepare = async () => {
     import.meta.env.MODE === 'development' &&
     import.meta.env.VITE_APP_USE_MOCK_SERVER === 'true'
   ) {
-    const { worker } = await import('./test/handlers/worker');
+    const { worker } = await import('./test/browser');
     worker.start();
   }
 };
