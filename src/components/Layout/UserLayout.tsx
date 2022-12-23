@@ -6,7 +6,7 @@ import HeaderAction from '../HeaderAction';
 
 const links = [
   {
-    link: '/articles/all',
+    link: '/about',
     label: 'About',
   },
   {
