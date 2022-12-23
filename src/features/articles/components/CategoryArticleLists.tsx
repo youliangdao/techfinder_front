@@ -15,19 +15,24 @@ const CategoryArticleLists = ({
 }: ArticleListsProps) => {
   const largerThanSm = useMediaQuery('sm');
   const navigate = useNavigate();
-  const { categoryName, articleGenre } = useParams();
+  const { categoryName } = useParams();
 
   return (
     <Card radius="md">
-      <Tabs
-        value={articleGenre}
-        onTabChange={(value) =>
-          navigate(`/categories/${categoryName}/${value}`)
-        }
-      >
+      <Tabs defaultValue="all">
         <Tabs.List className="flex justify-around">
-          <Tabs.Tab value="all">{leftGenre}</Tabs.Tab>
-          <Tabs.Tab value="popular">{rightGenre}</Tabs.Tab>
+          <Tabs.Tab
+            value="all"
+            onClick={() => navigate(`/categories/${categoryName}`)}
+          >
+            {leftGenre}
+          </Tabs.Tab>
+          <Tabs.Tab
+            value="popular"
+            onClick={() => navigate(`/categories/${categoryName}?tab=popular`)}
+          >
+            {rightGenre}
+          </Tabs.Tab>
         </Tabs.List>
       </Tabs>
       {largerThanSm ? (
