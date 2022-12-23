@@ -31,7 +31,7 @@ const CategoryItem = ({ title, image, path }: Category) => {
     <Card
       className={classes.item}
       onClick={() => {
-        navigate(`/categories/${path}/all`);
+        navigate(`/categories/${path}`);
       }}
     >
       <Image src={image} height={50} fit="contain" />
