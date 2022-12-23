@@ -1,7 +1,7 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { Card, Pagination, SimpleGrid, Tabs } from '@mantine/core';
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useMediaQuery } from '../../../lib/mantine/useMediaQuery';
 import ArticleDetail from '../../articles/components/ArticleDetail';
@@ -15,20 +15,28 @@ const UserArticleLists = ({
 }: ArticleListsProps) => {
   const largerThanSm = useMediaQuery('sm');
   const navigate = useNavigate();
-  const { genre } = useParams();
-
-  console.log(genre);
+  const [searchParams] = useSearchParams();
+  const articleGenre = searchParams.get('tab') || 'all';
 
   return (
     <Card radius="md">
-      <Tabs
-        value={genre}
-        onTabChange={(value) => navigate(`/dashboards/${value}`)}
-      >
+      <Tabs value={articleGenre}>
         <Tabs.List className="flex justify-around">
-          <Tabs.Tab value="all">すべての記事</Tabs.Tab>
-          <Tabs.Tab value="likes">{leftGenre}</Tabs.Tab>
-          <Tabs.Tab value="bookmarks">{rightGenre}</Tabs.Tab>
+          <Tabs.Tab value="all" onClick={() => navigate('/dashboards')}>
+            すべての記事
+          </Tabs.Tab>
+          <Tabs.Tab
+            value="likes"
+            onClick={() => navigate('/dashboards?tab=likes')}
+          >
+            {leftGenre}
+          </Tabs.Tab>
+          <Tabs.Tab
+            value="bookmarks"
+            onClick={() => navigate('/dashboards?tab=bookmarks')}
+          >
+            {rightGenre}
+          </Tabs.Tab>
         </Tabs.List>
       </Tabs>
       {largerThanSm ? (

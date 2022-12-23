@@ -13,12 +13,8 @@ const initialData = [
         path: 'rails',
       },
       {
-        title: 'まとめ',
-        path: 'まとめ',
-      },
-      {
-        title: 'AWS',
-        path: 'aws',
+        title: 'Vue',
+        path: 'vue',
       },
       {
         title: 'React',
@@ -39,12 +35,8 @@ const initialData = [
         path: 'rails',
       },
       {
-        title: 'まとめ',
-        path: 'まとめ',
-      },
-      {
-        title: 'AWS',
-        path: 'aws',
+        title: 'Vue',
+        path: 'vue',
       },
       {
         title: 'React',
@@ -61,12 +53,12 @@ const initialData = [
       'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
     categories: [
       {
-        title: 'まとめ',
-        path: 'まとめ',
+        title: 'Rails',
+        path: 'rails',
       },
       {
-        title: 'AWS',
-        path: 'aws',
+        title: 'Vue',
+        path: 'vue',
       },
       {
         title: 'React',
@@ -83,12 +75,8 @@ const initialData = [
       'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
     categories: [
       {
-        title: 'まとめ',
-        path: 'まとめ',
-      },
-      {
-        title: 'AWS',
-        path: 'aws',
+        title: 'Vue',
+        path: 'vue',
       },
       {
         title: 'React',
@@ -105,12 +93,8 @@ const initialData = [
       'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
     categories: [
       {
-        title: 'まとめ',
-        path: 'まとめ',
-      },
-      {
-        title: 'AWS',
-        path: 'aws',
+        title: 'Rails',
+        path: 'rails',
       },
       {
         title: 'React',
@@ -127,16 +111,12 @@ const initialData = [
       'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
     categories: [
       {
-        title: 'まとめ',
-        path: 'まとめ',
+        title: 'Rails',
+        path: 'rails',
       },
       {
-        title: 'AWS',
-        path: 'aws',
-      },
-      {
-        title: 'React',
-        path: 'react',
+        title: 'Vue',
+        path: 'vue',
       },
     ],
     title: 'ChatGPTはどのように学習を行なっているのか',
@@ -149,12 +129,8 @@ const initialData = [
       'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
     categories: [
       {
-        title: 'まとめ',
-        path: 'まとめ',
-      },
-      {
-        title: 'AWS',
-        path: 'aws',
+        title: 'Vue',
+        path: 'vue',
       },
       {
         title: 'React',
@@ -171,12 +147,8 @@ const initialData = [
       'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
     categories: [
       {
-        title: 'まとめ',
-        path: 'まとめ',
-      },
-      {
-        title: 'AWS',
-        path: 'aws',
+        title: 'Vue',
+        path: 'vue',
       },
       {
         title: 'React',
@@ -215,9 +187,9 @@ const articleApi = {
 
 export const articleHandlers = [
   rest.get<DefaultBodyType, PathParams, Article[]>(
-    `${endpoint}/articles/:articleGenre`,
+    `${endpoint}/articles`,
     (req, res, ctx) => {
-      const { articleGenre } = req.params;
+      const articleGenre = req.url.searchParams.get('tab');
       return res(
         ctx.status(200),
         ctx.json(articleApi.getArticles(articleGenre))
@@ -225,9 +197,10 @@ export const articleHandlers = [
     }
   ),
   rest.get<DefaultBodyType, PathParams, Article[]>(
-    `${endpoint}/categories/:categoryName/:articleGenre`,
+    `${endpoint}/categories/:categoryName`,
     (req, res, ctx) => {
-      const { categoryName, articleGenre } = req.params;
+      const { categoryName } = req.params;
+      const articleGenre = req.url.searchParams.get('tab');
       return res(
         ctx.status(200),
         ctx.json(articleApi.getCategoryArticles({ categoryName, articleGenre }))

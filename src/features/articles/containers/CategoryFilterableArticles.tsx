@@ -5,7 +5,7 @@ import axios, { AxiosResponse } from 'axios';
 import { Category } from 'categories/types';
 import { endpoint } from 'config';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import SearchInput from '../../../components/SearchInput';
 import CategoryArticlesHeader from '../components/CategoryArticlesHeader';
@@ -17,19 +17,22 @@ const CategoryFilterableArticles = () => {
     title: '',
     image: '',
   });
-  const { categoryName, articleGenre } = useParams();
+  const { categoryName } = useParams();
+  const [searchParams] = useSearchParams();
+  const articleGenre = searchParams.get('tab');
 
   useEffect(() => {
     const fetchArticles = async () => {
       const res: AxiosResponse<Article[]> = await axios.get(
-        `${endpoint}/categories/${categoryName}/${articleGenre}`
+        `${endpoint}/categories/${categoryName}?tab=${articleGenre}`
       );
       return res.data;
     };
     const fetchCategory = async () => {
       const res: AxiosResponse<Category> = await axios.get(
-        `${endpoint}/categories/${categoryName}`
+        `${endpoint}/category?category=${categoryName}`
       );
+
       return res.data;
     };
     fetchArticles().then((data) => setArticleItems(data));

@@ -1,7 +1,7 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { Card, Pagination, SimpleGrid, Tabs } from '@mantine/core';
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useMediaQuery } from '../../../lib/mantine/useMediaQuery';
 import { ArticleListsProps } from '../types';
@@ -15,17 +15,20 @@ const ArticleLists = ({
 }: ArticleListsProps) => {
   const largerThanSm = useMediaQuery('sm');
   const navigate = useNavigate();
-  const { articleGenre } = useParams();
 
   return (
     <Card radius="md">
-      <Tabs
-        value={articleGenre}
-        onTabChange={(value) => navigate(`/articles/${value}`)}
-      >
+      <Tabs defaultValue="all">
         <Tabs.List className="flex justify-around">
-          <Tabs.Tab value="all">{leftGenre}</Tabs.Tab>
-          <Tabs.Tab value="popular">{rightGenre}</Tabs.Tab>
+          <Tabs.Tab value="all" onClick={() => navigate('/articles')}>
+            {leftGenre}
+          </Tabs.Tab>
+          <Tabs.Tab
+            value="popular"
+            onClick={() => navigate('/articles?tab=popular')}
+          >
+            {rightGenre}
+          </Tabs.Tab>
         </Tabs.List>
       </Tabs>
       {largerThanSm ? (

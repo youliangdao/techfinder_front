@@ -10,7 +10,7 @@ const PopularCategories = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       const res: AxiosResponse<Category[]> = await axios.get(
-        `${endpoint}/categories/popular`
+        `${endpoint}/category/popular`
       );
       return res.data;
     };

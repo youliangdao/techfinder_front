@@ -188,7 +188,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                     </NavLink>
                     <NavLink
                       className={classes.link}
-                      to="/articles/all"
+                      to="/articles"
                       onClick={toggle}
                     >
                       記事から探す
@@ -220,7 +220,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                 <Menu.Dropdown>
                   <Menu.Item
                     className="pb-0 font-bold"
-                    onClick={() => navigate('/dashboards/all')}
+                    onClick={() => navigate('/dashboards')}
                   >
                     テストテスト
                     <Menu.Label className="px-0 pt-0">@youliangdao</Menu.Label>
@@ -228,13 +228,13 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                   <Menu.Divider />
                   <Menu.Item
                     icon={<IconHeart size={14} stroke={1.5} />}
-                    onClick={() => navigate('/dashboards/likes')}
+                    onClick={() => navigate('/dashboards?tab=likes')}
                   >
                     いいねした記事
                   </Menu.Item>
                   <Menu.Item
                     icon={<IconBookmark size={14} stroke={1.5} />}
-                    onClick={() => navigate('/dashboards/bookmarks')}
+                    onClick={() => navigate('/dashboards?tab=bookmarks')}
                   >
                     ブックマークした記事
                   </Menu.Item>

@@ -236,15 +236,17 @@ export const categoryHandlers = [
     }
   ),
   rest.get<DefaultBodyType, PathParams, Category[]>(
-    `${endpoint}/categories/popular`,
+    `${endpoint}/category/popular`,
     (req, res, ctx) => {
       return res(ctx.status(200), ctx.json(categoryApi.getPopularCategories()));
     }
   ),
   rest.get<DefaultBodyType, PathParams, Category | undefined>(
-    `${endpoint}/categories/:categoryName`,
+    `${endpoint}/category`,
     (req, res, ctx) => {
-      const { categoryName } = req.params;
+      const categoryName = req.url.searchParams.get('category');
+      console.log(categoryName);
+
       return res(
         ctx.status(200),
         ctx.json(categoryApi.getCategory(categoryName))

@@ -58,7 +58,7 @@ const ArticleItem = ({ image, categories, title, date, media }: Article) => {
                 color="dimmed"
                 weight={700}
                 className={classes.category}
-                onClick={() => navigate(`/categories/${category.path}/all`)}
+                onClick={() => navigate(`/categories/${category.path}`)}
               >
                 #{category.title}
               </Anchor>
