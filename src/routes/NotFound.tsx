@@ -53,7 +53,7 @@ const useStyles = createStyles((theme) => ({
 
 const links = [
   {
-    link: '/articles/all',
+    link: '/about',
     label: 'About',
   },
   {
@@ -65,7 +65,7 @@ const links = [
         label: 'カテゴリから探す',
       },
       {
-        link: '/articles/all',
+        link: '/articles',
         label: '記事から探す',
       },
     ],
