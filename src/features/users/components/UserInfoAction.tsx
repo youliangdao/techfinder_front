@@ -1,4 +1,5 @@
-import { Avatar, Button, Group, Paper, Stack, Text } from '@mantine/core';
+import { Avatar, Button, Paper, Stack, Text, Title } from '@mantine/core';
+import { GithubButton, TwitterButton } from 'Button/SocialButtons';
 import { useMediaQuery } from 'lib/mantine/useMediaQuery';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -6,11 +7,10 @@ import { useNavigate } from 'react-router-dom';
 interface UserInfoActionProps {
   name: string;
   avatar: string;
-  email: string;
-  job: string;
+  description: string;
 }
 
-const UserInfoAction = ({ avatar, name, email, job }: UserInfoActionProps) => {
+const UserInfoAction = ({ avatar, name, description }: UserInfoActionProps) => {
   const largerThanSm = useMediaQuery('sm');
   const navigate = useNavigate();
   return (
@@ -19,41 +19,53 @@ const UserInfoAction = ({ avatar, name, email, job }: UserInfoActionProps) => {
       withBorder
       p="lg"
       sx={(theme) => ({
-        backgroundColor:
-          theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+        backgroundColor: theme.white,
       })}
     >
       {largerThanSm ? (
-        <Group position="apart" spacing="md" className="px-10">
-          <Group>
+        <div className="flex justify-between space-x-5 px-10">
+          <div className="flex space-x-5">
             <Avatar src={avatar} size={120} radius={120} />
             <Stack>
-              <Text size="lg" weight={500}>
+              <Title order={3} weight={500}>
                 {name}
-              </Text>
-              <Text color="dimmed" size="sm">
-                {email} • {job}
-              </Text>
+              </Title>
+              <Text size="sm">{description}</Text>
+              <div className="flex">
+                <TwitterButton variant="subtle" className="mx-auto px-0" />
+                <GithubButton variant="subtle" className="mx-auto px-0" />
+              </div>
             </Stack>
-          </Group>
+          </div>
           <Button variant="default" onClick={() => navigate('/profile')}>
             プロフィールを編集する
           </Button>
-        </Group>
+        </div>
       ) : (
-        <>
+        <Stack>
           <Avatar src={avatar} size={120} radius={120} mx="auto" />
           <Text align="center" size="lg" weight={500} mt="md">
             {name}
           </Text>
-          <Text align="center" color="dimmed" size="sm">
-            {email} • {job}
-          </Text>
+          <div className="mx-auto flex w-2/5">
+            <Text align="center" color="dimmed" size="sm">
+              {description}
+            </Text>
+          </div>
+          <div className="mx-auto flex w-1/12 justify-center">
+            <TwitterButton variant="subtle" className="mx-auto px-0" />
+            <GithubButton variant="subtle" className="mx-auto px-0" />
+          </div>
 
-          <Button variant="default" fullWidth mt="md">
+          <Button
+            variant="default"
+            fullWidth
+            mt="md"
+            onClick={() => navigate('/profile')}
+          >
             プロフィールを編集する
           </Button>
-        </>
+        </Stack>
       )}
     </Paper>
   );

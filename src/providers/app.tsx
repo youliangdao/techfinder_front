@@ -1,4 +1,5 @@
 import { MantineProvider } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
 import React, { ReactNode } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
@@ -14,7 +15,9 @@ const AppProvider = ({ children }: AppProviderProps) => {
     <HelmetProvider>
       <Provider store={store}>
         <MantineProvider withGlobalStyles withNormalizeCSS>
-          <Router>{children}</Router>
+          <NotificationsProvider>
+            <Router>{children}</Router>
+          </NotificationsProvider>
         </MantineProvider>
       </Provider>
     </HelmetProvider>

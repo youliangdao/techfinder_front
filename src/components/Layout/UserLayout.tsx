@@ -1,5 +1,7 @@
 import { Container } from '@mantine/core';
 import React, { FC, ReactNode } from 'react';
+import { selectUser } from 'store/ducks/userSlice';
+import { useAppSelector } from 'store/hooks';
 
 import FooterLinks from '../Footer';
 import HeaderAction from '../HeaderAction';
@@ -36,13 +38,13 @@ const data = [
   },
 ];
 
-const isLogin = true;
-
 type UserLayoutProps = {
   children: ReactNode;
 };
 
 const UserLayout: FC<UserLayoutProps> = ({ children }) => {
+  const user = useAppSelector(selectUser);
+  const isLogin = user.uid ? true : false;
   return (
     <>
       <HeaderAction {...{ links, isLogin }} />

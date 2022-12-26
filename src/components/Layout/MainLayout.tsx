@@ -1,6 +1,8 @@
 import { Container } from '@mantine/core';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import { selectUser } from 'store/ducks/userSlice';
+import { useAppSelector } from 'store/hooks';
 
 import FooterLinks from '../Footer';
 import HeaderAction from '../HeaderAction';
@@ -37,9 +39,9 @@ const data = [
   },
 ];
 
-const isLogin = true;
-
 const MainLayout = () => {
+  const user = useAppSelector(selectUser);
+  const isLogin = user.uid ? true : false;
   return (
     <>
       <HeaderAction {...{ links, isLogin }} />

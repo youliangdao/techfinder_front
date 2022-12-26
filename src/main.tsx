@@ -16,18 +16,10 @@ const prepare = async () => {
 };
 
 // prepareが完了した後にアプリケーションをマウントする
-if (import.meta.env.MODE === 'development') {
-  prepare().then(() => {
-    ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    );
-  });
-} else {
+prepare().then(() => {
   ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
       <App />
     </React.StrictMode>
   );
-}
+});

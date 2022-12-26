@@ -22,6 +22,7 @@ import {
   IconHeart,
   IconLogout,
 } from '@tabler/icons';
+import { useFirebaseAuth } from 'lib/auth/auth';
 import React, { forwardRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
@@ -104,6 +105,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
 
   const [sidebarOpened, { toggle }] = useDisclosure(false);
   const [loginOpened, setLoginOpened] = useState(false);
+  const { currentUser, signOut } = useFirebaseAuth();
   const { classes } = useStyles();
 
   const items = links.map((link) => {
@@ -214,7 +216,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
             <Group position="center">
               <Menu withArrow>
                 <Menu.Target>
-                  <UserButton image="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80" />
+                  <UserButton image={currentUser.avatar} />
                 </Menu.Target>
 
                 <Menu.Dropdown>
@@ -241,7 +243,11 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
 
                   <Menu.Divider />
 
-                  <Menu.Item color="red" icon={<IconLogout size={14} />}>
+                  <Menu.Item
+                    color="red"
+                    icon={<IconLogout size={14} />}
+                    onClick={signOut}
+                  >
                     ログアウト
                   </Menu.Item>
                 </Menu.Dropdown>
