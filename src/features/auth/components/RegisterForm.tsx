@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Button,
   Container,
   FileButton,
@@ -12,10 +11,13 @@ import {
   Title,
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { selectUser, updateUserProfile } from 'store/ducks/userSlice';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { z } from 'zod';
 
-import avatar from '/src/assets/avatar.png';
+import ImagePreview from './ImagePreview';
 
 const schema = z.object({
   nickname: z.string().trim().min(1, { message: 'ニックネームは必須です' }),
@@ -25,7 +27,17 @@ const schema = z.object({
 type Form = z.infer<typeof schema>;
 
 const RegisterForm = () => {
+  const user = useAppSelector(selectUser);
+  const [imageURL, setImageURL] = useState(user.avatar);
   const [file, setFile] = useState<File | null>(null);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const changeFileHandler = useCallback((payload: File | null) => {
+    if (payload) {
+      setFile(payload);
+    }
+  }, []);
+
   const form = useForm<Form>({
     validate: zodResolver(schema),
     initialValues: {
@@ -46,11 +58,30 @@ const RegisterForm = () => {
       </Title>
       <Space h={50} />
       <Paper shadow="md" withBorder p={30} radius="md">
-        <form onSubmit={form.onSubmit((values) => console.log(values, file))}>
+        <form
+          onSubmit={form.onSubmit((values) => {
+            dispatch(
+              updateUserProfile({
+                nickname: values.nickname,
+                description: values.description,
+                avatar: imageURL,
+              })
+            );
+            navigate('/');
+          })}
+        >
           <Stack spacing="lg">
             <Group>
-              <Avatar src={avatar} size={150} className="mx-auto" />
-              <FileButton onChange={setFile} accept="image/png,image/jpeg">
+              <ImagePreview
+                file={file}
+                imageURL={imageURL}
+                setImageURL={setImageURL}
+                size={150}
+              />
+              <FileButton
+                onChange={changeFileHandler}
+                accept="image/png,image/jpeg"
+              >
                 {(props) => (
                   <Button
                     variant="outline"

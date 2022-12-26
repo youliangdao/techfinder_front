@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Button,
   FileButton,
@@ -11,8 +10,13 @@ import {
   Title,
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
+import { showNotification } from '@mantine/notifications';
+import { IconCheck } from '@tabler/icons';
+import ImagePreview from 'auth/components/ImagePreview';
 import { useMediaQuery } from 'lib/mantine/useMediaQuery';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { selectUser, updateUserProfile } from 'store/ducks/userSlice';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { z } from 'zod';
 
 import { User } from '../types';
@@ -46,19 +50,69 @@ const ProfileForm = ({
     },
   });
   const [file, setFile] = useState<File | null>(null);
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser);
+  const [imageURL, setImageURL] = useState(user.avatar);
+
+  const changeFileHandler = useCallback((payload: File | null) => {
+    if (payload) {
+      setFile(payload);
+    }
+  }, []);
+
+  useEffect(() => {
+    setImageURL(user.avatar);
+    return () => {
+      setImageURL('');
+    };
+  }, [user]);
+
   return (
     <Box sx={{ maxWidth: 500 }} mx="auto">
       <Title className="max-sm:text-xl sm:text-3xl">プロフィール</Title>
       <Space h={40} />
-      <form onSubmit={form.onSubmit((values) => console.log(values, file))}>
+      <form
+        onSubmit={form.onSubmit((values) => {
+          showNotification({
+            message: '更新しました！',
+            icon: <IconCheck />,
+            styles: (theme) => ({
+              root: {
+                backgroundColor: theme.colors.dark,
+              },
+              description: { color: theme.white },
+            }),
+          });
+          dispatch(
+            updateUserProfile({
+              nickname: values.nickname,
+              description: values.description,
+              avatar: imageURL,
+            })
+          );
+        })}
+      >
         <Stack spacing="lg">
           <Group position="left">
             {largerThanSm ? (
-              <Avatar src="/src/assets/avatar.png" size={120} />
+              <ImagePreview
+                file={file}
+                imageURL={imageURL}
+                setImageURL={setImageURL}
+                size={120}
+              />
             ) : (
-              <Avatar src="/src/assets/avatar.png" size="xl" />
+              <ImagePreview
+                file={file}
+                imageURL={imageURL}
+                setImageURL={setImageURL}
+                size={84}
+              />
             )}
-            <FileButton onChange={setFile} accept="image/png,image/jpeg">
+            <FileButton
+              onChange={changeFileHandler}
+              accept="image/png,image/jpeg"
+            >
               {(props) => (
                 <Button variant="outline" {...props}>
                   画像をアップロード
