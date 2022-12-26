@@ -1,4 +1,6 @@
 import React from 'react';
+import { selectUser } from 'store/ducks/userSlice';
+import { useAppSelector } from 'store/hooks';
 
 import avatar from '/src/assets/avatar.png';
 
@@ -13,9 +15,16 @@ const profile = {
 };
 
 const Profile = () => {
+  const user = useAppSelector(selectUser);
   return (
     <>
-      <ProfileForm {...profile} />
+      <ProfileForm
+        nickname={user.nickname}
+        twitterUsername=""
+        githubUsername=""
+        description={user.description}
+        avatar={user.avatar}
+      />
     </>
   );
 };

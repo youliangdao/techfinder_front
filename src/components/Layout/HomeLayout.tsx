@@ -72,7 +72,8 @@ type MainLayoutProps = {
 
 const HomeLayout: FC<MainLayoutProps> = ({ children }) => {
   const user = useAppSelector(selectUser);
-  const isLogin = !(user.uid === '');
+  const isLogin = user.uid ? true : false;
+
   return (
     <>
       <HeaderAction {...{ links, isLogin }} />

@@ -9,6 +9,8 @@ import {
 import FooterLinks from 'components/Footer';
 import HeaderAction from 'components/HeaderAction';
 import React from 'react';
+import { selectUser } from 'store/ducks/userSlice';
+import { useAppSelector } from 'store/hooks';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -83,11 +85,10 @@ const data = [
   },
 ];
 
-const isLogin = true;
-
 const NotFound = () => {
   const { classes } = useStyles();
-
+  const user = useAppSelector(selectUser);
+  const isLogin = user.uid ? true : false;
   return (
     <>
       <HeaderAction {...{ links, isLogin }} />
