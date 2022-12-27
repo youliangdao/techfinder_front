@@ -1,8 +1,12 @@
 import { Group, Modal, Stack, Text } from '@mantine/core';
 import { MantineLogo } from '@mantine/ds';
 import { GoogleButton } from 'components/Button/SocialButtons';
-import { auth, provider } from 'firebase';
-import { getAdditionalUserInfo, signInWithPopup } from 'firebase/auth';
+import {
+  getAdditionalUserInfo,
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from 'firebase/auth';
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,6 +18,8 @@ type LoginFormProps = {
 const LoginForm: FC<LoginFormProps> = ({ opened, setOpened }) => {
   const navigate = useNavigate();
   const signInWithGoogle = () => {
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((result) => {
         setOpened(false);

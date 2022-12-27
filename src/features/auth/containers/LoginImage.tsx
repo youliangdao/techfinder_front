@@ -1,7 +1,11 @@
 import { createStyles, Group, Paper, Stack, Text, Title } from '@mantine/core';
 import { GoogleButton } from 'Button/SocialButtons';
-import { auth, provider } from 'firebase';
-import { getAdditionalUserInfo, signInWithPopup } from 'firebase/auth';
+import {
+  getAdditionalUserInfo,
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from 'firebase/auth';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -51,6 +55,8 @@ const LoginImage = () => {
   const fromPathName: string = location.state.from.pathname;
 
   const signInWithGoogle = () => {
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((result) => {
         if (getAdditionalUserInfo(result)?.isNewUser) {
