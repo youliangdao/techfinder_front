@@ -4,6 +4,7 @@ import { User } from '../../features/users/types';
 import { RootState } from '../store';
 
 type UserState = {
+  authChecked: boolean;
   avatar: string;
   description: string;
   nickname: string;
@@ -13,16 +14,30 @@ type UserState = {
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
-    user: { avatar: '', nickname: '', uid: '', description: '' },
+    user: {
+      avatar: '',
+      nickname: '',
+      uid: '',
+      description: '',
+      authChecked: false,
+    },
   },
   reducers: {
     login: (state, action: PayloadAction<UserState>) => {
       state.user = action.payload;
     },
     logout: (state) => {
-      state.user = { avatar: '', nickname: '', uid: '', description: '' };
+      state.user = {
+        avatar: '',
+        nickname: '',
+        uid: '',
+        description: '',
+        authChecked: true,
+      };
     },
-
+    checkAuth: (state, action: PayloadAction<boolean>) => {
+      state.user.authChecked = action.payload;
+    },
     updateUserProfile: (
       state,
       action: PayloadAction<Pick<User, 'nickname' | 'description' | 'avatar'>>
@@ -34,7 +49,8 @@ export const userSlice = createSlice({
   },
 });
 
-export const { login, logout, updateUserProfile } = userSlice.actions;
+export const { login, logout, checkAuth, updateUserProfile } =
+  userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.user;
 

@@ -16,6 +16,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Create dot env file
+        run: |
+          touch .env
+          echo "VITE_APP_FIREBASE_APIKEY=${{ secrets.VITE_APP_FIREBASE_APIKEY }}" >> .env
+          echo "VITE_APP_FIREBASE_DOMAIN=${{ secrets.VITE_APP_FIREBASE_DOMAIN }}" >> .env
+          echo "VITE_APP_FIREBASE_PROJECTID=${{ secrets.VITE_APP_FIREBASE_PROJECTID }}" >> .env
+          echo "VITE_APP_FIREBASE_STORAGE_BUCKET=${{ secrets.VITE_APP_FIREBASE_STORAGE_BUCKET }}" >> .env
+          echo "VITE_APP_FIREBASE_SENDER_ID=${{ secrets.VITE_APP_FIREBASE_SENDER_ID }}" >> .env
+          echo "VITE_APP_FIREBASE_APP_ID=${{ secrets.VITE_APP_FIREBASE_APP_ID }}" >> .env
+          echo "VITE_APP_MEASUREMENT_ID=${{ secrets.VITE_APP_MEASUREMENT_ID }}" >> .env
+          echo "VITE_APP_API_ENDPOINT=${{ secrets.VITE_APP_API_ENDPOINT }}" >> .env
+          echo "VITE_APP_USE_MOCK_SERVER=${{ secrets.VITE_APP_USE_MOCK_SERVER }}" >> .env
+
       - name: Setup Node
         uses: actions/setup-node@v2
         with:

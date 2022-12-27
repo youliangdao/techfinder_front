@@ -5,8 +5,6 @@ import React from 'react';
 import AppRoutes from 'routes';
 
 const App = () => {
-  console.log(import.meta.env.VITE_APP_FIREBASE_PROJECTID);
-
   return (
     <AppProvider>
       <AppRoutes />
