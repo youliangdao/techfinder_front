@@ -1,5 +1,7 @@
 import './lib/tailwind.css';
 
+import { initializeApp } from 'firebase/app';
+import firebaseConfig from 'firebase-config';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -14,6 +16,8 @@ const prepare = async () => {
     worker.start();
   }
 };
+
+const app = initializeApp(firebaseConfig);
 
 // prepareが完了した後にアプリケーションをマウントする
 prepare().then(() => {
