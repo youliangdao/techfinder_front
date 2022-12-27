@@ -22,9 +22,11 @@ import {
   IconHeart,
   IconLogout,
 } from '@tabler/icons';
-import { useFirebaseAuth } from 'lib/auth/auth';
+import { getAuth } from 'firebase/auth';
 import React, { forwardRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { selectUser } from 'store/ducks/userSlice';
+import { useAppSelector } from 'store/hooks';
 
 import LoginForm from '../features/auth/components/LoginForm';
 import { useMediaQuery } from '../lib/mantine/useMediaQuery';
@@ -102,10 +104,10 @@ type HeaderActionProps = {
 const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
   const largerThanSm = useMediaQuery('sm');
   const navigate = useNavigate();
+  const currentUser = useAppSelector(selectUser);
 
   const [sidebarOpened, { toggle }] = useDisclosure(false);
   const [loginOpened, setLoginOpened] = useState(false);
-  const { currentUser, signOut } = useFirebaseAuth();
   const { classes } = useStyles();
 
   const items = links.map((link) => {
@@ -246,7 +248,10 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                   <Menu.Item
                     color="red"
                     icon={<IconLogout size={14} />}
-                    onClick={signOut}
+                    onClick={() => {
+                      const auth = getAuth();
+                      auth.signOut();
+                    }}
                   >
                     ログアウト
                   </Menu.Item>

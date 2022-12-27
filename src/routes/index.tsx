@@ -4,7 +4,7 @@ import RegisterForm from 'auth/components/RegisterForm';
 import LoginImage from 'auth/containers/LoginImage';
 import FilterableCategoryLists from 'categories/containers/FilterableCategoryLists';
 import MainLayout from 'Layout/MainLayout';
-import { useFirebaseAuth } from 'lib/auth/auth';
+import { useFirebaseAuth } from 'lib/auth/firebaseAuth';
 import React, { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from 'routes/Home';
@@ -16,7 +16,7 @@ import NotFound from './NotFound';
 
 const AppRoutes = () => {
   const { hash, pathname } = useLocation();
-  useFirebaseAuth();
+  const { currentUser } = useFirebaseAuth();
 
   useEffect(() => {
     if (!hash) {

@@ -1,37 +1,44 @@
 import { Center, Loader } from '@mantine/core';
 import UserLayout from 'Layout/UserLayout';
-import { useFirebaseAuth } from 'lib/auth/auth';
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import { selectUser } from 'store/ducks/userSlice';
+import { useAppSelector } from 'store/hooks';
 
 type RouteAuthGuardProps = {
   component: React.ReactNode;
   redirect: string;
 };
 
-export const RouteAuthGuard = (props: RouteAuthGuardProps) => {
+export const RouteAuthGuard = ({
+  component,
+  redirect,
+}: RouteAuthGuardProps) => {
   const location = useLocation();
-  const { currentUser, authChecked } = useFirebaseAuth();
-
-  if (authChecked) {
+  const currentUser = useAppSelector(selectUser);
+  if (currentUser.authChecked) {
     if (currentUser.uid) {
-      return <>{props.component}</>;
+      return <>{component}</>;
     } else {
       return (
-        <Navigate
-          to={props.redirect}
-          state={{ from: location }}
-          replace={false}
-        />
+        <Navigate to={redirect} state={{ from: location }} replace={false} />
       );
     }
   } else {
-    return (
-      <UserLayout>
+    if (location.pathname === 'profile') {
+      return (
+        <UserLayout>
+          <Center>
+            <Loader />
+          </Center>
+        </UserLayout>
+      );
+    } else {
+      return (
         <Center>
           <Loader />
         </Center>
-      </UserLayout>
-    );
+      );
+    }
   }
 };
