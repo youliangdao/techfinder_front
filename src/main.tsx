@@ -16,7 +16,7 @@ const prepare = async () => {
     worker.start();
   }
 };
-
+console.log(firebaseConfig);
 const app = initializeApp(firebaseConfig);
 
 // prepareが完了した後にアプリケーションをマウントする
