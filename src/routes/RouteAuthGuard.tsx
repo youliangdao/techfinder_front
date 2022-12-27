@@ -25,7 +25,7 @@ export const RouteAuthGuard = ({
       );
     }
   } else {
-    if (location.pathname === 'profile') {
+    if (location.pathname === '/profile') {
       return (
         <UserLayout>
           <Center>
