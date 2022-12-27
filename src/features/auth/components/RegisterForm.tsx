@@ -20,8 +20,14 @@ import { z } from 'zod';
 import ImagePreview from './ImagePreview';
 
 const schema = z.object({
-  nickname: z.string().trim().min(1, { message: 'ニックネームは必須です' }),
-  description: z.string(),
+  nickname: z
+    .string()
+    .trim()
+    .min(1, { message: 'ニックネームは必須です' })
+    .max(40, { message: 'ニックネームは40字以内にしてください' }),
+  description: z
+    .string()
+    .max(160, { message: '自己紹介は160字以内にしてください' }),
 });
 
 type Form = z.infer<typeof schema>;
@@ -44,6 +50,7 @@ const RegisterForm = () => {
       nickname: '',
       description: '',
     },
+    validateInputOnBlur: true,
   });
   return (
     <Container size={420} my={40}>
