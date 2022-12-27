@@ -22,11 +22,16 @@ import { z } from 'zod';
 import { User } from '../types';
 
 const schema = z.object({
-  nickname: z.string().trim().min(1, { message: 'ニックネームは必須です' }),
+  nickname: z
+    .string()
+    .trim()
+    .min(1, { message: 'ニックネームは必須です' })
+    .max(40, { message: 'ニックネームは40字以内にしてください' }),
   twitterUsername: z.string(),
   githubUsername: z.string(),
-  description: z.string(),
-  avatar: z.string(),
+  description: z
+    .string()
+    .max(160, { message: '自己紹介は160字以内にしてください' }),
 });
 
 type Form = z.infer<typeof schema>;
@@ -46,8 +51,8 @@ const ProfileForm = ({
       twitterUsername,
       githubUsername,
       description,
-      avatar,
     },
+    validateInputOnBlur: true,
   });
   const [file, setFile] = useState<File | null>(null);
   const dispatch = useAppDispatch();

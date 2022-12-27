@@ -30,7 +30,7 @@ const UserInfoAction = ({ avatar, name, description }: UserInfoActionProps) => {
               <Title order={3} weight={500}>
                 {name}
               </Title>
-              <Text size="sm" className="w-2/3 break-words">
+              <Text size="sm" className="break-all">
                 {description}
               </Text>
               <div className="flex w-1/12 justify-start">
