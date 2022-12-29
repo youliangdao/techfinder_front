@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { endpoint } from 'config';
 import {
   getAdditionalUserInfo,
   getAuth,
@@ -13,13 +15,32 @@ export const signInWithGoogle = (
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
   signInWithPopup(auth, provider)
-    .then((result) => {
+    .then(async (result) => {
       setOpened(false);
-      if (getAdditionalUserInfo(result)?.isNewUser) {
-        navigate('/onboarding');
-        return;
+      const user = result.user;
+      const token = await user.getIdToken();
+
+      const config = {
+        headers: { authorization: `Bearer ${token}` },
+      };
+
+      try {
+        axios.post(`${endpoint}/authentication`, null, config);
+        if (getAdditionalUserInfo(result)?.isNewUser) {
+          navigate('/onboarding');
+          return;
+        }
+        navigate('/');
+      } catch (err) {
+        let message;
+
+        if (axios.isAxiosError(err) && err.response) {
+          console.error(err.response.data.message);
+        } else {
+          message = String(err);
+          console.error(message);
+        }
       }
-      navigate('/');
     })
     .catch((error) => {
       setOpened(false);
