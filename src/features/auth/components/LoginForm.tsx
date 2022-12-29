@@ -4,6 +4,7 @@ import { GoogleButton } from 'components/Button/SocialButtons';
 import { signInWithGoogle } from 'lib/auth/auth';
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from 'store/hooks';
 
 type LoginFormProps = {
   opened: boolean;
@@ -12,6 +13,7 @@ type LoginFormProps = {
 
 const LoginForm: FC<LoginFormProps> = ({ opened, setOpened }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   return (
     <Modal
       opened={opened}
@@ -32,7 +34,7 @@ const LoginForm: FC<LoginFormProps> = ({ opened, setOpened }) => {
         </Text>
         <Group grow mb="md" mt="md">
           <GoogleButton
-            onClick={() => signInWithGoogle(setOpened, navigate)}
+            onClick={() => signInWithGoogle(setOpened, navigate, dispatch)}
             title="Login with Google"
           />
           {/* <TwitterButton radius="xl">Twitter</TwitterButton> */}
