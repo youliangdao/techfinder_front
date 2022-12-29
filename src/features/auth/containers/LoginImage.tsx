@@ -1,4 +1,5 @@
 import { createStyles, Group, Paper, Stack, Text, Title } from '@mantine/core';
+import { postIdToken } from 'auth/api/postIdToken';
 import { GoogleButton } from 'Button/SocialButtons';
 import {
   getAdditionalUserInfo,
@@ -8,6 +9,8 @@ import {
 } from 'firebase/auth';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { logout } from 'store/ducks/userSlice';
+import { useAppDispatch } from 'store/hooks';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -51,29 +54,38 @@ type CustomLocation = {
 const LoginImage = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const location: CustomLocation = useLocation() as CustomLocation;
   const fromPathName: string = location.state.from.pathname;
 
-  const signInWithGoogle = () => {
+  const signInWithGoogle = async () => {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        if (getAdditionalUserInfo(result)?.isNewUser) {
-          navigate('/onboarding');
-          return;
-        }
-        navigate(fromPathName, { replace: true });
-      })
-      .catch((error) => {
-        if (error.code === 'auth/account-exists-with-different-credential') {
-          alert(
-            `${error.customData.email}は他のSNSと連携した既存ユーザーが登録済みです。既存ユーザーでログイン後、こちらのSNSとの連携が可能です`
-          );
-          return;
-        }
-        alert(`ログイン/新規登録に失敗しました。\n${error.message}`);
-      });
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const token = await user.getIdToken();
+      const config = {
+        headers: { authorization: `Bearer ${token}` },
+      };
+      await postIdToken(config);
+
+      if (getAdditionalUserInfo(result)?.isNewUser) {
+        navigate('/onboarding');
+        return;
+      }
+      navigate(fromPathName, { replace: true });
+    } catch (error: any) {
+      dispatch(logout());
+
+      if (error.code === 'auth/account-exists-with-different-credential') {
+        alert(
+          `${error.customData.email}は他のSNSと連携した既存ユーザーが登録済みです。既存ユーザーでログイン後、こちらのSNSとの連携が可能です`
+        );
+        return;
+      }
+      alert(`ログイン/新規登録に失敗しました。\n${error.message}`);
+    }
   };
   return (
     <div className={classes.wrapper}>
