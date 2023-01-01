@@ -13,13 +13,15 @@ import { useForm, zodResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import { IconCheck } from '@tabler/icons';
 import ImagePreview from 'auth/components/ImagePreview';
+import { getAuth } from 'firebase/auth';
+import { postImage } from 'lib/auth/api/postImage';
 import { useMediaQuery } from 'lib/mantine/useMediaQuery';
 import React, { useCallback, useEffect, useState } from 'react';
 import { selectUser, updateUserProfile } from 'store/ducks/userSlice';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { getAvatar } from 'users/api/getAvatar';
+import { patchProfile } from 'users/api/patchProfile';
 import { z } from 'zod';
-
-import { User } from '../types';
 
 const schema = z.object({
   nickname: z
@@ -36,27 +38,24 @@ const schema = z.object({
 
 type Form = z.infer<typeof schema>;
 
-const ProfileForm = ({
-  nickname,
-  twitterUsername,
-  githubUsername,
-  description,
-  avatar,
-}: User) => {
+const ProfileForm = () => {
+  const user = useAppSelector(selectUser);
+  console.log(user);
+
   const largerThanSm = useMediaQuery('sm');
   const form = useForm<Form>({
     validate: zodResolver(schema),
     initialValues: {
-      nickname,
-      twitterUsername,
-      githubUsername,
-      description,
+      nickname: user.nickname,
+      twitterUsername: '',
+      githubUsername: '',
+      description: user.description,
     },
     validateInputOnBlur: true,
   });
   const [file, setFile] = useState<File | null>(null);
+  const [isLoading, setIsLoding] = useState(false);
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectUser);
   const [imageURL, setImageURL] = useState(user.avatar);
 
   const changeFileHandler = useCallback((payload: File | null) => {
@@ -77,24 +76,101 @@ const ProfileForm = ({
       <Title className="max-sm:text-xl sm:text-3xl">プロフィール</Title>
       <Space h={40} />
       <form
-        onSubmit={form.onSubmit((values) => {
-          showNotification({
-            message: '更新しました！',
-            icon: <IconCheck />,
-            styles: (theme) => ({
-              root: {
-                backgroundColor: theme.colors.dark,
+        onSubmit={form.onSubmit(async (values) => {
+          setIsLoding(true);
+          try {
+            const auth = getAuth();
+            const idToken = await auth.currentUser?.getIdToken(true);
+            const config = {
+              headers: {
+                authorization: `Bearer ${idToken}`,
               },
-              description: { color: theme.white },
-            }),
-          });
-          dispatch(
-            updateUserProfile({
-              nickname: values.nickname,
-              description: values.description,
-              avatar: imageURL,
-            })
-          );
+            };
+            if (file) {
+              const key = await postImage(file, config);
+              await patchProfile(
+                values.nickname,
+                values.description,
+                key,
+                config
+              );
+              const avatarImageUrl = await getAvatar(config);
+
+              showNotification({
+                message: '更新しました！',
+                icon: <IconCheck />,
+                styles: (theme) => ({
+                  root: {
+                    backgroundColor: theme.colors.dark,
+                  },
+                  description: { color: theme.white },
+                }),
+              });
+
+              dispatch(
+                updateUserProfile({
+                  nickname: values.nickname,
+                  description: values.description,
+                  avatar: avatarImageUrl,
+                  avatarKey: key || '',
+                })
+              );
+              setIsLoding(false);
+            } else {
+              const key = user.avatarKey;
+              await patchProfile(
+                values.nickname,
+                values.description,
+                key,
+                config
+              );
+              if (user.avatarKey) {
+                const avatarImageUrl = await getAvatar(config);
+                showNotification({
+                  message: '更新しました！',
+                  icon: <IconCheck />,
+                  styles: (theme) => ({
+                    root: {
+                      backgroundColor: theme.colors.dark,
+                    },
+                    description: { color: theme.white },
+                  }),
+                });
+                dispatch(
+                  updateUserProfile({
+                    nickname: values.nickname,
+                    description: values.description,
+                    avatar: avatarImageUrl,
+                    avatarKey: key || '',
+                  })
+                );
+              } else {
+                const avatarImageUrl = user.avatar;
+                showNotification({
+                  message: '更新しました！',
+                  icon: <IconCheck />,
+                  styles: (theme) => ({
+                    root: {
+                      backgroundColor: theme.colors.dark,
+                    },
+                    description: { color: theme.white },
+                  }),
+                });
+                dispatch(
+                  updateUserProfile({
+                    nickname: values.nickname,
+                    description: values.description,
+                    avatar: avatarImageUrl,
+                    avatarKey: key || '',
+                  })
+                );
+              }
+              setIsLoding(false);
+            }
+          } catch (error: any) {
+            setIsLoding(false);
+            alert(`プロフィール編集に失敗しました。\n${error.message}`);
+          }
         })}
       >
         <Stack spacing="lg">
@@ -148,7 +224,7 @@ const ProfileForm = ({
           />
         </Stack>
         <Group position="center" className="mt-10">
-          <Button type="submit" radius="xl" size="md">
+          <Button type="submit" radius="xl" size="md" loading={isLoading}>
             更新する
           </Button>
         </Group>
