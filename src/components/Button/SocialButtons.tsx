@@ -6,9 +6,10 @@ import { ReactComponent as GoogleIcon } from '/src/assets/google.svg';
 
 type GoogleButtonProps = {
   title: string;
+  loading: boolean;
   onClick: () => void;
 };
-export function GoogleButton({ onClick, title }: GoogleButtonProps) {
+export function GoogleButton({ onClick, title, loading }: GoogleButtonProps) {
   return (
     <Button
       leftIcon={
@@ -19,6 +20,7 @@ export function GoogleButton({ onClick, title }: GoogleButtonProps) {
       variant="default"
       color="gray"
       onClick={onClick}
+      loading={loading}
     >
       {title}
     </Button>
