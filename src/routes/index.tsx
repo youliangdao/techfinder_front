@@ -50,7 +50,10 @@ const AppRoutes = () => {
           }
         />
       </Route>
-      <Route path="onboarding" element={<RegisterForm />} />
+      <Route
+        path="onboarding"
+        element={<RouteAuthGuard component={<RegisterForm />} redirect="/" />}
+      />
       <Route path="login" element={<LoginImage />} />
       <Route path="/" element={<Home />} />
       {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
