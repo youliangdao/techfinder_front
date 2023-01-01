@@ -11,10 +11,14 @@ import {
   Title,
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
+import { getAuth } from 'firebase/auth';
+import { postImage } from 'lib/auth/api/postImage';
 import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { selectUser, updateUserProfile } from 'store/ducks/userSlice';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { getAvatar } from 'users/api/getAvatar';
+import { patchProfile } from 'users/api/patchProfile';
 import { z } from 'zod';
 
 import ImagePreview from './ImagePreview';
@@ -65,16 +69,76 @@ const RegisterForm = () => {
       </Title>
       <Space h={50} />
       <Paper shadow="md" withBorder p={30} radius="md">
+        <Title order={3} align="center">
+          プロフィールを入力してください
+        </Title>
+        <Space h={30} />
+
         <form
-          onSubmit={form.onSubmit((values) => {
-            dispatch(
-              updateUserProfile({
-                nickname: values.nickname,
-                description: values.description,
-                avatar: imageURL,
-              })
-            );
-            navigate('/');
+          onSubmit={form.onSubmit(async (values) => {
+            try {
+              const auth = getAuth();
+              const idToken = await auth.currentUser?.getIdToken(true);
+              const config = {
+                headers: {
+                  authorization: `Bearer ${idToken}`,
+                },
+              };
+              if (file) {
+                const key = await postImage(file, config);
+                const user = await patchProfile(
+                  values.nickname,
+                  values.description,
+                  key,
+                  config
+                );
+
+                const avatarImageUrl = await getAvatar(config);
+
+                dispatch(
+                  updateUserProfile({
+                    nickname: values.nickname,
+                    description: values.description,
+                    avatar: avatarImageUrl,
+                    avatarKey: key || '',
+                  })
+                );
+                navigate('/');
+              } else {
+                const key = user.avatarKey;
+                await patchProfile(
+                  values.nickname,
+                  values.description,
+                  key,
+                  config
+                );
+                if (user.avatarKey) {
+                  const avatarImageUrl = await getAvatar(config);
+                  dispatch(
+                    updateUserProfile({
+                      nickname: values.nickname,
+                      description: values.description,
+                      avatar: avatarImageUrl,
+                      avatarKey: key || '',
+                    })
+                  );
+                  navigate('/');
+                } else {
+                  const avatarImageUrl = user.avatar;
+                  dispatch(
+                    updateUserProfile({
+                      nickname: values.nickname,
+                      description: values.description,
+                      avatar: avatarImageUrl,
+                      avatarKey: key || '',
+                    })
+                  );
+                  navigate('/');
+                }
+              }
+            } catch (error: any) {
+              alert(`ユーザー登録に失敗しました。\n${error.message}`);
+            }
           })}
         >
           <Stack spacing="lg">

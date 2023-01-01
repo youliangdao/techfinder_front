@@ -16,9 +16,28 @@ export const RouteAuthGuard = ({
 }: RouteAuthGuardProps) => {
   const location = useLocation();
   const currentUser = useAppSelector(selectUser);
+
   if (currentUser.authChecked) {
-    if (currentUser.uid) {
-      return <>{component}</>;
+    if (currentUser.apiChecked) {
+      if (currentUser.uid) {
+        return <>{component}</>;
+      } else {
+        if (location.pathname === '/profile') {
+          return (
+            <UserLayout>
+              <Center>
+                <Loader />
+              </Center>
+            </UserLayout>
+          );
+        } else {
+          return (
+            <Center>
+              <Loader />
+            </Center>
+          );
+        }
+      }
     } else {
       return (
         <Navigate to={redirect} state={{ from: location }} replace={false} />

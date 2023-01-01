@@ -6,11 +6,8 @@ export const postIdToken = async (config: {
     authorization: string;
   };
 }) => {
-  await axios.post(`${endpoint}/authentication`, null, config);
-  axios.interceptors.response.use(
-    (response) => response,
-    (error) => {
-      throw new Error('login error');
-    }
-  );
+  const res = await axios.post(`${endpoint}/authentication`, null, config);
+  if (res.status !== 200) {
+    throw new Error('login error');
+  }
 };

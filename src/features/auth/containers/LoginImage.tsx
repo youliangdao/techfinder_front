@@ -1,16 +1,17 @@
 import { createStyles, Group, Paper, Stack, Text, Title } from '@mantine/core';
-import { postIdToken } from 'auth/api/postIdToken';
+import axios from 'axios';
 import { GoogleButton } from 'Button/SocialButtons';
+import { endpoint } from 'config';
 import {
   getAdditionalUserInfo,
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
 } from 'firebase/auth';
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { logout } from 'store/ducks/userSlice';
-import { useAppDispatch } from 'store/hooks';
+import { logout, selectUser } from 'store/ducks/userSlice';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -55,10 +56,15 @@ const LoginImage = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const currentUser = useAppSelector(selectUser);
+  const [isLoading, setIsLoading] = useState(false);
   const location: CustomLocation = useLocation() as CustomLocation;
   const fromPathName: string = location.state.from.pathname;
 
+  console.log(currentUser);
+
   const signInWithGoogle = async () => {
+    setIsLoading(true);
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
     try {
@@ -68,12 +74,17 @@ const LoginImage = () => {
       const config = {
         headers: { authorization: `Bearer ${token}` },
       };
-      await postIdToken(config);
+      const res = await axios.post(`${endpoint}/authentication`, null, config);
+
+      if (res.status !== 200) {
+        throw new Error('login error');
+      }
 
       if (getAdditionalUserInfo(result)?.isNewUser) {
         navigate('/onboarding');
         return;
       }
+
       navigate(fromPathName, { replace: true });
     } catch (error: any) {
       dispatch(logout());
@@ -102,6 +113,7 @@ const LoginImage = () => {
             <GoogleButton
               onClick={signInWithGoogle}
               title="Login with Google"
+              loading={isLoading}
             />
             {/* <TwitterButton radius="xl">Twitter</TwitterButton> */}
           </Group>

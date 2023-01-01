@@ -1,5 +1,6 @@
 import { AnyAction, Dispatch, ThunkDispatch } from '@reduxjs/toolkit';
-import { postIdToken } from 'auth/api/postIdToken';
+import axios from 'axios';
+import { endpoint } from 'config';
 import {
   getAdditionalUserInfo,
   getAuth,
@@ -43,7 +44,11 @@ export const signInWithGoogle = async (
     const config = {
       headers: { authorization: `Bearer ${token}` },
     };
-    await postIdToken(config);
+    const res = await axios.post(`${endpoint}/authentication`, null, config);
+
+    if (res.status !== 200) {
+      throw new Error('login error');
+    }
 
     if (getAdditionalUserInfo(result)?.isNewUser) {
       navigate('/onboarding');
