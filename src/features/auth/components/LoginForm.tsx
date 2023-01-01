@@ -36,6 +36,7 @@ const LoginForm: FC<LoginFormProps> = ({ opened, setOpened }) => {
           <GoogleButton
             onClick={() => signInWithGoogle(setOpened, navigate, dispatch)}
             title="Login with Google"
+            loading={false}
           />
           {/* <TwitterButton radius="xl">Twitter</TwitterButton> */}
         </Group>
