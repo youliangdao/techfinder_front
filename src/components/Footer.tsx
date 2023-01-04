@@ -1,6 +1,7 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { Anchor, Container, Group, Image, Text } from '@mantine/core';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import logo from '/src/assets/logo3.png';
 
@@ -111,6 +112,7 @@ interface FooterLinksProps {
 }
 
 const FooterLinks = ({ data }: FooterLinksProps) => {
+  const navigate = useNavigate();
   const links = data.map((link) => (
     <Anchor<'a'>
       color="dimmed"
@@ -128,7 +130,12 @@ const FooterLinks = ({ data }: FooterLinksProps) => {
   return (
     <footer className="bg-m_gray-0 border-t-m_gray-2 mt-0 border-0 border-t border-solid py-12">
       <Container className="flex items-center justify-between max-sm:flex-col">
-        <Image src={logo} width={200} fit="contain" />
+        <Image
+          src={logo}
+          width={200}
+          fit="contain"
+          onClick={() => navigate('/')}
+        />
         <Group className="max-sm:mt-4">{links}</Group>
       </Container>
       <Container className="border-t-m_gray-2 mt-6 flex items-center justify-between border-0 border-t border-solid py-6 px-4 max-sm:flex-col">
