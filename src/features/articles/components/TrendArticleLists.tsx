@@ -1,5 +1,13 @@
 /* eslint-disable tailwindcss/no-custom-classname */
-import { Anchor, Card, Group, SimpleGrid, Text } from '@mantine/core';
+import {
+  Anchor,
+  Card,
+  Center,
+  Group,
+  Loader,
+  SimpleGrid,
+  Text,
+} from '@mantine/core';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,8 +18,10 @@ import ArticleItem from './ArticleItem';
 
 const TrendArticleLists = ({
   articleItems,
-}: Pick<ArticleListsProps, 'articleItems'>) => {
+  isLoading,
+}: Pick<ArticleListsProps, 'articleItems'> & { isLoading: boolean }) => {
   const largerThanSm = useMediaQuery('sm');
+
   const navigate = useNavigate();
 
   return (
@@ -26,20 +36,24 @@ const TrendArticleLists = ({
           すべての記事を見る
         </Anchor>
       </Group>
-      {largerThanSm ? (
+      {isLoading ? (
+        <Center className="py-20">
+          <Loader />
+        </Center>
+      ) : largerThanSm ? (
         <SimpleGrid mt="md" className="grid-cols-2">
           {articleItems.map((articleItem, index) => {
             if (index < 2) {
-              return <ArticleDetail key={articleItem.date} {...articleItem} />;
+              return <ArticleDetail key={articleItem.id} {...articleItem} />;
             } else {
-              return <ArticleItem key={articleItem.date} {...articleItem} />;
+              return <ArticleItem key={articleItem.id} {...articleItem} />;
             }
           })}
         </SimpleGrid>
       ) : (
         <SimpleGrid my="md" className="mx-auto grid-cols-1 place-items-center">
           {articleItems.map((articleItem) => (
-            <ArticleItem key={articleItem.date} {...articleItem} />
+            <ArticleItem key={articleItem.id} {...articleItem} />
           ))}
         </SimpleGrid>
       )}

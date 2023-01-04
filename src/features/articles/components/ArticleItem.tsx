@@ -6,14 +6,13 @@ import {
   createStyles,
   Group,
   Image,
+  Stack,
   Text,
 } from '@mantine/core';
 import { IconBookmark, IconHeart, IconShare } from '@tabler/icons';
 import { Article } from 'articles/types';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { ReactComponent as Zenn } from '/src/assets/zenn.svg';
 
 const useStyles = createStyles((theme) => ({
   category: {
@@ -38,20 +37,80 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const ArticleItem = ({ image, categories, title, date, media }: Article) => {
+const ArticleItem = ({
+  image,
+  categories,
+  title,
+  date,
+  media,
+  link,
+}: Article) => {
   const { classes, theme } = useStyles();
   const navigate = useNavigate();
+
   return (
     <Card
       radius="md"
-      className="bg-m_gray-0 hover:bg-m_gray-1 max-w-md py-0 hover:cursor-pointer"
-      // component="a"
-      // href="https://zenn.dev/"
-      // target="_blank"
+      className="bg-m_gray-0 hover:bg-m_gray-1 w-full py-0 hover:cursor-pointer"
     >
-      <Group noWrap spacing={0} className="">
-        <div className="">
-          <div className="xs:space-x-2 mb-2 flex space-x-1">
+      <Stack className="py-2">
+        <div className="flex justify-between">
+          <div className="xs:space-x-2 flex space-x-1">
+            {categories.map((category) => (
+              <Anchor
+                key={category.title}
+                color="dimmed"
+                weight={700}
+                className={classes.category}
+                onClick={() => navigate(`/categories/${category.path}`)}
+              >
+                #{category.title}
+              </Anchor>
+            ))}
+          </div>
+        </div>
+        <div className="flex justify-between space-x-3">
+          <Anchor
+            className="text-sm font-bold text-black"
+            href={link}
+            target="_blank"
+          >
+            {title}
+          </Anchor>
+          <a href={link} target="_blank" rel="noreferrer">
+            <Image src={image} width={150} fit="contain" />
+          </a>
+        </div>
+        <Group className="justify-between">
+          <Group noWrap spacing="xs">
+            <Group spacing="xs" noWrap>
+              <Image src={media.image} fit="contain" width={15} />
+              <Text size="xs">{media.name}</Text>
+              <Text size="xs" color="dimmed">
+                {date}
+              </Text>
+            </Group>
+          </Group>
+          <Group className="justify-between px-2">
+            <ActionIcon>
+              <IconHeart size={18} color={theme.colors.red[6]} stroke={1.5} />
+            </ActionIcon>
+            <ActionIcon>
+              <IconBookmark
+                size={18}
+                color={theme.colors.yellow[6]}
+                stroke={1.5}
+              />
+            </ActionIcon>
+            <ActionIcon>
+              <IconShare size={16} color={theme.colors.blue[6]} stroke={1.5} />
+            </ActionIcon>
+          </Group>
+        </Group>
+      </Stack>
+      {/* <Group noWrap spacing={3} className="py-3">
+        <Stack justify="space-between" spacing="xs">
+          <div className="xs:space-x-2 flex space-x-1">
             {categories.map((category) => (
               <Anchor
                 key={category.title}
@@ -65,9 +124,7 @@ const ArticleItem = ({ image, categories, title, date, media }: Article) => {
             ))}
           </div>
           <Anchor
-            className="max-xs:text-sm font-bold leading-tight text-black"
-            mt="xs"
-            mb="md"
+            className="text-sm font-bold leading-tight text-black"
             href="https://zenn.dev/"
             target="_blank"
           >
@@ -80,14 +137,14 @@ const ArticleItem = ({ image, categories, title, date, media }: Article) => {
               </ActionIcon>
               <Text size="xs">{media}</Text>
             </Group>
-            <Text size="xs" color="dimmed">
-              {date}
-            </Text>
           </Group>
-        </div>
-        <div className="pt-4">
+        </Stack>
+        <Stack justify="space-between" spacing="xs">
+          <Text size="xs" color="dimmed">
+            {date}
+          </Text>
           <a href="https://zenn.dev/" target="_blank" rel="noreferrer">
-            <Image src={image} height={100} width={140} />
+            <Image src={image} width={150} fit="contain" />
           </a>
           <Group className="justify-between px-2">
             <ActionIcon>
@@ -104,8 +161,8 @@ const ArticleItem = ({ image, categories, title, date, media }: Article) => {
               <IconShare size={16} color={theme.colors.blue[6]} stroke={1.5} />
             </ActionIcon>
           </Group>
-        </div>
-      </Group>
+        </Stack>
+      </Group> */}
     </Card>
   );
 };
