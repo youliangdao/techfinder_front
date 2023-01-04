@@ -1,7 +1,8 @@
 /* eslint-disable tailwindcss/no-custom-classname */
-import { Anchor, Container, Group, Text } from '@mantine/core';
-import { MantineLogo } from '@mantine/ds';
+import { Anchor, Container, Group, Image, Text } from '@mantine/core';
 import React from 'react';
+
+import logo from '/src/assets/logo3.png';
 
 // const useStyles = createStyles((theme) => ({
 //   footer: {
@@ -127,7 +128,7 @@ const FooterLinks = ({ data }: FooterLinksProps) => {
   return (
     <footer className="bg-m_gray-0 border-t-m_gray-2 mt-0 border-0 border-t border-solid py-12">
       <Container className="flex items-center justify-between max-sm:flex-col">
-        <MantineLogo size={28} />
+        <Image src={logo} width={200} fit="contain" />
         <Group className="max-sm:mt-4">{links}</Group>
       </Container>
       <Container className="border-t-m_gray-2 mt-6 flex items-center justify-between border-0 border-t border-solid py-6 px-4 max-sm:flex-col">
