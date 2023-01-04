@@ -14,8 +14,6 @@ import { Article } from 'articles/types';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ReactComponent as Zenn } from '/src/assets/zenn.svg';
-
 const useStyles = createStyles((theme) => ({
   card: {
     backgroundColor:
@@ -33,9 +31,17 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const ArticleDetail = ({ image, categories, title, date, media }: Article) => {
+const ArticleDetail = ({
+  image,
+  categories,
+  title,
+  date,
+  media,
+  link,
+}: Article) => {
   const navigate = useNavigate();
   const { theme } = useStyles();
+
   return (
     <Card
       radius="md"
@@ -46,11 +52,11 @@ const ArticleDetail = ({ image, categories, title, date, media }: Article) => {
     >
       <Stack>
         <div className="pt-4">
-          <a href="https://zenn.dev/" target="_blank" rel="noreferrer">
+          <a href={link} target="_blank" rel="noreferrer">
             <Image src={image} />
           </a>
         </div>
-        <div className="">
+        <div className="pb-2">
           <div className="mb-2 flex space-x-2">
             {categories.map((category) => (
               <Anchor
@@ -68,17 +74,18 @@ const ArticleDetail = ({ image, categories, title, date, media }: Article) => {
             className="font-bold leading-tight text-black"
             mt="xs"
             mb="md"
-            href="https://zenn.dev/"
+            href={link}
             target="_blank"
           >
             {title}
           </Anchor>
           <Group noWrap spacing="xs" className="mt-2 justify-between">
             <Group spacing="xs" noWrap>
-              <ActionIcon size="md">
+              {/* <ActionIcon size="md">
                 <Zenn style={{ color: '#3EA8FF' }} />
-              </ActionIcon>
-              <Text size="xs">{media}</Text>
+              </ActionIcon> */}
+              <Image src={media.image} fit="contain" width={20} />
+              <Text size="xs">{media.name}</Text>
               <Text size="xs" color="dimmed">
                 {date}
               </Text>

@@ -4,7 +4,7 @@ import { DefaultBodyType, PathParams, rest } from 'msw';
 
 const initialData = [
   {
-    id: 1,
+    id: '1',
     image:
       'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
     categories: [
@@ -23,10 +23,14 @@ const initialData = [
     ],
     title: 'ChatGPTはどのように学習を行なっているのか',
     date: '1日前',
-    media: 'zenn.dev',
+    media: {
+      name: 'zenn.dev',
+      image: '',
+    },
+    link: '',
   },
   {
-    id: 2,
+    id: '2',
     image:
       'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
     categories: [
@@ -45,10 +49,14 @@ const initialData = [
     ],
     title: 'ChatGPTはどのように学習を行なっているのか',
     date: '1日前',
-    media: 'zenn.dev',
+    media: {
+      name: 'zenn.dev',
+      image: '',
+    },
+    link: '',
   },
   {
-    id: 3,
+    id: '3',
     image:
       'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
     categories: [
@@ -67,10 +75,14 @@ const initialData = [
     ],
     title: 'ChatGPTはどのように学習を行なっているのか',
     date: '1日前',
-    media: 'zenn.dev',
+    media: {
+      name: 'zenn.dev',
+      image: '',
+    },
+    link: '',
   },
   {
-    id: 4,
+    id: '4',
     image:
       'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
     categories: [
@@ -85,10 +97,14 @@ const initialData = [
     ],
     title: 'ChatGPTはどのように学習を行なっているのか',
     date: '1日前',
-    media: 'zenn.dev',
+    media: {
+      name: 'zenn.dev',
+      image: '',
+    },
+    link: '',
   },
   {
-    id: 5,
+    id: '5',
     image:
       'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
     categories: [
@@ -103,10 +119,14 @@ const initialData = [
     ],
     title: 'ChatGPTはどのように学習を行なっているのか',
     date: '1日前',
-    media: 'zenn.dev',
+    media: {
+      name: 'zenn.dev',
+      image: '',
+    },
+    link: '',
   },
   {
-    id: 6,
+    id: '6',
     image:
       'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
     categories: [
@@ -121,10 +141,14 @@ const initialData = [
     ],
     title: 'ChatGPTはどのように学習を行なっているのか',
     date: '1日前',
-    media: 'zenn.dev',
+    media: {
+      name: 'zenn.dev',
+      image: '',
+    },
+    link: '',
   },
   {
-    id: 7,
+    id: '7',
     image:
       'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
     categories: [
@@ -139,10 +163,14 @@ const initialData = [
     ],
     title: 'ChatGPTはどのように学習を行なっているのか',
     date: '1日前',
-    media: 'zenn.dev',
+    media: {
+      name: 'zenn.dev',
+      image: '',
+    },
+    link: '',
   },
   {
-    id: 8,
+    id: '8',
     image:
       'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
     categories: [
@@ -157,7 +185,11 @@ const initialData = [
     ],
     title: 'ChatGPTはどのように学習を行なっているのか',
     date: '1日前',
-    media: 'zenn.dev',
+    media: {
+      name: 'zenn.dev',
+      image: '',
+    },
+    link: '',
   },
 ];
 
@@ -165,7 +197,7 @@ const articleApi = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getArticles(params: any) {
     if (params === 'popular') {
-      return initialData.filter((value) => value.id % 2 === 0);
+      return initialData.filter((value) => parseInt(value.id) % 2 === 0);
     }
     return initialData;
   },
@@ -174,7 +206,7 @@ const articleApi = {
       const categoryArticles = initialData.filter((value) =>
         value.categories.some((category) => category.path === categoryName)
       );
-      return categoryArticles.filter((value) => value.id % 2 === 0);
+      return categoryArticles.filter((value) => parseInt(value.id) % 2 === 0);
     }
     return initialData.filter((value) =>
       value.categories.some((category) => category.path === categoryName)
@@ -197,7 +229,7 @@ export const articleHandlers = [
     }
   ),
   rest.get<DefaultBodyType, PathParams, Article[]>(
-    `${endpoint}/categories/:categoryName`,
+    `${endpoint}/articles/:categoryName`,
     (req, res, ctx) => {
       const { categoryName } = req.params;
       const articleGenre = req.url.searchParams.get('tab');

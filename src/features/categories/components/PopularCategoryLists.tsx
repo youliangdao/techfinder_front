@@ -26,19 +26,19 @@ const PopularCategoryLists = ({ categories }: Categories) => {
         <>
           <SimpleGrid mt="md" className="grid-cols-3">
             {categories.slice(0, 3).map((item) => (
-              <CategoryItem key={item.title} {...item} />
+              <CategoryItem key={item.id} {...item} />
             ))}
           </SimpleGrid>
           <SimpleGrid my="md" className="grid-cols-6">
             {categories.slice(3).map((item) => (
-              <CategoryItem key={item.title} {...item} />
+              <CategoryItem key={item.id} {...item} />
             ))}
           </SimpleGrid>
         </>
       ) : (
         <SimpleGrid my="md" className="xs:grid-cols-4 grid-cols-3">
           {categories.map((item) => (
-            <CategoryItem key={item.title} {...item} />
+            <CategoryItem key={item.id} {...item} />
           ))}
         </SimpleGrid>
       )}

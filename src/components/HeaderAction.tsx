@@ -8,12 +8,12 @@ import {
   createStyles,
   Group,
   Header,
+  Image,
   Menu,
   Paper,
   Transition,
   UnstyledButton,
 } from '@mantine/core';
-import { MantineLogo } from '@mantine/ds';
 import { useDisclosure } from '@mantine/hooks';
 import {
   IconBookmark,
@@ -27,6 +27,8 @@ import React, { forwardRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { selectUser } from 'store/ducks/userSlice';
 import { useAppSelector } from 'store/hooks';
+
+import logo from '/src/assets/logo3.png';
 
 import LoginForm from '../features/auth/components/LoginForm';
 import { useMediaQuery } from '../lib/mantine/useMediaQuery';
@@ -161,8 +163,17 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
         className="flex h-14 items-center justify-between sm:px-10"
         fluid
       >
-        <Group>
-          {!largerThanSm && (
+        {largerThanSm ? (
+          <Group>
+            <Image
+              src={logo}
+              height={60}
+              fit="contain"
+              onClick={() => navigate('/')}
+            />
+          </Group>
+        ) : (
+          <Group>
             <>
               <Burger opened={sidebarOpened} onClick={toggle} size="sm" />
               <Transition
@@ -201,9 +212,14 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                 )}
               </Transition>
             </>
-          )}
-          <MantineLogo className="h-8" onClick={() => navigate('/')} />
-        </Group>
+            <Image
+              src={logo}
+              width={120}
+              fit="contain"
+              onClick={() => navigate('/')}
+            />
+          </Group>
+        )}
         <Group className="mr-2 sm:mr-4">
           {largerThanSm && <Group spacing={5}>{items}</Group>}
           {!isLogin ? (

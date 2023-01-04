@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import categoryReducer from './ducks/categorySlice';
 import userReducer from './ducks/userSlice';
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    category: categoryReducer,
   },
 });
 
