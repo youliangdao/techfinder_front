@@ -8,7 +8,7 @@ import {
   Tabs,
 } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useMediaQuery } from '../../../lib/mantine/useMediaQuery';
 import { ArticleListsProps } from '../types';
@@ -30,6 +30,8 @@ const ArticleLists = ({
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const articleGenre = searchParams.get('tab') || 'all';
+  const location = useLocation();
+
   const [currentArticleItems, setCurrentArticleItems] = useState(
     articleItems.slice(0, ITEMS_PAGE_SIZE)
   );
@@ -57,7 +59,7 @@ const ArticleLists = ({
             value="all"
             onClick={() => {
               setPage(1);
-              navigate('/articles');
+              navigate(location.pathname);
             }}
           >
             {leftGenre}
@@ -66,7 +68,7 @@ const ArticleLists = ({
             value="popular"
             onClick={() => {
               setPage(1);
-              navigate('/articles?tab=popular');
+              navigate(`${location.pathname}?tab=popular`);
             }}
           >
             {rightGenre}
