@@ -7,6 +7,10 @@ export type Category = {
   path: string;
 };
 
+export type Categories = {
+  categories: Category[];
+};
+
 export type CategoryListsType = {
   categories: Category[];
   filterInput: string;

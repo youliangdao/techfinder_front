@@ -2,6 +2,8 @@ import { Card, createStyles, Image, Text } from '@mantine/core';
 import { Category } from 'categories/types';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { setCategory } from 'store/ducks/categorySlice';
+import { useAppDispatch } from 'store/hooks';
 
 const useStyles = createStyles((theme) => ({
   item: {
@@ -23,14 +25,23 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const CategoryItem = ({ title, image, path }: Category) => {
+const CategoryItem = ({ id, title, image, path }: Category) => {
   const { classes } = useStyles();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   return (
     <Card
       className={classes.item}
       onClick={() => {
+        dispatch(
+          setCategory({
+            id,
+            title,
+            image,
+            path,
+          })
+        );
         navigate(`/categories/${path}`);
       }}
     >
