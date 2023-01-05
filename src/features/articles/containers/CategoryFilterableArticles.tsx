@@ -9,8 +9,8 @@ import { formatDistanceToNow } from 'date-fns';
 import { ja } from 'date-fns/locale';
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
-import { selectCategory, setCategory } from 'store/ducks/categorySlice';
-import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { setCategory } from 'store/ducks/categorySlice';
+import { useAppDispatch } from 'store/hooks';
 
 import CategoryArticlesHeader from '../components/CategoryArticlesHeader';
 
@@ -24,12 +24,12 @@ const CategoryFilterableArticles = () => {
   const [page, setPage] = useState(1);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const category = useAppSelector(selectCategory);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setFilterInput('');
+    // setFilterInput('');
     setIsLoading(true);
+    setPage(1);
     const fetchArticles = async () => {
       const res = await axios.get<ResponseArticleType>(
         `${endpoint}/${categoryName}/articles?tab=${articleGenre}`
@@ -96,7 +96,7 @@ const CategoryFilterableArticles = () => {
 
   return (
     <>
-      <CategoryArticlesHeader {...category} />
+      <CategoryArticlesHeader />
       <Space h="lg" />
       <form
         onSubmit={(e) => {
