@@ -15,7 +15,7 @@ import { ArticleListsProps } from '../types';
 import ArticleDetail from './ArticleDetail';
 import ArticleItem from './ArticleItem';
 
-const ITEMS_PAGE_SIZE = 4;
+const ITEMS_PAGE_SIZE = 10;
 
 const ArticleLists = ({
   leftGenre,
@@ -30,7 +30,7 @@ const ArticleLists = ({
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const articleGenre = searchParams.get('tab') || 'all';
-  const location = useLocation();
+  const { hash, pathname } = useLocation();
 
   const [currentArticleItems, setCurrentArticleItems] = useState(
     articleItems.slice(0, ITEMS_PAGE_SIZE)
@@ -43,13 +43,16 @@ const ArticleLists = ({
   );
 
   useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0);
+    }
     const filterArticleItems = articleItems.filter((articleItem) =>
       new RegExp(filterInput, 'i').test(articleItem.title)
     );
     const from = (page - 1) * ITEMS_PAGE_SIZE;
     const to = from + ITEMS_PAGE_SIZE;
     setCurrentArticleItems(filterArticleItems.slice(from, to));
-  }, [page, articleItems, filterInput]);
+  }, [page, articleItems, filterInput, hash, pathname]);
 
   return (
     <Card radius="md">
@@ -59,7 +62,7 @@ const ArticleLists = ({
             value="all"
             onClick={() => {
               setPage(1);
-              navigate(location.pathname);
+              navigate(pathname);
             }}
           >
             {leftGenre}
@@ -68,7 +71,7 @@ const ArticleLists = ({
             value="popular"
             onClick={() => {
               setPage(1);
-              navigate(`${location.pathname}?tab=popular`);
+              navigate(`${pathname}?tab=popular`);
             }}
           >
             {rightGenre}
