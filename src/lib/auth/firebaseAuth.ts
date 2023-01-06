@@ -1,6 +1,10 @@
+import { getBookmarks } from 'articles/api/getBookmarks';
+import { getLikes } from 'articles/api/getLikes';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { setBookmarkIds } from 'store/ducks/bookmarkSlice';
+import { setLikeIds } from 'store/ducks/likeSlice';
 import {
   checkApi,
   checkAuth,
@@ -22,13 +26,28 @@ export const useFirebaseAuth = () => {
       dispatch(checkAuth(true));
       dispatch(checkApi(true));
       const idToken = await authUser.getIdToken();
+
       const config = {
         headers: {
           authorization: `Bearer ${idToken}`,
         },
       };
       try {
+        const bookmarks = await getBookmarks(config);
+        const likes = await getLikes(config);
+        const bookmarkIds = bookmarks.data.map((bookmark) => bookmark.id);
+        const likeIds = likes.data.map((like) => like.id);
         const user = await showProfile(config);
+        dispatch(
+          setBookmarkIds({
+            bookmarkIds,
+          })
+        );
+        dispatch(
+          setLikeIds({
+            likeIds,
+          })
+        );
         if (user.data.attributes.avatar_key) {
           const avatarImageUrl = await getAvatar(config);
           dispatch(

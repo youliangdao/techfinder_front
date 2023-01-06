@@ -40,7 +40,6 @@ type Form = z.infer<typeof schema>;
 
 const ProfileForm = () => {
   const user = useAppSelector(selectUser);
-  console.log(user);
 
   const largerThanSm = useMediaQuery('sm');
   const form = useForm<Form>({

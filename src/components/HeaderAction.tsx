@@ -21,12 +21,17 @@ import {
   IconChevronRight,
   IconHeart,
   IconLogout,
+  IconSettings,
 } from '@tabler/icons';
 import { getAuth } from 'firebase/auth';
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import {
+  openLoginModal,
+  selectIsLoginOpened,
+} from 'store/ducks/loginModalSlice';
 import { selectUser } from 'store/ducks/userSlice';
-import { useAppSelector } from 'store/hooks';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
 
 import logo from '/src/assets/logo3.png';
 
@@ -86,7 +91,6 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
       >
         <Group>
           <Avatar src={image} radius="xl" />
-
           <IconChevronRight size={16} />
         </Group>
       </UnstyledButton>
@@ -107,9 +111,10 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
   const largerThanSm = useMediaQuery('sm');
   const navigate = useNavigate();
   const currentUser = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+  const isLoginOpened = useAppSelector(selectIsLoginOpened);
 
   const [sidebarOpened, { toggle }] = useDisclosure(false);
-  const [loginOpened, setLoginOpened] = useState(false);
   const { classes } = useStyles();
 
   const items = links.map((link) => {
@@ -226,7 +231,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
             <Button
               radius="xl"
               className="h-8"
-              onClick={() => setLoginOpened(true)}
+              onClick={() => dispatch(openLoginModal())}
             >
               Login
             </Button>
@@ -239,11 +244,12 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
 
                 <Menu.Dropdown>
                   <Menu.Item
-                    className="pb-0 font-bold"
+                    className="px-0"
                     onClick={() => navigate('/dashboards')}
                   >
-                    テストテスト
-                    <Menu.Label className="px-0 pt-0">@youliangdao</Menu.Label>
+                    <Menu.Label className="text-sm">
+                      {currentUser.nickname}
+                    </Menu.Label>
                   </Menu.Item>
                   <Menu.Divider />
                   <Menu.Item
@@ -258,11 +264,15 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                   >
                     ブックマークした記事
                   </Menu.Item>
-
                   <Menu.Divider />
-
+                  <Menu.Label>Settings</Menu.Label>
                   <Menu.Item
-                    color="red"
+                    icon={<IconSettings size={14} stroke={1.5} />}
+                    onClick={() => navigate('/profile')}
+                  >
+                    プロフィール編集
+                  </Menu.Item>
+                  <Menu.Item
                     icon={<IconLogout size={14} />}
                     onClick={() => {
                       const auth = getAuth();
@@ -275,7 +285,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
               </Menu>
             </Group>
           )}
-          <LoginForm opened={loginOpened} setOpened={setLoginOpened} />
+          <LoginForm />
         </Group>
       </Container>
     </Header>

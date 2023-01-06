@@ -1,47 +1,55 @@
-import { Group, Modal, Stack, Text } from '@mantine/core';
-import { MantineLogo } from '@mantine/ds';
+import { Anchor, Group, Image, Modal, Stack, Text } from '@mantine/core';
 import { GoogleButton } from 'components/Button/SocialButtons';
 import { signInWithGoogle } from 'lib/auth/auth';
-import React, { FC } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from 'store/hooks';
+import {
+  closeLoginModal,
+  selectIsLoginOpened,
+} from 'store/ducks/loginModalSlice';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
 
-type LoginFormProps = {
-  opened: boolean;
-  setOpened: (flag: boolean) => void;
-};
+import logo from '/src/assets/logo3.png';
 
-const LoginForm: FC<LoginFormProps> = ({ opened, setOpened }) => {
+const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const isLoginOpened = useAppSelector(selectIsLoginOpened);
+
   return (
     <Modal
-      opened={opened}
-      onClose={() => setOpened(false)}
+      opened={isLoginOpened}
+      onClose={() => dispatch(closeLoginModal())}
       centered
       overlayOpacity={0.55}
-      size="md"
+      size="sm"
       classNames={{
         modal: 'pt-2',
         header: 'mb-0',
       }}
     >
-      <Stack className="space-y-4">
-        <MantineLogo className="h-8" />
-
+      <Stack>
+        {/* <MantineLogo className="h-8" /> */}
+        <Image src={logo} fit="contain" height={80} />
         <Text size="sm" color="dimmed">
-          StackDeveloperは個人開発者のための技術記事データベースです。お気に入りの記事を見つけたら、いいねやブックマークをしましょう
+          DevZoneは個人開発者のための技術記事データベースです。
+          目的の記事を見つけたらいいねやストックをしましょう
         </Text>
-        <Group grow mb="md" mt="md">
+        <Group grow mb="md">
           <GoogleButton
-            onClick={() => signInWithGoogle(setOpened, navigate, dispatch)}
+            onClick={() => {
+              dispatch(closeLoginModal());
+              signInWithGoogle(navigate, dispatch);
+            }}
             title="Login with Google"
             loading={false}
           />
           {/* <TwitterButton radius="xl">Twitter</TwitterButton> */}
         </Group>
         <Text size="sm" color="dimmed" className="px-5 text-center">
-          利用規約、プライバシーポリシーに同意したうえでログインしてください。
+          <Anchor href="/">利用規約</Anchor>、
+          <Anchor href="/">プライバシーポリシー</Anchor>
+          に同意したうえでログインしてください。
         </Text>
       </Stack>
     </Modal>
