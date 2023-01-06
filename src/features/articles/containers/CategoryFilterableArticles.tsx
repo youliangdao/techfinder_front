@@ -27,7 +27,7 @@ const CategoryFilterableArticles = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // setFilterInput('');
+    setFilterInput('');
     setIsLoading(true);
     setPage(1);
     const fetchArticles = async () => {

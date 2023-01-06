@@ -1,7 +1,6 @@
+import { fetchTrendArticles } from 'articles/api/fetchTrendArticles';
 import TrendArticleLists from 'articles/components/TrendArticleLists';
-import { Article, ResponseArticleType } from 'articles/types';
-import axios from 'axios';
-import { endpoint } from 'config';
+import { Article } from 'articles/types';
 import { formatDistanceToNow } from 'date-fns';
 import { ja } from 'date-fns/locale';
 import React, { useEffect, useState } from 'react';
@@ -9,15 +8,14 @@ import React, { useEffect, useState } from 'react';
 const TrendArticles = () => {
   const [articleItems, setArticleItems] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [bookmarkIds, setBookmarkIds] = useState<string[] | undefined>(
+    undefined
+  );
+
   useEffect(() => {
     setIsLoading(true);
-    const fetchArticles = async () => {
-      const res = await axios.get<ResponseArticleType>(
-        `${endpoint}/articles/rising`
-      );
-      return res.data;
-    };
-    fetchArticles()
+
+    fetchTrendArticles()
       .then((data) => {
         setIsLoading(false);
         const newArticles = data.data.map((article) => ({

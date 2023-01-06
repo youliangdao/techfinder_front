@@ -45,7 +45,7 @@ export type ArticleType = {
 } & BaseEntity;
 
 export type ResponseArticleType = {
-  data: ArticleType[];
+  data: ArticleType[] | [];
   included: CategoryType[];
   meta: {
     media: {
