@@ -1,4 +1,4 @@
-import { Center, Container, Loader } from '@mantine/core';
+import { Container, Loader } from '@mantine/core';
 import UserLayout from 'Layout/UserLayout';
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
@@ -25,10 +25,16 @@ export const RouteAuthGuard = ({
         if (location.pathname === '/profile') {
           return (
             <UserLayout>
-              <Center>
+              <Container className="flex items-center justify-center py-60">
                 <Loader />
-              </Center>
+              </Container>
             </UserLayout>
+          );
+        } else if (location.pathname === '/dashboards') {
+          return (
+            <Container className="flex items-center justify-center py-60">
+              <Loader />
+            </Container>
           );
         } else {
           return (
@@ -47,10 +53,19 @@ export const RouteAuthGuard = ({
     if (location.pathname === '/profile') {
       return (
         <UserLayout>
-          <Center>
+          {/* <Center>
             <Loader />
-          </Center>
+          </Center> */}
+          <Container className="flex items-center justify-center py-60">
+            <Loader />
+          </Container>
         </UserLayout>
+      );
+    } else if (location.pathname === '/dashboards') {
+      return (
+        <Container className="flex items-center justify-center py-60">
+          <Loader />
+        </Container>
       );
     } else {
       return (
