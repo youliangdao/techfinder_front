@@ -10,9 +10,27 @@ import {
   Text,
 } from '@mantine/core';
 import { IconBookmark, IconHeart, IconShare } from '@tabler/icons';
+import { deleteBookmark } from 'articles/api/deleteBookmark';
+import { deleteLike } from 'articles/api/deleteLike';
+import { postBookmarks } from 'articles/api/postBookmarks';
+import { postLikes } from 'articles/api/postLikes';
 import { Article } from 'articles/types';
-import React from 'react';
+import { getAuth } from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  addBookmarkIds,
+  deleteBookmarkIds,
+  selectBookmarkIds,
+} from 'store/ducks/bookmarkSlice';
+import {
+  addLikeIds,
+  deleteLikeIds,
+  selectLikeIds,
+} from 'store/ducks/likeSlice';
+import { openLoginModal } from 'store/ducks/loginModalSlice';
+import { selectUser } from 'store/ducks/userSlice';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -38,9 +56,95 @@ const ArticleDetail = ({
   date,
   media,
   link,
+  id,
 }: Article) => {
   const navigate = useNavigate();
   const { theme } = useStyles();
+  const [isBookmark, setIsBookmark] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isBookmarkLoading, setIsBookmarkLoading] = useState(false);
+  const [isLikeLoading, setIsLikeLoading] = useState(false);
+  const curentUser = useAppSelector(selectUser);
+  const bookmarkIds = useAppSelector(selectBookmarkIds);
+  const likeIds = useAppSelector(selectLikeIds);
+  const dispatch = useAppDispatch();
+
+  const bookmark = async () => {
+    setIsBookmarkLoading(true);
+    if (isBookmark) {
+      try {
+        const auth = getAuth();
+        const idToken = await auth.currentUser?.getIdToken();
+
+        const config = {
+          headers: {
+            authorization: `Bearer ${idToken}`,
+          },
+        };
+        await deleteBookmark(config, id);
+        dispatch(deleteBookmarkIds(id));
+      } catch (error: any) {
+        alert(`ブックマーク解除に失敗しました。\n${error.message}`);
+      }
+    } else {
+      try {
+        const auth = getAuth();
+        const idToken = await auth.currentUser?.getIdToken();
+        const config = {
+          headers: {
+            authorization: `Bearer ${idToken}`,
+          },
+        };
+        await postBookmarks(config, id);
+        dispatch(addBookmarkIds(id));
+      } catch (error: any) {
+        alert(`ブックマークの保存に失敗しました。\n${error.message}`);
+      }
+    }
+    setIsBookmarkLoading(false);
+    setIsBookmark((prev) => !prev);
+  };
+
+  const like = async () => {
+    setIsLikeLoading(true);
+    if (isLiked) {
+      try {
+        const auth = getAuth();
+        const idToken = await auth.currentUser?.getIdToken();
+
+        const config = {
+          headers: {
+            authorization: `Bearer ${idToken}`,
+          },
+        };
+        await deleteLike(config, id);
+        dispatch(deleteLikeIds(id));
+      } catch (error: any) {
+        alert(`ブックマーク解除に失敗しました。\n${error.message}`);
+      }
+    } else {
+      try {
+        const auth = getAuth();
+        const idToken = await auth.currentUser?.getIdToken();
+        const config = {
+          headers: {
+            authorization: `Bearer ${idToken}`,
+          },
+        };
+        await postLikes(config, id);
+        dispatch(addLikeIds(id));
+      } catch (error: any) {
+        alert(`ブックマークの保存に失敗しました。\n${error.message}`);
+      }
+    }
+    setIsLikeLoading(false);
+    setIsLiked((prev) => !prev);
+  };
+
+  useEffect(() => {
+    bookmarkIds.includes(id) && setIsBookmark(true);
+    likeIds.includes(id) && setIsLiked(true);
+  }, [id, bookmarkIds, likeIds]);
 
   return (
     <Card
@@ -91,16 +195,50 @@ const ArticleDetail = ({
               </Text>
             </Group>
             <Group className="">
-              <ActionIcon>
-                <IconHeart size={18} color={theme.colors.red[6]} stroke={1.5} />
-              </ActionIcon>
-              <ActionIcon>
-                <IconBookmark
-                  size={18}
-                  color={theme.colors.yellow[6]}
-                  stroke={1.5}
-                />
-              </ActionIcon>
+              {curentUser.uid ? (
+                <ActionIcon onClick={like} loading={isLikeLoading}>
+                  {isLiked ? (
+                    <IconHeart
+                      size={18}
+                      color={theme.colors.red[6]}
+                      stroke={1.5}
+                      fill={theme.colors.red[6]}
+                    />
+                  ) : (
+                    <IconHeart size={18} stroke={1.5} />
+                  )}
+                </ActionIcon>
+              ) : (
+                <ActionIcon
+                  onClick={() => {
+                    dispatch(openLoginModal());
+                  }}
+                >
+                  <IconHeart size={18} stroke={1.5} />
+                </ActionIcon>
+              )}
+              {curentUser.uid ? (
+                <ActionIcon onClick={bookmark} loading={isBookmarkLoading}>
+                  {isBookmark ? (
+                    <IconBookmark
+                      size={18}
+                      color={theme.colors.yellow[6]}
+                      stroke={1.5}
+                      fill={theme.colors.yellow[6]}
+                    />
+                  ) : (
+                    <IconBookmark size={18} stroke={1.5} />
+                  )}
+                </ActionIcon>
+              ) : (
+                <ActionIcon
+                  onClick={() => {
+                    dispatch(openLoginModal());
+                  }}
+                >
+                  <IconBookmark size={18} stroke={1.5} />
+                </ActionIcon>
+              )}
               <ActionIcon>
                 <IconShare
                   size={16}

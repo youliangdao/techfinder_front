@@ -57,7 +57,7 @@ const HeroContents = () => {
             <Text className="max-sm:hidden sm:mt-4">
               「アイデアが思い浮かばない」「どんな技術で開発すればいいのかわからない」
               <br />
-              そんな個人開発者のよくある悩みをStackDeveloperは解決します。
+              そんな個人開発者のよくある悩みをDevZoneは解決します。
             </Text>
           </div>
         </div>

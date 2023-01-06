@@ -28,7 +28,6 @@ type signInWithGoogleDispatch = ThunkDispatch<
   Dispatch<AnyAction>;
 
 export const signInWithGoogle = async (
-  setOpened: (flag: boolean) => void,
   navigate: NavigateFunction,
   dispatch: signInWithGoogleDispatch
 ) => {
@@ -37,7 +36,6 @@ export const signInWithGoogle = async (
 
   try {
     const result = await signInWithPopup(auth, provider);
-    setOpened(false);
 
     const user = result.user;
     const token = await user.getIdToken();

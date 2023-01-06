@@ -1,203 +1,197 @@
-import ArticleLists from 'articles/components/ArticleLists';
-import React, { useState } from 'react';
-
-const articleItems = [
-  {
-    id: '1',
-    image:
-      'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    categories: [
-      {
-        title: 'Rails',
-        path: 'rails',
-      },
-      {
-        title: 'Vue',
-        path: 'vue',
-      },
-      {
-        title: 'React',
-        path: 'react',
-      },
-    ],
-    title: 'ChatGPTはどのように学習を行なっているのか',
-    date: '1日前',
-    media: {
-      name: 'zenn.dev',
-      image: '',
-    },
-    link: '',
-  },
-  {
-    id: '2',
-    image:
-      'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    categories: [
-      {
-        title: 'Rails',
-        path: 'rails',
-      },
-      {
-        title: 'Vue',
-        path: 'vue',
-      },
-      {
-        title: 'React',
-        path: 'react',
-      },
-    ],
-    title: 'ChatGPTはどのように学習を行なっているのか',
-    date: '1日前',
-    media: {
-      name: 'zenn.dev',
-      image: '',
-    },
-    link: '',
-  },
-  {
-    id: '3',
-    image:
-      'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    categories: [
-      {
-        title: 'Rails',
-        path: 'rails',
-      },
-      {
-        title: 'Vue',
-        path: 'vue',
-      },
-      {
-        title: 'React',
-        path: 'react',
-      },
-    ],
-    title: 'ChatGPTはどのように学習を行なっているのか',
-    date: '1日前',
-    media: {
-      name: 'zenn.dev',
-      image: '',
-    },
-    link: '',
-  },
-  {
-    id: '4',
-    image:
-      'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    categories: [
-      {
-        title: 'Vue',
-        path: 'vue',
-      },
-      {
-        title: 'React',
-        path: 'react',
-      },
-    ],
-    title: 'ChatGPTはどのように学習を行なっているのか',
-    date: '1日前',
-    media: {
-      name: 'zenn.dev',
-      image: '',
-    },
-    link: '',
-  },
-  {
-    id: '5',
-    image:
-      'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    categories: [
-      {
-        title: 'Rails',
-        path: 'rails',
-      },
-      {
-        title: 'React',
-        path: 'react',
-      },
-    ],
-    title: 'ChatGPTはどのように学習を行なっているのか',
-    date: '1日前',
-    media: {
-      name: 'zenn.dev',
-      image: '',
-    },
-    link: '',
-  },
-  {
-    id: '6',
-    image:
-      'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    categories: [
-      {
-        title: 'Rails',
-        path: 'rails',
-      },
-      {
-        title: 'Vue',
-        path: 'vue',
-      },
-    ],
-    title: 'ChatGPTはどのように学習を行なっているのか',
-    date: '1日前',
-    media: {
-      name: 'zenn.dev',
-      image: '',
-    },
-    link: '',
-  },
-  {
-    id: '7',
-    image:
-      'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    categories: [
-      {
-        title: 'Vue',
-        path: 'vue',
-      },
-      {
-        title: 'React',
-        path: 'react',
-      },
-    ],
-    title: 'ChatGPTはどのように学習を行なっているのか',
-    date: '1日前',
-    media: {
-      name: 'zenn.dev',
-      image: '',
-    },
-    link: '',
-  },
-  {
-    id: '8',
-    image:
-      'https://images.unsplash.com/photo-1602080858428-57174f9431cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    categories: [
-      {
-        title: 'Vue',
-        path: 'vue',
-      },
-      {
-        title: 'React',
-        path: 'react',
-      },
-    ],
-    title: 'ChatGPTはどのように学習を行なっているのか',
-    date: '1日前',
-    media: {
-      name: 'zenn.dev',
-      image: '',
-    },
-    link: '',
-  },
-];
+import { getBookmarks } from 'articles/api/getBookmarks';
+import { getBookmarksLikes } from 'articles/api/getBookmarksLikes';
+import { getLikes } from 'articles/api/getLikes';
+import { Article } from 'articles/types';
+import { formatDistanceToNow } from 'date-fns';
+import { ja } from 'date-fns/locale';
+import { getAuth } from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import UserArticleLists from 'users/components/UserArticleLists';
 
 const MyArticles = () => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [articleItems, setArticleItems] = useState<Article[]>([]);
+  const [searchParams] = useSearchParams();
+  const articleGenre = searchParams.get('tab') || '';
+
+  useEffect(() => {
+    const fetchBookmarks = async () => {
+      try {
+        const auth = getAuth();
+        const idToken = await auth.currentUser?.getIdToken(true);
+
+        const config = {
+          headers: {
+            authorization: `Bearer ${idToken}`,
+          },
+        };
+        const bookmarkData = await getBookmarks(config);
+        return bookmarkData;
+      } catch (error: any) {
+        throw new Error(`error \n ${error.message}`);
+      }
+    };
+    const fetchLikes = async () => {
+      try {
+        const auth = getAuth();
+        const idToken = await auth.currentUser?.getIdToken(true);
+
+        const config = {
+          headers: {
+            authorization: `Bearer ${idToken}`,
+          },
+        };
+        const likeData = await getLikes(config);
+        return likeData;
+      } catch (error: any) {
+        throw new Error(`error \n ${error.message}`);
+      }
+    };
+    const fetchBookmarksLikes = async () => {
+      try {
+        const auth = getAuth();
+        const idToken = await auth.currentUser?.getIdToken(true);
+
+        const config = {
+          headers: {
+            authorization: `Bearer ${idToken}`,
+          },
+        };
+        const likeData = await getBookmarksLikes(config);
+        return likeData;
+      } catch (error: any) {
+        throw new Error(`error \n ${error.message}`);
+      }
+    };
+
+    setIsLoading(true);
+
+    switch (articleGenre) {
+      case 'bookmarks':
+        fetchBookmarks()
+          .then((data) => {
+            setIsLoading(false);
+            const newArticles = data.data.map((article) => ({
+              id: article.id,
+              title: article.attributes.title,
+              date: formatDistanceToNow(new Date(article.attributes.date), {
+                addSuffix: true,
+                locale: ja,
+              }),
+              media: {
+                name: data.meta.media.name,
+                image: data.meta.media.image,
+              },
+              image: article.attributes.image,
+              link: article.attributes.link,
+              categories: article.relationships.categories.data.flatMap(
+                (category) => {
+                  return data.included
+                    .filter((includedData) => {
+                      return includedData.id === category.id;
+                    })
+                    .map((data) => ({
+                      title: data.attributes.name,
+                      path: data.attributes.path,
+                    }));
+                }
+              ),
+            }));
+
+            setArticleItems(newArticles);
+          })
+          .catch((error) => {
+            setIsLoading(false);
+            alert('記事情報の取得に失敗しました');
+          })
+          .finally(() => setIsLoading(false));
+        break;
+      case 'likes':
+        fetchLikes()
+          .then((data) => {
+            setIsLoading(false);
+            const newArticles = data.data.map((article) => ({
+              id: article.id,
+              title: article.attributes.title,
+              date: formatDistanceToNow(new Date(article.attributes.date), {
+                addSuffix: true,
+                locale: ja,
+              }),
+              media: {
+                name: data.meta.media.name,
+                image: data.meta.media.image,
+              },
+              image: article.attributes.image,
+              link: article.attributes.link,
+              categories: article.relationships.categories.data.flatMap(
+                (category) => {
+                  return data.included
+                    .filter((includedData) => {
+                      return includedData.id === category.id;
+                    })
+                    .map((data) => ({
+                      title: data.attributes.name,
+                      path: data.attributes.path,
+                    }));
+                }
+              ),
+            }));
+
+            setArticleItems(newArticles);
+          })
+          .catch((error) => {
+            setIsLoading(false);
+            alert('記事情報の取得に失敗しました');
+          })
+          .finally(() => setIsLoading(false));
+        break;
+      default:
+        fetchBookmarksLikes()
+          .then((data) => {
+            setIsLoading(false);
+            const newArticles = data.data.map((article) => ({
+              id: article.id,
+              title: article.attributes.title,
+              date: formatDistanceToNow(new Date(article.attributes.date), {
+                addSuffix: true,
+                locale: ja,
+              }),
+              media: {
+                name: data.meta.media.name,
+                image: data.meta.media.image,
+              },
+              image: article.attributes.image,
+              link: article.attributes.link,
+              categories: article.relationships.categories.data.flatMap(
+                (category) => {
+                  return data.included
+                    .filter((includedData) => {
+                      return includedData.id === category.id;
+                    })
+                    .map((data) => ({
+                      title: data.attributes.name,
+                      path: data.attributes.path,
+                    }));
+                }
+              ),
+            }));
+
+            setArticleItems(newArticles);
+          })
+          .catch((error) => {
+            setIsLoading(false);
+            alert('記事情報の取得に失敗しました');
+          })
+          .finally(() => setIsLoading(false));
+        break;
+    }
+  }, [articleGenre]);
+
   return (
     <>
-      <ArticleLists
+      <UserArticleLists
         leftGenre="いいねした記事"
         rightGenre="ブックマークした記事"
         articleItems={articleItems}
