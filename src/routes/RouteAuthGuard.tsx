@@ -1,4 +1,4 @@
-import { Center, Loader } from '@mantine/core';
+import { Center, Container, Loader } from '@mantine/core';
 import UserLayout from 'Layout/UserLayout';
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
@@ -32,9 +32,9 @@ export const RouteAuthGuard = ({
           );
         } else {
           return (
-            <Center>
+            <Container className="flex h-screen items-center justify-center">
               <Loader />
-            </Center>
+            </Container>
           );
         }
       }
@@ -54,9 +54,9 @@ export const RouteAuthGuard = ({
       );
     } else {
       return (
-        <Center>
+        <Container className="flex h-screen items-center justify-center">
           <Loader />
-        </Center>
+        </Container>
       );
     }
   }
