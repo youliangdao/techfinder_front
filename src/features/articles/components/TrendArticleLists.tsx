@@ -31,7 +31,7 @@ const TrendArticleLists = ({
         <Anchor
           size="sm"
           className="leading-none"
-          onClick={() => navigate('/articles')}
+          onClick={() => navigate('/articles/all')}
         >
           すべての記事を見る
         </Anchor>
@@ -60,7 +60,7 @@ const TrendArticleLists = ({
       <Card
         className="hover:bg-m_gray-0 mt-3 flex items-center justify-center border-x-0 py-2 font-semibold hover:cursor-pointer"
         withBorder
-        onClick={() => navigate('/articles')}
+        onClick={() => navigate('/articles/all')}
       >
         すべての記事を見る
       </Card>

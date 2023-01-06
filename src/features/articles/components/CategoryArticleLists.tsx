@@ -22,7 +22,7 @@ import ArticleItem from './ArticleItem';
 
 const ITEMS_PAGE_SIZE = 10;
 
-const ArticleLists = ({
+const CategoryArticleLists = ({
   leftGenre,
   rightGenre,
   articleItems,
@@ -63,7 +63,7 @@ const ArticleLists = ({
       <Tabs
         value={params.tab}
         onTabChange={(value) => {
-          navigate(`/articles/${value}`);
+          navigate(`/categories/${params.categoryName}/${value}`);
         }}
       >
         <Tabs.List className="flex justify-around">
@@ -121,4 +121,4 @@ const ArticleLists = ({
   );
 };
 
-export default ArticleLists;
+export default CategoryArticleLists;

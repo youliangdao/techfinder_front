@@ -42,7 +42,7 @@ const CategoryItem = ({ id, title, image, path }: Category) => {
             path,
           })
         );
-        navigate(`/categories/${path}`);
+        navigate(`/categories/${path}/all`);
       }}
     >
       <Image src={image} height={50} fit="contain" />

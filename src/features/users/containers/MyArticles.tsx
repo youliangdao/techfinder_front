@@ -6,15 +6,13 @@ import { formatDistanceToNow } from 'date-fns';
 import { ja } from 'date-fns/locale';
 import { getAuth } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import UserArticleLists from 'users/components/UserArticleLists';
 
 const MyArticles = () => {
-  const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [articleItems, setArticleItems] = useState<Article[]>([]);
-  const [searchParams] = useSearchParams();
-  const articleGenre = searchParams.get('tab') || '';
+  const params = useParams();
 
   useEffect(() => {
     const fetchBookmarks = async () => {
@@ -68,7 +66,7 @@ const MyArticles = () => {
 
     setIsLoading(true);
 
-    switch (articleGenre) {
+    switch (params.tab) {
       case 'bookmarks':
         fetchBookmarks()
           .then((data) => {
@@ -187,7 +185,7 @@ const MyArticles = () => {
           .finally(() => setIsLoading(false));
         break;
     }
-  }, [articleGenre]);
+  }, [params.tab]);
 
   return (
     <>
@@ -195,10 +193,7 @@ const MyArticles = () => {
         leftGenre="いいねした記事"
         rightGenre="ブックマークした記事"
         articleItems={articleItems}
-        filterInput=""
         isLoading={isLoading}
-        page={page}
-        setPage={setPage}
       />
     </>
   );

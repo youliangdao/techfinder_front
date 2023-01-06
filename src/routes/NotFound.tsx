@@ -9,6 +9,7 @@ import {
 import FooterLinks from 'components/Footer';
 import HeaderAction from 'components/HeaderAction';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { selectUser } from 'store/ducks/userSlice';
 import { useAppSelector } from 'store/hooks';
 
@@ -89,6 +90,7 @@ const NotFound = () => {
   const { classes } = useStyles();
   const user = useAppSelector(selectUser);
   const isLogin = user.uid ? true : false;
+  const navigate = useNavigate();
   return (
     <>
       <HeaderAction {...{ links, isLogin }} />
@@ -108,7 +110,7 @@ const NotFound = () => {
             address, or the page has been moved to another URL.
           </Text>
           <Group position="center">
-            <Button variant="subtle" size="md">
+            <Button variant="subtle" size="md" onClick={() => navigate('/')}>
               Take me back to home page
             </Button>
           </Group>

@@ -10,7 +10,12 @@ import {
 import ArticleItem from 'articles/components/ArticleItem';
 import { ArticleListsProps } from 'articles/types';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 
 import { useMediaQuery } from '../../../lib/mantine/useMediaQuery';
 
@@ -20,64 +25,43 @@ const UserArticleLists = ({
   leftGenre,
   rightGenre,
   articleItems,
-  filterInput,
   isLoading,
-  page,
-  setPage,
-}: ArticleListsProps) => {
+}: Omit<ArticleListsProps, 'filterInput'>) => {
   const largerThanSm = useMediaQuery('sm');
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const articleGenre = searchParams.get('tab') || 'all';
+  const articlePage = parseInt(searchParams.get('page') || '1');
+  const params = useParams();
+
   const { hash, pathname } = useLocation();
 
   const [currentArticleItems, setCurrentArticleItems] = useState(
     articleItems.slice(0, ITEMS_PAGE_SIZE)
   );
 
-  const pageCount = Math.ceil(
-    articleItems.filter((articleItem) =>
-      new RegExp(filterInput, 'i').test(articleItem.title)
-    ).length / ITEMS_PAGE_SIZE
-  );
+  const pageCount = Math.ceil(articleItems.length / ITEMS_PAGE_SIZE);
 
   useEffect(() => {
     if (!hash) {
       window.scrollTo(0, 0);
     }
-    const filterArticleItems = articleItems.filter((articleItem) =>
-      new RegExp(filterInput, 'i').test(articleItem.title)
-    );
-    const from = (page - 1) * ITEMS_PAGE_SIZE;
+    const from = (articlePage - 1) * ITEMS_PAGE_SIZE;
     const to = from + ITEMS_PAGE_SIZE;
-    setCurrentArticleItems(filterArticleItems.slice(from, to));
-  }, [page, articleItems, filterInput, hash, pathname]);
+    setCurrentArticleItems(articleItems.slice(from, to));
+  }, [articlePage, articleItems, hash, pathname]);
 
   return (
     <Card radius="md">
-      <Tabs value={articleGenre}>
+      <Tabs
+        value={params.tab}
+        onTabChange={(value) => {
+          navigate(`/dashboards/${value}`);
+        }}
+      >
         <Tabs.List className="flex justify-around">
-          <Tabs.Tab value="all" onClick={() => navigate('/dashboards')}>
-            すべての記事
-          </Tabs.Tab>
-          <Tabs.Tab
-            value="likes"
-            onClick={() => {
-              setPage(1);
-              navigate(`${pathname}?tab=likes`);
-            }}
-          >
-            {leftGenre}
-          </Tabs.Tab>
-          <Tabs.Tab
-            value="bookmarks"
-            onClick={() => {
-              setPage(1);
-              navigate(`${pathname}?tab=bookmarks`);
-            }}
-          >
-            {rightGenre}
-          </Tabs.Tab>
+          <Tabs.Tab value="all">すべての記事</Tabs.Tab>
+          <Tabs.Tab value="likes">{leftGenre}</Tabs.Tab>
+          <Tabs.Tab value="bookmarks">{rightGenre}</Tabs.Tab>
         </Tabs.List>
       </Tabs>
       {isLoading ? (
@@ -92,7 +76,13 @@ const UserArticleLists = ({
             ))}
           </SimpleGrid>
           <Card className="mt-10 flex items-center justify-center">
-            <Pagination total={pageCount} onChange={setPage} page={page} />
+            <Pagination
+              total={pageCount}
+              onChange={(nextPage) => {
+                navigate(`${pathname}?page=${nextPage}`);
+              }}
+              page={articlePage}
+            />
           </Card>
         </>
       ) : (
@@ -106,7 +96,13 @@ const UserArticleLists = ({
             ))}
           </SimpleGrid>
           <Card className="mt-10 flex items-center justify-center">
-            <Pagination total={pageCount} onChange={setPage} page={page} />
+            <Pagination
+              total={pageCount}
+              onChange={(nextPage) => {
+                navigate(`${pathname}?page=${nextPage}`);
+              }}
+              page={articlePage}
+            />
           </Card>
         </>
       )}

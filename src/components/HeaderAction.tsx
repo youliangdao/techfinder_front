@@ -245,7 +245,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                 <Menu.Dropdown>
                   <Menu.Item
                     className="px-0"
-                    onClick={() => navigate('/dashboards')}
+                    onClick={() => navigate('/dashboards/all')}
                   >
                     <Menu.Label className="text-sm">
                       {currentUser.nickname}
@@ -254,13 +254,13 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                   <Menu.Divider />
                   <Menu.Item
                     icon={<IconHeart size={14} stroke={1.5} />}
-                    onClick={() => navigate('/dashboards?tab=likes')}
+                    onClick={() => navigate('/dashboards/likes')}
                   >
                     いいねした記事
                   </Menu.Item>
                   <Menu.Item
                     icon={<IconBookmark size={14} stroke={1.5} />}
-                    onClick={() => navigate('/dashboards?tab=bookmarks')}
+                    onClick={() => navigate('/dashboards/bookmarks')}
                   >
                     ブックマークした記事
                   </Menu.Item>

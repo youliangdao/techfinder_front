@@ -9,7 +9,7 @@ import {
   Stack,
   Text,
 } from '@mantine/core';
-import { IconBookmark, IconHeart, IconShare } from '@tabler/icons';
+import { IconBookmark, IconHeart, IconMessageCircle2 } from '@tabler/icons';
 import { deleteBookmark } from 'articles/api/deleteBookmark';
 import { deleteLike } from 'articles/api/deleteLike';
 import { postBookmarks } from 'articles/api/postBookmarks';
@@ -166,7 +166,7 @@ const ArticleItem = ({
                 color="dimmed"
                 weight={700}
                 className={classes.category}
-                onClick={() => navigate(`/categories/${category.path}`)}
+                onClick={() => navigate(`/categories/${category.path}/all`)}
               >
                 #{category.title}
               </Anchor>
@@ -241,66 +241,11 @@ const ArticleItem = ({
               </ActionIcon>
             )}
             <ActionIcon>
-              <IconShare size={16} color={theme.colors.blue[6]} stroke={1.5} />
+              <IconMessageCircle2 size={16} stroke={1.5} />
             </ActionIcon>
           </Group>
         </Group>
       </Stack>
-      {/* <Group noWrap spacing={3} className="py-3">
-        <Stack justify="space-between" spacing="xs">
-          <div className="xs:space-x-2 flex space-x-1">
-            {categories.map((category) => (
-              <Anchor
-                key={category.title}
-                color="dimmed"
-                weight={700}
-                className={classes.category}
-                onClick={() => navigate(`/categories/${category.path}`)}
-              >
-                #{category.title}
-              </Anchor>
-            ))}
-          </div>
-          <Anchor
-            className="text-sm font-bold leading-tight text-black"
-            href="https://zenn.dev/"
-            target="_blank"
-          >
-            {title}
-          </Anchor>
-          <Group noWrap spacing="xs">
-            <Group spacing="xs" noWrap>
-              <ActionIcon size="md">
-                <Zenn style={{ color: '#3EA8FF' }} />
-              </ActionIcon>
-              <Text size="xs">{media}</Text>
-            </Group>
-          </Group>
-        </Stack>
-        <Stack justify="space-between" spacing="xs">
-          <Text size="xs" color="dimmed">
-            {date}
-          </Text>
-          <a href="https://zenn.dev/" target="_blank" rel="noreferrer">
-            <Image src={image} width={150} fit="contain" />
-          </a>
-          <Group className="justify-between px-2">
-            <ActionIcon>
-              <IconHeart size={18} color={theme.colors.red[6]} stroke={1.5} />
-            </ActionIcon>
-            <ActionIcon>
-              <IconBookmark
-                size={18}
-                color={theme.colors.yellow[6]}
-                stroke={1.5}
-              />
-            </ActionIcon>
-            <ActionIcon>
-              <IconShare size={16} color={theme.colors.blue[6]} stroke={1.5} />
-            </ActionIcon>
-          </Group>
-        </Stack>
-      </Group> */}
     </Card>
   );
 };

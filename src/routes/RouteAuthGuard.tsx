@@ -30,15 +30,15 @@ export const RouteAuthGuard = ({
               </Container>
             </UserLayout>
           );
-        } else if (location.pathname === '/dashboards') {
+        } else if (location.pathname === '/onboarding') {
           return (
-            <Container className="flex items-center justify-center py-60">
+            <Container className="flex h-screen items-center justify-center">
               <Loader />
             </Container>
           );
         } else {
           return (
-            <Container className="flex h-screen items-center justify-center">
+            <Container className="flex items-center justify-center py-60">
               <Loader />
             </Container>
           );
@@ -53,23 +53,20 @@ export const RouteAuthGuard = ({
     if (location.pathname === '/profile') {
       return (
         <UserLayout>
-          {/* <Center>
-            <Loader />
-          </Center> */}
           <Container className="flex items-center justify-center py-60">
             <Loader />
           </Container>
         </UserLayout>
       );
-    } else if (location.pathname === '/dashboards') {
+    } else if (location.pathname === '/onboarding') {
       return (
-        <Container className="flex items-center justify-center py-60">
+        <Container className="flex h-screen items-center justify-center">
           <Loader />
         </Container>
       );
     } else {
       return (
-        <Container className="flex h-screen items-center justify-center">
+        <Container className="flex items-center justify-center py-60">
           <Loader />
         </Container>
       );
