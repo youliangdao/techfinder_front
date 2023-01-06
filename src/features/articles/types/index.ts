@@ -1,5 +1,4 @@
 import { Category, CategoryType } from 'categories/types';
-import { Dispatch, SetStateAction } from 'react';
 import { BaseEntity } from 'types';
 
 export type Article = {
@@ -20,9 +19,7 @@ export type ArticleListsProps = {
   filterInput: string;
   isLoading: boolean;
   leftGenre: string;
-  page: number;
   rightGenre: string;
-  setPage: Dispatch<SetStateAction<number>>;
 };
 
 export type ArticleType = {
