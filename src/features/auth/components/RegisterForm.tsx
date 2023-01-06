@@ -3,6 +3,7 @@ import {
   Container,
   FileButton,
   Group,
+  LoadingOverlay,
   Paper,
   Space,
   Stack,
@@ -40,6 +41,7 @@ const RegisterForm = () => {
   const user = useAppSelector(selectUser);
   const [imageURL, setImageURL] = useState(user.avatar);
   const [file, setFile] = useState<File | null>(null);
+  const [visible, setVisible] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const changeFileHandler = useCallback((payload: File | null) => {
@@ -65,7 +67,7 @@ const RegisterForm = () => {
           fontWeight: 900,
         })}
       >
-        Welcome to StackDeveloper!
+        Welcome to DevZone!
       </Title>
       <Space h={50} />
       <Paper shadow="md" withBorder p={30} radius="md">
@@ -76,6 +78,7 @@ const RegisterForm = () => {
 
         <form
           onSubmit={form.onSubmit(async (values) => {
+            setVisible(true);
             try {
               const auth = getAuth();
               const idToken = await auth.currentUser?.getIdToken(true);
@@ -103,6 +106,7 @@ const RegisterForm = () => {
                     avatarKey: key || '',
                   })
                 );
+                setVisible(false);
                 navigate('/');
               } else {
                 const key = user.avatarKey;
@@ -122,6 +126,7 @@ const RegisterForm = () => {
                       avatarKey: key || '',
                     })
                   );
+                  setVisible(false);
                   navigate('/');
                 } else {
                   const avatarImageUrl = user.avatar;
@@ -133,14 +138,17 @@ const RegisterForm = () => {
                       avatarKey: key || '',
                     })
                   );
+                  setVisible(false);
                   navigate('/');
                 }
               }
             } catch (error: any) {
+              setVisible(false);
               alert(`ユーザー登録に失敗しました。\n${error.message}`);
             }
           })}
         >
+          <LoadingOverlay visible={visible} overlayBlur={2} />
           <Stack spacing="lg">
             <Group>
               <ImagePreview
