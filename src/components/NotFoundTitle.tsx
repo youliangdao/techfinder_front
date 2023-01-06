@@ -7,6 +7,7 @@ import {
   Title,
 } from '@mantine/core';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -51,6 +52,7 @@ const useStyles = createStyles((theme) => ({
 
 const NotFoundTitle = () => {
   const { classes } = useStyles();
+  const navigate = useNavigate();
 
   return (
     <Container className={classes.root}>
@@ -66,7 +68,7 @@ const NotFoundTitle = () => {
         address, or the page has been moved to another URL.
       </Text>
       <Group position="center">
-        <Button variant="subtle" size="md">
+        <Button variant="subtle" size="md" onClick={() => navigate('/')}>
           Take me back to home page
         </Button>
       </Group>
