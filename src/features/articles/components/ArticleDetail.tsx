@@ -9,7 +9,7 @@ import {
   Stack,
   Text,
 } from '@mantine/core';
-import { IconBookmark, IconHeart, IconShare } from '@tabler/icons';
+import { IconBookmark, IconHeart, IconMessageCircle2 } from '@tabler/icons';
 import { deleteBookmark } from 'articles/api/deleteBookmark';
 import { deleteLike } from 'articles/api/deleteLike';
 import { postBookmarks } from 'articles/api/postBookmarks';
@@ -150,9 +150,6 @@ const ArticleDetail = ({
     <Card
       radius="md"
       className="hover:bg-m_gray-1 bg-m_gray-0 max-w-md py-0 hover:cursor-pointer"
-      // component="a"
-      // href="https://zenn.dev/"
-      // target="_blank"
     >
       <Stack>
         <div className="pt-4">
@@ -168,7 +165,7 @@ const ArticleDetail = ({
                 color="dimmed"
                 weight={700}
                 size="xs"
-                onClick={() => navigate(`/categories/${category.path}`)}
+                onClick={() => navigate(`/categories/${category.path}/all`)}
               >
                 #{category.title}
               </Anchor>
@@ -185,9 +182,6 @@ const ArticleDetail = ({
           </Anchor>
           <Group noWrap spacing="xs" className="mt-2 justify-between">
             <Group spacing="xs" noWrap>
-              {/* <ActionIcon size="md">
-                <Zenn style={{ color: '#3EA8FF' }} />
-              </ActionIcon> */}
               <Image src={media.image} fit="contain" width={20} />
               <Text size="xs">{media.name}</Text>
               <Text size="xs" color="dimmed">
@@ -240,11 +234,7 @@ const ArticleDetail = ({
                 </ActionIcon>
               )}
               <ActionIcon>
-                <IconShare
-                  size={16}
-                  color={theme.colors.blue[6]}
-                  stroke={1.5}
-                />
+                <IconMessageCircle2 size={16} stroke={1.5} />
               </ActionIcon>
             </Group>
           </Group>
