@@ -8,7 +8,12 @@ import {
   Tabs,
 } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 
 import { useMediaQuery } from '../../../lib/mantine/useMediaQuery';
 import { ArticleListsProps } from '../types';
@@ -23,14 +28,13 @@ const ArticleLists = ({
   articleItems,
   filterInput,
   isLoading,
-  page,
-  setPage,
 }: ArticleListsProps) => {
   const largerThanSm = useMediaQuery('sm');
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const articleGenre = searchParams.get('tab') || 'all';
+  const articlePage = parseInt(searchParams.get('page') || '1');
   const { hash, pathname } = useLocation();
+  const params = useParams();
 
   const [currentArticleItems, setCurrentArticleItems] = useState(
     articleItems.slice(0, ITEMS_PAGE_SIZE)
@@ -49,33 +53,22 @@ const ArticleLists = ({
     const filterArticleItems = articleItems.filter((articleItem) =>
       new RegExp(filterInput, 'i').test(articleItem.title)
     );
-    const from = (page - 1) * ITEMS_PAGE_SIZE;
+    const from = (articlePage - 1) * ITEMS_PAGE_SIZE;
     const to = from + ITEMS_PAGE_SIZE;
     setCurrentArticleItems(filterArticleItems.slice(from, to));
-  }, [page, articleItems, filterInput, hash, pathname]);
+  }, [articlePage, articleItems, filterInput, hash]);
 
   return (
     <Card radius="md">
-      <Tabs value={articleGenre}>
+      <Tabs
+        value={params.tab}
+        onTabChange={(value) => {
+          navigate(`/articles/${value}`);
+        }}
+      >
         <Tabs.List className="flex justify-around">
-          <Tabs.Tab
-            value="all"
-            onClick={() => {
-              setPage(1);
-              navigate(pathname);
-            }}
-          >
-            {leftGenre}
-          </Tabs.Tab>
-          <Tabs.Tab
-            value="popular"
-            onClick={() => {
-              setPage(1);
-              navigate(`${pathname}?tab=popular`);
-            }}
-          >
-            {rightGenre}
-          </Tabs.Tab>
+          <Tabs.Tab value="all">{leftGenre}</Tabs.Tab>
+          <Tabs.Tab value="popular">{rightGenre}</Tabs.Tab>
         </Tabs.List>
       </Tabs>
       {isLoading ? (
@@ -94,7 +87,13 @@ const ArticleLists = ({
             })}
           </SimpleGrid>
           <Card className="mt-10 flex items-center justify-center">
-            <Pagination total={pageCount} onChange={setPage} page={page} />
+            <Pagination
+              total={pageCount}
+              onChange={(nextPage) => {
+                navigate(`${pathname}?page=${nextPage}`);
+              }}
+              page={articlePage}
+            />
           </Card>
         </>
       ) : (
@@ -108,7 +107,13 @@ const ArticleLists = ({
             ))}
           </SimpleGrid>
           <Card className="mt-10 flex items-center justify-center">
-            <Pagination total={pageCount} onChange={setPage} page={page} />
+            <Pagination
+              total={pageCount}
+              onChange={(nextPage) => {
+                navigate(`${pathname}?page=${nextPage}`);
+              }}
+              page={articlePage}
+            />
           </Card>
         </>
       )}
