@@ -6,9 +6,12 @@ import {
   createStyles,
   Group,
   Image,
+  Modal,
+  Space,
   Stack,
   Text,
 } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { IconBookmark, IconHeart, IconMessageCircle2 } from '@tabler/icons';
 import { deleteBookmark } from 'articles/api/deleteBookmark';
 import { deleteLike } from 'articles/api/deleteLike';
@@ -16,6 +19,7 @@ import { postBookmarks } from 'articles/api/postBookmarks';
 import { postLikes } from 'articles/api/postLikes';
 import { Article } from 'articles/types';
 import { getAuth } from 'firebase/auth';
+import ArticleComments from 'lib/modal/ArticleComments';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -70,6 +74,8 @@ const ArticleItem = ({
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarkLoading, setIsBookmarkLoading] = useState(false);
   const [isLikeLoading, setIsLikeLoading] = useState(false);
+
+  const [commentOpened, { open, close }] = useDisclosure(false);
   const curentUser = useAppSelector(selectUser);
   const bookmarkIds = useAppSelector(selectBookmarkIds);
   const likeIds = useAppSelector(selectLikeIds);
@@ -240,7 +246,19 @@ const ArticleItem = ({
                 <IconBookmark size={18} stroke={1.5} />
               </ActionIcon>
             )}
-            <ActionIcon>
+            <Modal
+              opened={commentOpened}
+              onClose={close}
+              title={title}
+              size="lg"
+              classNames={{
+                title: 'font-bold text-lg',
+              }}
+            >
+              <Space h={30} />
+              <ArticleComments articleId={id} />
+            </Modal>
+            <ActionIcon onClick={() => open()}>
               <IconMessageCircle2 size={16} stroke={1.5} />
             </ActionIcon>
           </Group>

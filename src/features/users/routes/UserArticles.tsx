@@ -7,7 +7,11 @@ import UserInfo from 'users/containers/UserInfo';
 
 const UserArticles = () => {
   const params = useParams();
-  if (params.tab === 'all' || params.tab === 'popular') {
+  if (
+    params.tab === 'all' ||
+    params.tab === 'bookmarks' ||
+    params.tab === 'likes'
+  ) {
     return (
       <>
         <UserInfo />

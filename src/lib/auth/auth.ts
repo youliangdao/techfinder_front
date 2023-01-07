@@ -29,7 +29,8 @@ type signInWithGoogleDispatch = ThunkDispatch<
 
 export const signInWithGoogle = async (
   navigate: NavigateFunction,
-  dispatch: signInWithGoogleDispatch
+  dispatch: signInWithGoogleDispatch,
+  fromPathName: string
 ) => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
@@ -52,7 +53,7 @@ export const signInWithGoogle = async (
       navigate('/onboarding');
       return;
     }
-    navigate('/');
+    navigate(fromPathName);
   } catch (error: any) {
     dispatch(logout());
     if (error.code === 'auth/account-exists-with-different-credential') {

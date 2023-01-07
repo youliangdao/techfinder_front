@@ -1,5 +1,4 @@
 import { Category, CategoryType } from 'categories/types';
-import { BaseEntity } from 'types';
 
 export type Article = {
   id: string;
@@ -23,6 +22,7 @@ export type ArticleListsProps = {
 };
 
 export type ArticleType = {
+  id: string;
   attributes: {
     title: string;
     date: string;
@@ -35,11 +35,12 @@ export type ArticleType = {
     categories: {
       data: {
         id: string;
-        type: string;
+        type: 'category';
       }[];
     };
   };
-} & BaseEntity;
+  type: 'qiita_article';
+};
 
 export type ResponseArticleType = {
   data: ArticleType[] | [];

@@ -1,5 +1,3 @@
-import { BaseEntity } from 'types';
-
 export type Category = {
   id: string;
   title: string;
@@ -17,12 +15,14 @@ export type CategoryListsType = {
 };
 
 export type CategoryType = {
+  id: string;
   attributes: {
     name: string;
     image: string;
     path: string;
   };
-} & BaseEntity;
+  type: 'category';
+};
 
 export type ResponseCategoryType = {
   data: CategoryType[];

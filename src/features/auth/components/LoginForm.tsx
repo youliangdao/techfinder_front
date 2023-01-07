@@ -2,7 +2,7 @@ import { Anchor, Group, Image, Modal, Stack, Text } from '@mantine/core';
 import { GoogleButton } from 'components/Button/SocialButtons';
 import { signInWithGoogle } from 'lib/auth/auth';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   closeLoginModal,
   selectIsLoginOpened,
@@ -15,6 +15,8 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLoginOpened = useAppSelector(selectIsLoginOpened);
+  const location = useLocation();
+  const fromPathName = location.pathname + location.search;
 
   return (
     <Modal
@@ -39,7 +41,7 @@ const LoginForm = () => {
           <GoogleButton
             onClick={() => {
               dispatch(closeLoginModal());
-              signInWithGoogle(navigate, dispatch);
+              signInWithGoogle(navigate, dispatch, fromPathName);
             }}
             title="Login with Google"
             loading={false}
