@@ -52,3 +52,13 @@ export type ResponseArticleType = {
     };
   };
 };
+
+export type LikeCounts = {
+  count: number;
+  status: 'ok';
+};
+
+export type BookmarkCounts = {
+  count: number;
+  status: 'ok';
+};

@@ -1,4 +1,13 @@
-import { Avatar, Button, Group, Menu, Text, TextInput } from '@mantine/core';
+import {
+  Avatar,
+  Button,
+  Divider,
+  Group,
+  Menu,
+  Space,
+  Text,
+  TextInput,
+} from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
 import { IconChevronDown, IconEdit, IconTrash } from '@tabler/icons';
 import { deleteComment } from 'comments/api/deleteComment';
@@ -174,6 +183,8 @@ const CommentItem = ({
           {form.values.body}
         </Text>
       )}
+      <Space h="md" />
+      <Divider />
     </div>
   );
 };
