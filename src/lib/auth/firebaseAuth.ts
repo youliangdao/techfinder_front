@@ -1,5 +1,7 @@
 import { getBookmarks } from 'articles/api/getBookmarks';
 import { getLikes } from 'articles/api/getLikes';
+import axios from 'axios';
+import { endpoint } from 'config';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -33,8 +35,19 @@ export const useFirebaseAuth = () => {
         },
       };
       try {
+        const res = await axios.post(
+          `${endpoint}/authentication`,
+          null,
+          config
+        );
+
+        if (res.status !== 200) {
+          throw new Error('login error');
+        }
+
         const bookmarks = await getBookmarks(config);
         const likes = await getLikes(config);
+
         const bookmarkIds = bookmarks.data.map((bookmark) => bookmark.id);
         const likeIds = likes.data.map((like) => like.id);
         const user = await showProfile(config);
@@ -74,8 +87,8 @@ export const useFirebaseAuth = () => {
             })
           );
         }
-      } catch (error) {
-        alert(`ユーザー情報の取得に失敗しました`);
+      } catch (error: any) {
+        alert(`ユーザー情報の取得に失敗しました\n${error.messages}`);
       }
     } else {
       dispatch(logout());
