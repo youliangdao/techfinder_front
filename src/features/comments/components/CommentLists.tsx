@@ -54,14 +54,11 @@ const CommentLists = ({
       <Divider className="my-5 font-bold" />
       <Stack className="space-y-1 px-8">
         {commentLists.map((comment) => (
-          <>
-            <CommentItem
-              key={comment.id}
-              comment={comment}
-              setCommentLists={setCommentLists}
-            />
-            <Divider />
-          </>
+          <CommentItem
+            key={comment.id}
+            comment={comment}
+            setCommentLists={setCommentLists}
+          />
         ))}
         <form
           onSubmit={form.onSubmit(async (values) => {
