@@ -9,7 +9,7 @@ import {
   signInWithPopup,
 } from 'firebase/auth';
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { logout, selectUser } from 'store/ducks/userSlice';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 
@@ -56,12 +56,10 @@ const LoginImage = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const currentUser = useAppSelector(selectUser);
   const [isLoading, setIsLoading] = useState(false);
   const location: CustomLocation = useLocation() as CustomLocation;
-  const fromPathName: string = location.state.from.pathname;
-
-  console.log(currentUser);
+  const fromPathName = location.state.from.pathname;
+  const currentUser = useAppSelector(selectUser);
 
   const signInWithGoogle = async () => {
     setIsLoading(true);
@@ -98,29 +96,33 @@ const LoginImage = () => {
       alert(`ログイン/新規登録に失敗しました。\n${error.message}`);
     }
   };
-  return (
-    <div className={classes.wrapper}>
-      <Paper className={classes.form} radius={0} p={30}>
-        <Title order={2} className={classes.title} align="center" my="md">
-          Sign In
-        </Title>
+  if (currentUser.uid) {
+    return <Navigate to="/" replace />;
+  } else {
+    return (
+      <div className={classes.wrapper}>
+        <Paper className={classes.form} radius={0} p={30}>
+          <Title order={2} className={classes.title} align="center" my="md">
+            Sign In
+          </Title>
 
-        <Stack className="space-y-4">
-          <Text size="sm" color="dimmed">
-            新規登録、ログインのどちらも以下のリンクから行うことができます。利用規約、プライバシーポリシーに同意したうえでログインしてください。
-          </Text>
-          <Group grow mb="md" mt="md">
-            <GoogleButton
-              onClick={signInWithGoogle}
-              title="Login with Google"
-              loading={isLoading}
-            />
-            {/* <TwitterButton radius="xl">Twitter</TwitterButton> */}
-          </Group>
-        </Stack>
-      </Paper>
-    </div>
-  );
+          <Stack className="space-y-4">
+            <Text size="sm" color="dimmed">
+              新規登録、ログインのどちらも以下のリンクから行うことができます。利用規約、プライバシーポリシーに同意したうえでログインしてください。
+            </Text>
+            <Group grow mb="md" mt="md">
+              <GoogleButton
+                onClick={signInWithGoogle}
+                title="Login with Google"
+                loading={isLoading}
+              />
+              {/* <TwitterButton radius="xl">Twitter</TwitterButton> */}
+            </Group>
+          </Stack>
+        </Paper>
+      </div>
+    );
+  }
 };
 
 export default LoginImage;
