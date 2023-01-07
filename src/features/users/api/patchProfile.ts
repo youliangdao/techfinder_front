@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { endpoint } from 'config';
+import { UserType } from 'users/types';
 
 export const patchProfile = async (
   nickname: string,
@@ -11,7 +12,7 @@ export const patchProfile = async (
     };
   }
 ) => {
-  const res = await axios.patch(
+  const res = await axios.patch<UserType>(
     `${endpoint}/profile`,
     {
       nickname: nickname,
