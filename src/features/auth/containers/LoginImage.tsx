@@ -1,7 +1,5 @@
 import { createStyles, Group, Paper, Stack, Text, Title } from '@mantine/core';
-import axios from 'axios';
 import { GoogleButton } from 'Button/SocialButtons';
-import { endpoint } from 'config';
 import {
   getAdditionalUserInfo,
   getAuth,
@@ -67,16 +65,6 @@ const LoginImage = () => {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      const token = await user.getIdToken();
-      const config = {
-        headers: { authorization: `Bearer ${token}` },
-      };
-      const res = await axios.post(`${endpoint}/authentication`, null, config);
-
-      if (res.status !== 200) {
-        throw new Error('login error');
-      }
 
       if (getAdditionalUserInfo(result)?.isNewUser) {
         navigate('/onboarding', {
