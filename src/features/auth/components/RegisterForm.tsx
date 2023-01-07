@@ -109,38 +109,28 @@ const RegisterForm = () => {
                 setVisible(false);
                 navigate('/');
               } else {
-                const key = user.avatarKey;
+                const res = await fetch(user.avatar);
+                const blob = await res.blob();
+                const file = new File([blob], 'image.jpg');
+                const key = await postImage(file, config);
+
                 await patchProfile(
                   values.nickname,
                   values.description,
                   key,
                   config
                 );
-                if (user.avatarKey) {
-                  const avatarImageUrl = await getAvatar(config);
-                  dispatch(
-                    updateUserProfile({
-                      nickname: values.nickname,
-                      description: values.description,
-                      avatar: avatarImageUrl,
-                      avatarKey: key || '',
-                    })
-                  );
-                  setVisible(false);
-                  navigate('/');
-                } else {
-                  const avatarImageUrl = user.avatar;
-                  dispatch(
-                    updateUserProfile({
-                      nickname: values.nickname,
-                      description: values.description,
-                      avatar: avatarImageUrl,
-                      avatarKey: key || '',
-                    })
-                  );
-                  setVisible(false);
-                  navigate('/');
-                }
+                const avatarImageUrl = await getAvatar(config);
+                dispatch(
+                  updateUserProfile({
+                    nickname: values.nickname,
+                    description: values.description,
+                    avatar: avatarImageUrl,
+                    avatarKey: key || '',
+                  })
+                );
+                setVisible(false);
+                navigate('/');
               }
             } catch (error: any) {
               setVisible(false);
