@@ -79,7 +79,13 @@ const LoginImage = () => {
       }
 
       if (getAdditionalUserInfo(result)?.isNewUser) {
-        navigate('/onboarding');
+        navigate('/onboarding', {
+          state: {
+            from: {
+              pathname: fromPathName,
+            },
+          },
+        });
         return;
       }
 

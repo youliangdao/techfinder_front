@@ -15,7 +15,7 @@ import { useForm, zodResolver } from '@mantine/form';
 import { getAuth } from 'firebase/auth';
 import { postImage } from 'lib/auth/api/postImage';
 import React, { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { selectUser, updateUserProfile } from 'store/ducks/userSlice';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { getAvatar } from 'users/api/getAvatar';
@@ -44,6 +44,9 @@ const RegisterForm = () => {
   const [visible, setVisible] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const fromPathName = location.state.from.pathname;
+
   const changeFileHandler = useCallback((payload: File | null) => {
     if (payload) {
       setFile(payload);
@@ -107,7 +110,7 @@ const RegisterForm = () => {
                   })
                 );
                 setVisible(false);
-                navigate('/');
+                navigate(fromPathName);
               } else {
                 const res = await fetch(user.avatar);
                 const blob = await res.blob();
@@ -130,7 +133,7 @@ const RegisterForm = () => {
                   })
                 );
                 setVisible(false);
-                navigate('/');
+                navigate(fromPathName);
               }
             } catch (error: any) {
               setVisible(false);
