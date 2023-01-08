@@ -51,7 +51,7 @@ const UserArticleLists = ({
   }, [articlePage, articleItems, hash, pathname]);
 
   return (
-    <Card radius="md">
+    <Card radius="md" className="max-sm:px-0">
       <Tabs
         value={params.tab}
         onTabChange={(value) => {
@@ -59,9 +59,15 @@ const UserArticleLists = ({
         }}
       >
         <Tabs.List className="flex justify-around">
-          <Tabs.Tab value="all">すべての記事</Tabs.Tab>
-          <Tabs.Tab value="likes">{leftGenre}</Tabs.Tab>
-          <Tabs.Tab value="bookmarks">{rightGenre}</Tabs.Tab>
+          <Tabs.Tab value="all" className="max-sm:text-xs">
+            すべての記事
+          </Tabs.Tab>
+          <Tabs.Tab value="likes" className="max-sm:text-xs">
+            {leftGenre}
+          </Tabs.Tab>
+          <Tabs.Tab value="bookmarks" className="max-sm:text-xs">
+            {rightGenre}
+          </Tabs.Tab>
         </Tabs.List>
       </Tabs>
       {isLoading ? (

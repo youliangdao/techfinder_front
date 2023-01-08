@@ -136,7 +136,7 @@ const FooterLinks = ({ data }: FooterLinksProps) => {
           fit="contain"
           onClick={() => navigate('/')}
         />
-        <Group className="max-sm:mt-4">{links}</Group>
+        <Group className="space-x-3 max-sm:mt-4">{links}</Group>
       </Container>
       <Container className="border-t-m_gray-2 mt-6 flex items-center justify-between border-0 border-t border-solid py-6 px-4 max-sm:flex-col">
         <Text color="dimmed" size="sm">
