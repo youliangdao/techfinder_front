@@ -60,6 +60,7 @@ const CommentLists = ({
             setCommentLists={setCommentLists}
           />
         ))}
+        <Space h="md" />
         <form
           onSubmit={form.onSubmit(async (values) => {
             setIsLoding(true);
@@ -111,7 +112,7 @@ const CommentLists = ({
             <>
               <Textarea
                 placeholder="コメントを書く（任意）"
-                label="Your comment"
+                // label="Your comment"
                 radius="md"
                 // size="md"
                 withAsterisk
@@ -120,7 +121,7 @@ const CommentLists = ({
               />
               <Group position="right" mt="md" className="xs:px-5">
                 <Button loading={isLoading} type="submit">
-                  Submit
+                  投稿する
                 </Button>
               </Group>
             </>
