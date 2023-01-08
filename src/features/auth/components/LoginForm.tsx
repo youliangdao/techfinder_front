@@ -34,7 +34,7 @@ const LoginForm = () => {
         {/* <MantineLogo className="h-8" /> */}
         <Image src={logo} fit="contain" height={80} />
         <Text size="sm" color="dimmed">
-          DevZoneは個人開発者のための技術記事データベースです。
+          TechFinderは個人開発者のための技術記事データベースです。
           目的の記事を見つけたらいいねやストックをしましょう
         </Text>
         <Group grow mb="md">

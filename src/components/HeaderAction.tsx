@@ -197,7 +197,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                       to="/about"
                       onClick={toggle}
                     >
-                      DevZoneについて
+                      TechFinderについて
                     </NavLink>
                     <NavLink
                       className={classes.link}
