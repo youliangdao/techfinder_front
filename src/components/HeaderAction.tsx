@@ -197,7 +197,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                       to="/about"
                       onClick={toggle}
                     >
-                      StackDeveloperについて
+                      DevZoneについて
                     </NavLink>
                     <NavLink
                       className={classes.link}
@@ -208,7 +208,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                     </NavLink>
                     <NavLink
                       className={classes.link}
-                      to="/articles"
+                      to="/articles/all"
                       onClick={toggle}
                     >
                       記事から探す
