@@ -21,7 +21,7 @@ const links = [
         label: 'カテゴリから探す',
       },
       {
-        link: '/articles',
+        link: '/articles/all',
         label: '記事から探す',
       },
     ],
