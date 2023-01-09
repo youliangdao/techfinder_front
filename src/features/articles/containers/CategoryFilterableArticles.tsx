@@ -88,6 +88,15 @@ const CategoryFilterableArticles = () => {
     'stripe',
     'others',
     'linebot',
+    'supabase',
+    'cloudflare',
+    'rust',
+    'wasm',
+    'auth0',
+    'prisma',
+    'svelte',
+    'html',
+    'slack',
   ];
 
   const dispatch = useAppDispatch();
@@ -119,8 +128,8 @@ const CategoryFilterableArticles = () => {
             locale: ja,
           }),
           media: {
-            name: data.meta.media.name,
-            image: data.meta.media.image,
+            name: article.attributes.media_name,
+            image: article.attributes.media_image,
           },
           image: article.attributes.image,
           link: article.attributes.link,

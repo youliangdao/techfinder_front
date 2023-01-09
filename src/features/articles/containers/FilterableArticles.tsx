@@ -39,8 +39,8 @@ const FilterableArticles = () => {
             locale: ja,
           }),
           media: {
-            name: data.meta.media.name,
-            image: data.meta.media.image,
+            name: article.attributes.media_name,
+            image: article.attributes.media_image,
           },
           image: article.attributes.image,
           link: article.attributes.link,

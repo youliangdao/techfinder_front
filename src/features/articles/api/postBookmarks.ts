@@ -13,7 +13,7 @@ export const postBookmarks = async (
     await axios.post(
       `${endpoint}/bookmarks`,
       {
-        qiita_article_id: id,
+        article_id: id,
       },
       config
     );
