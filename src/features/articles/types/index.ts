@@ -29,6 +29,8 @@ export type ArticleType = {
     image: string;
     item_id: string;
     link: string;
+    media_image: string;
+    media_name: string;
     stock: number;
   };
   relationships: {
@@ -39,18 +41,18 @@ export type ArticleType = {
       }[];
     };
   };
-  type: 'qiita_article';
+  type: 'article';
 };
 
 export type ResponseArticleType = {
   data: ArticleType[] | [];
   included: CategoryType[];
-  meta: {
-    media: {
-      name: string;
-      image: string;
-    };
-  };
+  // meta: {
+  //   media: {
+  //     name: string;
+  //     image: string;
+  //   };
+  // };
 };
 
 export type LikeCounts = {

@@ -11,9 +11,9 @@ export const postLikes = async (
 ) => {
   try {
     await axios.post(
-      `${endpoint}/qiita_article_likes`,
+      `${endpoint}/likes`,
       {
-        qiita_article_id: id,
+        article_id: id,
       },
       config
     );

@@ -10,7 +10,7 @@ export const deleteLike = async (
   id: string
 ) => {
   try {
-    await axios.delete(`${endpoint}/qiita_article_likes/${id}`, config);
+    await axios.delete(`${endpoint}/likes/${id}`, config);
   } catch (error) {
     throw new Error('like delete error');
   }
