@@ -26,13 +26,14 @@ const CategoryArticleLists = ({
   leftGenre,
   rightGenre,
   articleItems,
-  filterInput,
   isLoading,
 }: ArticleListsProps) => {
   const largerThanSm = useMediaQuery('sm');
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const articlePage = parseInt(searchParams.get('page') || '1');
+  const filterInput = searchParams.get('q') || '';
+
   const { hash, pathname } = useLocation();
   const params = useParams();
 
@@ -90,7 +91,11 @@ const CategoryArticleLists = ({
             <Pagination
               total={pageCount}
               onChange={(nextPage) => {
-                navigate(`${pathname}?page=${nextPage}`);
+                if (filterInput) {
+                  navigate(`${pathname}?q=${filterInput}&page=${nextPage}`);
+                } else {
+                  navigate(`${pathname}?page=${nextPage}`);
+                }
               }}
               page={articlePage}
             />
@@ -110,7 +115,11 @@ const CategoryArticleLists = ({
             <Pagination
               total={pageCount}
               onChange={(nextPage) => {
-                navigate(`${pathname}?page=${nextPage}`);
+                if (filterInput) {
+                  navigate(`${pathname}?q=${filterInput}&page=${nextPage}`);
+                } else {
+                  navigate(`${pathname}?page=${nextPage}`);
+                }
               }}
               page={articlePage}
             />

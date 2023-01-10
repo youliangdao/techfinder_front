@@ -7,16 +7,17 @@ import { endpoint } from 'config';
 import { formatDistanceToNow } from 'date-fns';
 import { ja } from 'date-fns/locale';
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import ArticleLists from '../components/ArticleLists';
 
 const FilterableArticles = () => {
-  const [filterInput, setFilterInput] = useState<string>('');
+  // const [filterInput, setFilterInput] = useState<string>('');
   const [articleItems, setArticleItems] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -74,11 +75,12 @@ const FilterableArticles = () => {
           onSubmit={(e) => {
             e.preventDefault();
             if (inputRef.current?.value) {
-              setFilterInput(inputRef.current.value);
+              navigate(
+                `/articles/${params.tab}/search?q=${inputRef.current?.value}`
+              );
             } else {
-              setFilterInput('');
+              navigate(`/articles/${params.tab}`);
             }
-            navigate(`/articles/${params.tab}`);
           }}
         >
           <TextInput
@@ -94,7 +96,6 @@ const FilterableArticles = () => {
           leftGenre="すべての記事"
           rightGenre="人気記事"
           articleItems={articleItems}
-          filterInput={filterInput}
           isLoading={isLoading}
         />
       </>

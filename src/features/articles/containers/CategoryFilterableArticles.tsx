@@ -9,18 +9,19 @@ import { endpoint } from 'config';
 import { formatDistanceToNow } from 'date-fns';
 import { ja } from 'date-fns/locale';
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { setCategory } from 'store/ducks/categorySlice';
 import { useAppDispatch } from 'store/hooks';
 
 import CategoryArticlesHeader from '../components/CategoryArticlesHeader';
 
 const CategoryFilterableArticles = () => {
-  const [filterInput, setFilterInput] = useState<string>('');
   const [articleItems, setArticleItems] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const params = useParams();
+
+  const navigate = useNavigate();
 
   const categoryTable = [
     'ui',
@@ -178,9 +179,11 @@ const CategoryFilterableArticles = () => {
           onSubmit={(e) => {
             e.preventDefault();
             if (inputRef.current?.value) {
-              setFilterInput(inputRef.current.value);
+              navigate(
+                `/categories/${params.categoryName}/${params.tab}/search?q=${inputRef.current?.value}`
+              );
             } else {
-              setFilterInput('');
+              navigate(`/categories/${params.categoryName}/${params.tab}`);
             }
           }}
         >
@@ -198,7 +201,6 @@ const CategoryFilterableArticles = () => {
           rightGenre="人気記事"
           articleItems={articleItems}
           isLoading={isLoading}
-          filterInput={filterInput}
         />
       </>
     );

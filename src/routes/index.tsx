@@ -30,6 +30,7 @@ const AppRoutes = () => {
       <Route path="articles" element={<MainLayout />}>
         <Route index element={<Navigate to="/" replace />} />
         <Route path=":tab" element={<FilterableArticles />} />
+        <Route path=":tab/search" element={<FilterableArticles />} />
         {/* <Route index element={<FilterableArticles />} /> */}
         {/* <Route path=":articleId" element={<ArticleProfile />} /> */}
         <Route path="*" element={<NotFoundTitle />} />
@@ -39,6 +40,7 @@ const AppRoutes = () => {
         <Route path=":categoryName">
           <Route index element={<Navigate to="/categories" replace />} />
           <Route path=":tab" element={<CategoryFilterableArticles />} />
+          <Route path=":tab/search" element={<CategoryFilterableArticles />} />
           <Route path="*" element={<NotFoundTitle />} />
         </Route>
         <Route path="*" element={<NotFoundTitle />} />
