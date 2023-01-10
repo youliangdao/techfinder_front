@@ -42,6 +42,8 @@ const CommentLists = ({
   const navigate = useNavigate();
   const location = useLocation();
 
+  const fromPathName = location.pathname + location.search;
+
   const form = useForm<Form>({
     validate: zodResolver(schema),
     initialValues: {
@@ -139,7 +141,7 @@ const CommentLists = ({
                     navigate('/login', {
                       state: {
                         from: {
-                          pathname: location.pathname,
+                          pathname: fromPathName,
                         },
                       },
                     });
