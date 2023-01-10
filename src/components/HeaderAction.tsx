@@ -11,6 +11,7 @@ import {
   Image,
   Menu,
   Paper,
+  Skeleton,
   Transition,
   UnstyledButton,
 } from '@mantine/core';
@@ -26,10 +27,7 @@ import {
 import { getAuth } from 'firebase/auth';
 import React, { forwardRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import {
-  openLoginModal,
-  selectIsLoginOpened,
-} from 'store/ducks/loginModalSlice';
+import { openLoginModal } from 'store/ducks/loginModalSlice';
 import { selectUser } from 'store/ducks/userSlice';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 
@@ -112,7 +110,8 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
   const navigate = useNavigate();
   const currentUser = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
-  const isLoginOpened = useAppSelector(selectIsLoginOpened);
+
+  console.log(currentUser.apiChecked, currentUser.uid);
 
   const [sidebarOpened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();
@@ -227,7 +226,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
         )}
         <Group className="mr-2 sm:mr-4">
           {largerThanSm && <Group spacing={5}>{items}</Group>}
-          {!isLogin ? (
+          {!currentUser.apiChecked ? (
             <Button
               radius="xl"
               className="h-8"
@@ -235,7 +234,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
             >
               Login
             </Button>
-          ) : (
+          ) : currentUser.uid ? (
             <Group position="center">
               <Menu withArrow>
                 <Menu.Target>
@@ -284,6 +283,8 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                 </Menu.Dropdown>
               </Menu>
             </Group>
+          ) : (
+            <Skeleton height={40} circle />
           )}
           <LoginForm />
         </Group>
