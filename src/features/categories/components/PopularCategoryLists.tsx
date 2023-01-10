@@ -4,10 +4,13 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useMediaQuery } from '../../../lib/mantine/useMediaQuery';
-import { Categories } from '../types';
+import { PopularCategoryListsType } from '../types';
 import CategoryItem from './CategoryItem';
 
-const PopularCategoryLists = ({ categories }: Categories) => {
+const PopularCategoryLists = ({
+  categories,
+  isLoading,
+}: PopularCategoryListsType) => {
   const largerThanSm = useMediaQuery('sm');
   const navigate = useNavigate();
   return (
@@ -25,20 +28,20 @@ const PopularCategoryLists = ({ categories }: Categories) => {
       {largerThanSm ? (
         <>
           <SimpleGrid mt="md" className="grid-cols-3">
-            {categories.slice(0, 3).map((item) => (
-              <CategoryItem key={item.id} {...item} />
+            {categories.slice(0, 3).map((category) => (
+              <CategoryItem key={category.id} {...{ category, isLoading }} />
             ))}
           </SimpleGrid>
           <SimpleGrid my="md" className="grid-cols-6">
-            {categories.slice(3).map((item) => (
-              <CategoryItem key={item.id} {...item} />
+            {categories.slice(3).map((category) => (
+              <CategoryItem key={category.id} {...{ category, isLoading }} />
             ))}
           </SimpleGrid>
         </>
       ) : (
         <SimpleGrid my="md" className="xs:grid-cols-4 grid-cols-3">
-          {categories.map((item) => (
-            <CategoryItem key={item.id} {...item} />
+          {categories.map((category) => (
+            <CategoryItem key={category.id} {...{ category, isLoading }} />
           ))}
         </SimpleGrid>
       )}

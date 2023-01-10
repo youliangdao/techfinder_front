@@ -8,10 +8,20 @@ export type Category = {
 export type Categories = {
   categories: Category[];
 };
+export type CategoryItemProps = {
+  category: Category;
+  isLoading: boolean;
+};
+
+export type PopularCategoryListsType = Pick<
+  CategoryListsType,
+  'categories' | 'isLoading'
+>;
 
 export type CategoryListsType = {
   categories: Category[];
   filterInput: string;
+  isLoading: boolean;
 };
 
 export type CategoryType = {
