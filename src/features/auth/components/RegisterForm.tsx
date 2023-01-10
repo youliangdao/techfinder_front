@@ -70,7 +70,7 @@ const RegisterForm = () => {
           fontWeight: 900,
         })}
       >
-        Welcome to DevZone!
+        Welcome to TechFinder!
       </Title>
       <Space h={50} />
       <Paper shadow="md" withBorder p={30} radius="md">
