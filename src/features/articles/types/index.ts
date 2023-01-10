@@ -15,7 +15,6 @@ export type Article = {
 
 export type ArticleListsProps = {
   articleItems: Article[];
-  filterInput: string;
   isLoading: boolean;
   leftGenre: string;
   rightGenre: string;
