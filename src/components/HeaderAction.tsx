@@ -111,8 +111,6 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
   const currentUser = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
 
-  console.log(currentUser.apiChecked, currentUser.uid);
-
   const [sidebarOpened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();
 
