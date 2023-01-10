@@ -1,5 +1,5 @@
-import { Card, createStyles, Image, Text } from '@mantine/core';
-import { Category } from 'categories/types';
+import { Card, createStyles, Image, Skeleton, Text } from '@mantine/core';
+import { CategoryItemProps } from 'categories/types';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { setCategory } from 'store/ducks/categorySlice';
@@ -25,7 +25,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const CategoryItem = ({ id, title, image, path }: Category) => {
+const CategoryItem = ({ isLoading, category }: CategoryItemProps) => {
   const { classes } = useStyles();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -36,19 +36,25 @@ const CategoryItem = ({ id, title, image, path }: Category) => {
       onClick={() => {
         dispatch(
           setCategory({
-            id,
-            title,
-            image,
-            path,
+            id: category.id,
+            title: category.title,
+            image: category.image,
+            path: category.path,
           })
         );
-        navigate(`/categories/${path}/all`);
+        navigate(`/categories/${category.path}/all`);
       }}
     >
-      <Image src={image} height={50} fit="contain" />
-      <Text size="xs" mt={7}>
-        {title}
-      </Text>
+      {!isLoading ? (
+        <>
+          <Image src={category.image} height={50} fit="contain" />
+          <Text size="xs" mt={7}>
+            {category.title}
+          </Text>
+        </>
+      ) : (
+        <Skeleton height={50} circle radius="xl" />
+      )}
     </Card>
   );
 };

@@ -7,7 +7,9 @@ import PopularCategoryLists from '../components/PopularCategoryLists';
 
 const PopularCategories = () => {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    setIsLoading(true);
     const fetchCategories = async () => {
       const res: AxiosResponse<ResponseCategoryType> = await axios.get(
         `${endpoint}/categories/popular`
@@ -21,10 +23,11 @@ const PopularCategories = () => {
         image: category.attributes.image,
         path: category.attributes.path,
       }));
+      setIsLoading(false);
       setCategories(newCategories);
     });
   }, []);
-  return <PopularCategoryLists categories={categories} />;
+  return <PopularCategoryLists {...{ categories, isLoading }} />;
 };
 
 export default PopularCategories;

@@ -9,8 +9,12 @@ import CategoryLists from '../components/CategoryLists';
 const FilterableCategoryLists = () => {
   const [filterInput, setFilterInput] = useState<string>('');
   const [categories, setCategories] = useState<Category[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  console.log(isLoading);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchCategories = async () => {
       const res = await axios.get<ResponseCategoryType>(
         `${endpoint}/categories`
@@ -25,6 +29,7 @@ const FilterableCategoryLists = () => {
         image: category.attributes.image,
         path: category.attributes.path,
       }));
+      setIsLoading(false);
       setCategories(newCategories);
     });
   }, []);
@@ -33,7 +38,7 @@ const FilterableCategoryLists = () => {
     <>
       <SearchInput {...{ filterInput, setFilterInput }} />
       <br />
-      <CategoryLists {...{ filterInput, categories }} />
+      <CategoryLists {...{ filterInput, categories, isLoading }} />
     </>
   );
 };
