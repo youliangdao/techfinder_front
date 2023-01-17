@@ -28,6 +28,8 @@
     "@mantine/notifications": "^5.8.2",
     "@mantine/prism": "^5.8.2",
     "@reduxjs/toolkit": "^1.9.1",
+    "@tanstack/react-query": "^4.22.0",
+    "@tanstack/react-query-devtools": "^4.22.0",
     "axios": "^1.2.1",
     "date-fns": "^2.29.3",
     "embla-carousel-react": "^7.0.5",

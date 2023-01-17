@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Image, Skeleton, Text } from '@mantine/core';
+import { useQueryClient } from '@tanstack/react-query';
+import { CategoryType } from 'categories/types';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { selectCategory } from 'store/ducks/categorySlice';
-import { useAppSelector } from 'store/hooks';
 
 const categoryTable = new Map([
   ['ui', 'UI'],
@@ -83,15 +83,21 @@ const categoryTable = new Map([
 ]);
 
 const CategoryArticlesHeader = () => {
-  const category = useAppSelector(selectCategory);
-  const params = useParams();
+  const queryClient = useQueryClient();
+  const params = useParams<{ categoryName: string; tab: 'all' | 'popular' }>();
+
+  const category = queryClient.getQueryData<CategoryType>([
+    'category',
+    params.categoryName,
+  ]);
+
   const categoryTitle =
     params.categoryName && categoryTable.get(params.categoryName);
   return (
     <div className="xs:px-3 flex items-center justify-center space-x-3 sm:justify-start sm:px-5">
       <div className="flex h-20 items-center justify-center sm:h-24">
-        {category.id ? (
-          <Image src={category.image} height={100} fit="contain" />
+        {category ? (
+          <Image src={category.attributes.image} height={100} fit="contain" />
         ) : (
           <Skeleton circle height={60} />
         )}

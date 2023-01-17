@@ -1,25 +1,19 @@
-import { ResponseArticleType } from 'articles/types';
-import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+import { Article, ResponseArticleType } from 'articles/types';
+import axios, { AxiosResponse } from 'axios';
 import { endpoint } from 'config';
 import { formatDistanceToNow } from 'date-fns';
 import { ja } from 'date-fns/locale';
-import { getAuth } from 'firebase/auth';
+import { useParams } from 'react-router-dom';
 
-export const getBookmarks = async () => {
-  const auth = getAuth();
-  const idToken = await auth.currentUser?.getIdToken();
-
-  if (idToken) {
-    const config = {
-      headers: {
-        authorization: `Bearer ${idToken}`,
-      },
-    };
-    const res = await axios.get<ResponseArticleType>(
-      `${endpoint}/articles/bookmarks`,
-      config
+export const useQueryArticles = () => {
+  const params = useParams<{ tab: 'all' | 'popular' | undefined }>();
+  const getArticles = async () => {
+    const res: AxiosResponse<ResponseArticleType> = await axios.get(
+      `${endpoint}/articles?tab=${params.tab}`
     );
-    return res.data.data.map((article) => ({
+
+    const articleItems = res.data?.data.map((article) => ({
       id: article.id,
       title: article.attributes.title,
       date: formatDistanceToNow(new Date(article.attributes.date), {
@@ -43,7 +37,19 @@ export const getBookmarks = async () => {
           }));
       }),
     }));
-  } else {
-    return [];
-  }
+    return articleItems;
+  };
+
+  const { status, data } = useQuery<Article[], Error>({
+    queryKey: ['articles', params.tab],
+    queryFn: getArticles,
+    staleTime: Infinity,
+    onError: (error) =>
+      alert(`記事情報の取得に失敗しました。\n${error.message}`),
+  });
+  return {
+    data,
+    status,
+    params,
+  };
 };

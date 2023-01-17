@@ -21,8 +21,8 @@ const app = initializeApp(firebaseConfig);
 // prepareが完了した後にアプリケーションをマウントする
 prepare().then(() => {
   ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    // <React.StrictMode>
-    <App />
-    // </React.StrictMode>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
   );
 });

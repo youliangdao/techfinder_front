@@ -7,6 +7,7 @@ import {
   SimpleGrid,
   Tabs,
 } from '@mantine/core';
+import { useQueryBookmarks } from 'articles/hooks/useQueryBookmarks';
 import React, { useEffect, useState } from 'react';
 import {
   useLocation,
@@ -26,21 +27,21 @@ const ArticleLists = ({
   leftGenre,
   rightGenre,
   articleItems,
-  // filterInput,
   isLoading,
 }: ArticleListsProps) => {
   const largerThanSm = useMediaQuery('sm');
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const articlePage = parseInt(searchParams.get('page') || '1');
-  const filterInput = searchParams.get('q') || '';
   const { hash, pathname } = useLocation();
   const params = useParams();
+  const userBookmarksQuery = useQueryBookmarks();
 
   const [currentArticleItems, setCurrentArticleItems] = useState(
     articleItems.slice(0, ITEMS_PAGE_SIZE)
   );
 
+  const articlePage = parseInt(searchParams.get('page') || '1');
+  const filterInput = searchParams.get('q') || '';
   const pageCount = Math.ceil(
     articleItems.filter((articleItem) =>
       new RegExp(filterInput, 'i').test(articleItem.title)
@@ -72,7 +73,7 @@ const ArticleLists = ({
           <Tabs.Tab value="popular">{rightGenre}</Tabs.Tab>
         </Tabs.List>
       </Tabs>
-      {isLoading ? (
+      {isLoading || userBookmarksQuery.isLoading ? (
         <Center className="py-20">
           <Loader />
         </Center>

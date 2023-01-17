@@ -3,12 +3,8 @@ import React from 'react';
 
 import { ArticleCommentsProps } from './types';
 
-const ArticleComments = ({
-  articleId,
-  commentLists,
-  setCommentLists,
-}: ArticleCommentsProps) => {
-  return <CommentLists {...{ commentLists, articleId, setCommentLists }} />;
+const ArticleComments = ({ article, commentLists }: ArticleCommentsProps) => {
+  return <CommentLists {...{ commentLists, article }} />;
 };
 
 export default ArticleComments;

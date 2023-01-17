@@ -46,12 +46,11 @@ export type ArticleType = {
 export type ResponseArticleType = {
   data: ArticleType[] | [];
   included: CategoryType[];
-  // meta: {
-  //   media: {
-  //     name: string;
-  //     image: string;
-  //   };
-  // };
+};
+
+export type ResponseBookmarkPostType = {
+  data: ArticleType;
+  included: CategoryType[];
 };
 
 export type LikeCounts = {
