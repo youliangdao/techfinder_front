@@ -10,11 +10,7 @@ import {
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
 import { IconChevronDown, IconEdit, IconTrash } from '@tabler/icons';
-import { deleteComment } from 'comments/api/deleteComment';
-import { updateComment } from 'comments/api/updateComment';
-import { formatDistanceToNow } from 'date-fns';
-import { ja } from 'date-fns/locale';
-import { getAuth } from 'firebase/auth';
+import { useMutateArticleComment } from 'comments/hooks/useMutateArticleComment';
 import React, { useState } from 'react';
 import { selectUser } from 'store/ducks/userSlice';
 import { useAppSelector } from 'store/hooks';
@@ -33,12 +29,13 @@ type Form = z.infer<typeof schema>;
 
 const CommentItem = ({
   comment: { id, postedAt, body, author },
-  setCommentLists,
+  article,
 }: CommentItemProps) => {
   const currentUser = useAppSelector(selectUser);
 
   const [editedFlag, setEditedFlag] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { deleteCommentMutation, updateCommentMutation } =
+    useMutateArticleComment();
 
   const form = useForm<Form>({
     validate: zodResolver(schema),
@@ -47,24 +44,9 @@ const CommentItem = ({
     },
   });
 
-  const deleteCommentHandler = async (id: string) => {
+  const deleteCommentHandler = async () => {
     confirm('コメントを削除してよろしいですか？');
-    try {
-      const auth = getAuth();
-      const idToken = await auth.currentUser?.getIdToken();
-
-      const config = {
-        headers: {
-          authorization: `Bearer ${idToken}`,
-        },
-      };
-      await deleteComment(config, id);
-      setCommentLists((prevCommentLists) =>
-        prevCommentLists.filter((comment) => comment.id !== id)
-      );
-    } catch (error: any) {
-      alert(`コメント削除に失敗しました。\n${error.message}`);
-    }
+    deleteCommentMutation.mutate({ id, article });
   };
 
   return (
@@ -100,7 +82,7 @@ const CommentItem = ({
               <Menu.Item
                 color="red"
                 icon={<IconTrash size={14} />}
-                onClick={() => deleteCommentHandler(id)}
+                onClick={deleteCommentHandler}
               >
                 削除
               </Menu.Item>
@@ -111,47 +93,14 @@ const CommentItem = ({
       {editedFlag ? (
         <form
           onSubmit={form.onSubmit(async (values) => {
-            setIsLoading(true);
-            try {
-              const auth = getAuth();
-              const idToken = await auth.currentUser?.getIdToken();
-
-              const config = {
-                headers: {
-                  authorization: `Bearer ${idToken}`,
-                },
-              };
-              const data = await updateComment(config, id, values.body);
-              setCommentLists((prevCommentLists) =>
-                prevCommentLists.map((comment) => {
-                  if (comment.id === id) {
-                    return {
-                      id: id,
-                      author: {
-                        name: currentUser.nickname,
-                        image: currentUser.avatar,
-                      },
-                      body: data.data.attributes.body,
-                      postedAt: formatDistanceToNow(
-                        new Date(data.data.attributes.created_at),
-                        {
-                          addSuffix: true,
-                          locale: ja,
-                        }
-                      ),
-                    };
-                  }
-                  return comment;
-                })
-              );
-              setEditedFlag(false);
-              setIsLoading(false);
-            } catch (error: any) {
-              setEditedFlag(false);
-              setIsLoading(false);
-
-              alert(`コメント更新に失敗しました。\n${error.message}`);
-            }
+            updateCommentMutation.mutate({
+              body: values.body,
+              id: id,
+              nickname: currentUser.nickname,
+              avatar: currentUser.avatar,
+              article,
+            });
+            setEditedFlag(false);
           })}
         >
           <div className="flex justify-around space-x-2">
@@ -160,7 +109,11 @@ const CommentItem = ({
               className="w-full pl-12 pt-3"
             />
             <Button.Group className="items-center pt-3">
-              <Button size="xs" type="submit" loading={isLoading}>
+              <Button
+                size="xs"
+                type="submit"
+                loading={updateCommentMutation.isLoading}
+              >
                 編集
               </Button>
               <Button
