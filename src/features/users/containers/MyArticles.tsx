@@ -11,6 +11,11 @@ const MyArticles = () => {
     ...(userBookmarksQuery.data || []),
     ...(userCommentsQuery.data || []),
   ];
+  const uniqueComments = Array.from(
+    new Map(
+      (userCommentsQuery.data || []).map((article) => [article.id, article])
+    ).values()
+  );
   const uniqueBookmarksComments = Array.from(
     new Map(
       userBookmarksComments.map((article) => [article.id, article])
@@ -27,7 +32,7 @@ const MyArticles = () => {
         params.tab === 'bookmarks'
           ? userBookmarksQuery.data || []
           : params.tab === 'comments'
-          ? userCommentsQuery.data || []
+          ? uniqueComments
           : uniqueBookmarksComments
       }
       isLoading={userBookmarksQuery.isLoading || userCommentsQuery.isLoading}

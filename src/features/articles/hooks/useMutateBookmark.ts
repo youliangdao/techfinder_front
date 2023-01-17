@@ -26,7 +26,7 @@ export const useMutateBookmark = () => {
           [...previousBookmarks, res]
         );
       }
-      if (previousArticleBookmarks === 0) {
+      if (previousArticleBookmarks === 0 || previousArticleBookmarks) {
         queryClient.setQueryData<number>(
           ['articleBookmarks', variables],
           previousArticleBookmarks + 1
