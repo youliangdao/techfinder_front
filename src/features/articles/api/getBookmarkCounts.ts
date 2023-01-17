@@ -7,7 +7,7 @@ export const getBookmarkCounts = async (id: string) => {
     const res = await axios.get<BookmarkCounts>(
       `${endpoint}/articles/${id}/bookmarks`
     );
-    return res.data;
+    return res.data.count;
   } catch (error) {
     throw new Error('bookmark counts get error');
   }

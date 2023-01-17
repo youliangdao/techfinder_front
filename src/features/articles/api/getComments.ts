@@ -5,7 +5,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { ja } from 'date-fns/locale';
 import { getAuth } from 'firebase/auth';
 
-export const getBookmarks = async () => {
+export const getComments = async () => {
   const auth = getAuth();
   const idToken = await auth.currentUser?.getIdToken();
 
@@ -16,9 +16,10 @@ export const getBookmarks = async () => {
       },
     };
     const res = await axios.get<ResponseArticleType>(
-      `${endpoint}/articles/bookmarks`,
+      `${endpoint}/articles/comments`,
       config
     );
+
     return res.data.data.map((article) => ({
       id: article.id,
       title: article.attributes.title,
