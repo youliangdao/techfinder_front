@@ -1,8 +1,7 @@
+import { Article } from 'articles/types';
 import { Comment } from 'comments/types';
-import { Dispatch, SetStateAction } from 'react';
 
 export type ArticleCommentsProps = {
-  articleId: string;
+  article: Article;
   commentLists: Comment[];
-  setCommentLists: Dispatch<SetStateAction<Comment[]>>;
 };

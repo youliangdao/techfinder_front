@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Article } from 'articles/types';
 import { UserType } from 'users/types';
 
 export type Comment = {
@@ -12,14 +12,13 @@ export type Comment = {
 };
 
 export type CommentListsProps = {
-  articleId: string;
+  article: Article;
   commentLists: Comment[];
-  setCommentLists: Dispatch<SetStateAction<Comment[]>>;
 };
 
 export type CommentItemProps = {
+  article: Article;
   comment: Comment;
-  setCommentLists: Dispatch<SetStateAction<Comment[]>>;
 };
 
 export type CommentType = {
