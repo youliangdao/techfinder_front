@@ -251,15 +251,15 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                   <Menu.Divider />
                   <Menu.Item
                     icon={<IconHeart size={14} stroke={1.5} />}
-                    onClick={() => navigate('/dashboards/likes')}
-                  >
-                    いいねした記事
-                  </Menu.Item>
-                  <Menu.Item
-                    icon={<IconBookmark size={14} stroke={1.5} />}
                     onClick={() => navigate('/dashboards/bookmarks')}
                   >
                     ブックマークした記事
+                  </Menu.Item>
+                  <Menu.Item
+                    icon={<IconBookmark size={14} stroke={1.5} />}
+                    onClick={() => navigate('/dashboards/comments')}
+                  >
+                    コメントした記事
                   </Menu.Item>
                   <Menu.Divider />
                   <Menu.Label>Settings</Menu.Label>
