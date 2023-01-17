@@ -8,9 +8,9 @@ import UserInfo from 'users/containers/UserInfo';
 const UserArticles = () => {
   const params = useParams();
   if (
-    params.tab === 'all' ||
     params.tab === 'bookmarks' ||
-    params.tab === 'likes'
+    params.tab === 'comments' ||
+    params.tab === 'all'
   ) {
     return (
       <>
