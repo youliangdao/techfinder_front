@@ -90,7 +90,7 @@ const CategoryFilterableArticles = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const navigate = useNavigate();
-  const { articleItems, status, params } = useQueryCategoryArticles();
+  const { data, status, params } = useQueryCategoryArticles();
   const fetchCategory = useQueryCategory();
 
   const categoryFlag = categoryTable.includes(params.categoryName || '');
@@ -124,7 +124,7 @@ const CategoryFilterableArticles = () => {
         <CategoryArticleLists
           leftGenre="すべての記事"
           rightGenre="人気記事"
-          articleItems={articleItems ? articleItems : []}
+          articleItems={data ? data : []}
           isLoading={status === 'loading' || fetchCategory.status === 'loading'}
         />
       </>

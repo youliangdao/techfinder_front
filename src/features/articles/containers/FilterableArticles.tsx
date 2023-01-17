@@ -10,7 +10,7 @@ import ArticleLists from '../components/ArticleLists';
 const FilterableArticles = () => {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
-  const { status, articleItems, params } = useQueryArticles();
+  const { status, data, params } = useQueryArticles();
   if (params.tab === 'all' || params.tab === 'popular') {
     return (
       <>
@@ -38,7 +38,7 @@ const FilterableArticles = () => {
         <ArticleLists
           leftGenre="すべての記事"
           rightGenre="人気記事"
-          articleItems={articleItems ? articleItems : []}
+          articleItems={data ? data : []}
           isLoading={status === 'loading'}
         />
       </>
