@@ -95,6 +95,8 @@ const RegisterForm = () => {
                 const user = await patchProfile(
                   values.nickname,
                   values.description,
+                  '',
+                  '',
                   key,
                   config
                 );
@@ -107,6 +109,8 @@ const RegisterForm = () => {
                     description: values.description,
                     avatar: avatarImageUrl,
                     avatarKey: key || '',
+                    twitterUsername: '',
+                    githubUsername: '',
                   })
                 );
                 setVisible(false);
@@ -120,6 +124,8 @@ const RegisterForm = () => {
                 await patchProfile(
                   values.nickname,
                   values.description,
+                  '',
+                  '',
                   key,
                   config
                 );
@@ -130,6 +136,8 @@ const RegisterForm = () => {
                     description: values.description,
                     avatar: avatarImageUrl,
                     avatarKey: key || '',
+                    githubUsername: '',
+                    twitterUsername: '',
                   })
                 );
                 setVisible(false);

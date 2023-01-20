@@ -5,6 +5,8 @@ import { UserType } from 'users/types';
 export const patchProfile = async (
   nickname: string,
   description: string,
+  githubUsername: string,
+  twitterUsername: string,
   avatar_key: string | null,
   config: {
     headers: {
@@ -18,6 +20,8 @@ export const patchProfile = async (
       nickname: nickname,
       description: description,
       avatar_key: avatar_key,
+      github_username: githubUsername,
+      twitter_username: twitterUsername,
     },
     config
   );
