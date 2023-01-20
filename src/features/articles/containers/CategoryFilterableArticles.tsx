@@ -74,7 +74,7 @@ const categoryTable = [
   'threejs',
   'stripe',
   'others',
-  'linebot',
+  'line',
   'supabase',
   'cloudflare',
   'rust',
