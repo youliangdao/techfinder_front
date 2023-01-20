@@ -46,8 +46,8 @@ const ProfileForm = () => {
     validate: zodResolver(schema),
     initialValues: {
       nickname: user.nickname,
-      twitterUsername: '',
-      githubUsername: '',
+      twitterUsername: user.twitterUsername,
+      githubUsername: user.githubUsername,
       description: user.description,
     },
     validateInputOnBlur: true,
@@ -90,6 +90,8 @@ const ProfileForm = () => {
               await patchProfile(
                 values.nickname,
                 values.description,
+                values.githubUsername,
+                values.twitterUsername,
                 key,
                 config
               );
@@ -112,6 +114,8 @@ const ProfileForm = () => {
                   description: values.description,
                   avatar: avatarImageUrl,
                   avatarKey: key || '',
+                  githubUsername: values.githubUsername,
+                  twitterUsername: values.twitterUsername,
                 })
               );
               setIsLoding(false);
@@ -120,6 +124,8 @@ const ProfileForm = () => {
               await patchProfile(
                 values.nickname,
                 values.description,
+                values.githubUsername,
+                values.twitterUsername,
                 key,
                 config
               );
@@ -141,6 +147,8 @@ const ProfileForm = () => {
                     description: values.description,
                     avatar: avatarImageUrl,
                     avatarKey: key || '',
+                    githubUsername: values.githubUsername,
+                    twitterUsername: values.twitterUsername,
                   })
                 );
               } else {
@@ -161,6 +169,8 @@ const ProfileForm = () => {
                     description: values.description,
                     avatar: avatarImageUrl,
                     avatarKey: key || '',
+                    githubUsername: values.githubUsername,
+                    twitterUsername: values.twitterUsername,
                   })
                 );
               }

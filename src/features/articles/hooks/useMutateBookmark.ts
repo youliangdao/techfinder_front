@@ -11,60 +11,107 @@ export const useMutateBookmark = () => {
 
   const createBookmarkMutation = useMutation({
     mutationFn: postBookmark,
-    onSuccess: (res, variables) => {
+    onMutate: async (variables) => {
+      await queryClient.cancelQueries({
+        queryKey: ['userBookmarks', currentUser.uid],
+      });
+      await queryClient.cancelQueries({
+        queryKey: ['articleBookmarks', variables.id],
+      });
       const previousBookmarks = queryClient.getQueryData<Article[]>([
         'userBookmarks',
         currentUser.uid,
       ]);
       const previousArticleBookmarks = queryClient.getQueryData<number>([
         'articleBookmarks',
-        variables,
+        variables.id,
       ]);
       if (previousBookmarks) {
         queryClient.setQueryData<Article[]>(
           ['userBookmarks', currentUser.uid],
-          [...previousBookmarks, res]
+          [...previousBookmarks, variables]
         );
       }
       if (previousArticleBookmarks === 0 || previousArticleBookmarks) {
         queryClient.setQueryData<number>(
-          ['articleBookmarks', variables],
+          ['articleBookmarks', variables.id],
           previousArticleBookmarks + 1
         );
       }
+      return { previousBookmarks, previousArticleBookmarks };
     },
-    onError: (error) => {
+    onSettled: (data, error, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ['userBookmarks', currentUser.uid],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['articleBookmarks', variables.id],
+      });
+    },
+    onError: (error, variables, context) => {
+      queryClient.setQueryData<Article[]>(
+        ['userBookmarks', currentUser.uid],
+        context?.previousBookmarks
+      );
+      queryClient.setQueryData<number>(
+        ['articleBookmarks', variables.id],
+        context?.previousArticleBookmarks
+      );
       alert('ブックマーク登録に失敗しました');
     },
   });
 
   const deleteBookmarkMutation = useMutation({
     mutationFn: deleteBookmark,
-    onSuccess: (res, variables) => {
+    onMutate: async (variables) => {
+      await queryClient.cancelQueries({
+        queryKey: ['userBookmarks', currentUser.uid],
+      });
+      await queryClient.cancelQueries({
+        queryKey: ['articleBookmarks', variables.id],
+      });
       const previousBookmarks = queryClient.getQueryData<Article[]>([
         'userBookmarks',
         currentUser.uid,
       ]);
       const previousArticleBookmarks = queryClient.getQueryData<number>([
         'articleBookmarks',
-        variables,
+        variables.id,
       ]);
       if (previousBookmarks) {
         queryClient.setQueryData<Article[]>(
           ['userBookmarks', currentUser.uid],
           previousBookmarks.filter(
-            (previousBookmark) => variables !== previousBookmark.id
+            (previousBookmark) => variables.id !== previousBookmark.id
           )
         );
       }
+
       if (previousArticleBookmarks) {
         queryClient.setQueryData<number>(
-          ['articleBookmarks', variables],
+          ['articleBookmarks', variables.id],
           previousArticleBookmarks - 1
         );
       }
+      return { previousBookmarks, previousArticleBookmarks };
     },
-    onError: (error) => {
+    onSettled: (data, error, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ['userBookmarks', currentUser.uid],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['articleBookmarks', variables.id],
+      });
+    },
+    onError: (error, variables, context) => {
+      queryClient.setQueryData<Article[]>(
+        ['userBookmarks', currentUser.uid],
+        context?.previousBookmarks
+      );
+      queryClient.setQueryData<number>(
+        ['articleBookmarks', variables.id],
+        context?.previousArticleBookmarks
+      );
       alert('ブックマーク解除に失敗しました');
     },
   });

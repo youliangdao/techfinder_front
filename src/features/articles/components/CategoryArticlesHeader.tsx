@@ -70,7 +70,7 @@ const categoryTable = new Map([
   ['threejs', 'three.js'],
   ['stripe', 'Stripe'],
   ['others', 'その他'],
-  ['linebot', 'LINEBot'],
+  ['line', 'LINE'],
   ['supabase', 'Supabase'],
   ['cloudflare', 'Cloudflare'],
   ['rust', 'Rust'],

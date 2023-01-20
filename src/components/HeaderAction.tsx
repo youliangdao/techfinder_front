@@ -20,9 +20,11 @@ import {
   IconBookmark,
   IconChevronDown,
   IconChevronRight,
-  IconHeart,
   IconLogout,
+  IconMessageCircle2,
   IconSettings,
+  IconThumbUp,
+  IconTrash,
 } from '@tabler/icons';
 import { getAuth } from 'firebase/auth';
 import React, { forwardRef } from 'react';
@@ -250,16 +252,22 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                   </Menu.Item>
                   <Menu.Divider />
                   <Menu.Item
-                    icon={<IconHeart size={14} stroke={1.5} />}
+                    icon={<IconBookmark size={14} stroke={1.5} />}
                     onClick={() => navigate('/dashboards/bookmarks')}
                   >
                     ブックマークした記事
                   </Menu.Item>
                   <Menu.Item
-                    icon={<IconBookmark size={14} stroke={1.5} />}
+                    icon={<IconMessageCircle2 size={14} stroke={1.5} />}
                     onClick={() => navigate('/dashboards/comments')}
                   >
                     コメントした記事
+                  </Menu.Item>
+                  <Menu.Item
+                    icon={<IconThumbUp size={14} stroke={1.5} />}
+                    onClick={() => navigate('/dashboards/likes')}
+                  >
+                    いいねした記事
                   </Menu.Item>
                   <Menu.Divider />
                   <Menu.Label>Settings</Menu.Label>
@@ -277,6 +285,11 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                     }}
                   >
                     ログアウト
+                  </Menu.Item>
+                  <Menu.Divider />
+                  <Menu.Label>Danger zone</Menu.Label>
+                  <Menu.Item color="red" icon={<IconTrash size={14} />}>
+                    退会する
                   </Menu.Item>
                 </Menu.Dropdown>
               </Menu>

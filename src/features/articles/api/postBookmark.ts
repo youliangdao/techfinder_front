@@ -1,11 +1,11 @@
-import { ResponseBookmarkPostType } from 'articles/types';
+import { Article, ResponseBookmarkPostType } from 'articles/types';
 import axios from 'axios';
 import { endpoint } from 'config';
 import { formatDistanceToNow } from 'date-fns';
 import { ja } from 'date-fns/locale';
 import { getAuth } from 'firebase/auth';
 
-export const postBookmark = async (id: string) => {
+export const postBookmark = async ({ id }: Article) => {
   const auth = getAuth();
   const idToken = await auth.currentUser?.getIdToken();
   const config = {

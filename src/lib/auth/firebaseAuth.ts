@@ -53,6 +53,8 @@ export const useFirebaseAuth = () => {
               authChecked: true,
               apiChecked: true,
               avatarKey: user.data.attributes.avatar_key,
+              twitterUsername: user.data.attributes.twitter_username,
+              githubUsername: user.data.attributes.github_username,
             })
           );
         } else {
@@ -65,6 +67,8 @@ export const useFirebaseAuth = () => {
               authChecked: true,
               apiChecked: true,
               avatarKey: '',
+              twitterUsername: user.data.attributes.twitter_username,
+              githubUsername: user.data.attributes.github_username,
             })
           );
         }

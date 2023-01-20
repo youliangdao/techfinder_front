@@ -12,6 +12,7 @@ import { useForm, zodResolver } from '@mantine/form';
 import { IconChevronDown, IconEdit, IconTrash } from '@tabler/icons';
 import { useMutateArticleComment } from 'comments/hooks/useMutateArticleComment';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { selectUser } from 'store/ducks/userSlice';
 import { useAppSelector } from 'store/hooks';
 import { z } from 'zod';
@@ -30,7 +31,9 @@ type Form = z.infer<typeof schema>;
 const CommentItem = ({
   comment: { id, postedAt, body, author },
   article,
+  close,
 }: CommentItemProps) => {
+  const navigate = useNavigate();
   const currentUser = useAppSelector(selectUser);
 
   const [editedFlag, setEditedFlag] = useState(false);
@@ -53,7 +56,15 @@ const CommentItem = ({
     <div>
       <Group position="apart">
         <Group>
-          <Avatar src={author.image} alt={author.name} radius="xl" />
+          <Avatar
+            src={author.image}
+            alt={author.name}
+            radius="xl"
+            onClick={() => {
+              close();
+              navigate(`/users/${author.id}/all`);
+            }}
+          />
           <div>
             <Text size="sm">{author.name}</Text>
             <Text size="xs" color="dimmed">

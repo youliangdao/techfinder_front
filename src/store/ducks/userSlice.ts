@@ -8,7 +8,9 @@ type UserState = {
   avatar: string;
   avatarKey: string;
   description: string;
+  githubUsername: string;
   nickname: string;
+  twitterUsername: string;
   uid: string;
 };
 
@@ -21,6 +23,8 @@ export const userSlice = createSlice({
       nickname: '',
       uid: '',
       description: '',
+      twitterUsername: '',
+      githubUsername: '',
       authChecked: false,
       apiChecked: false,
     },
@@ -36,6 +40,8 @@ export const userSlice = createSlice({
         uid: '',
         description: '',
         avatarKey: '',
+        twitterUsername: '',
+        githubUsername: '',
         authChecked: true,
         apiChecked: false,
       };
@@ -49,13 +55,15 @@ export const userSlice = createSlice({
     updateUserProfile: (
       state,
       action: PayloadAction<
-        Pick<UserState, 'nickname' | 'description' | 'avatar' | 'avatarKey'>
+        Omit<UserState, 'apiChecked' | 'authChecked' | 'uid'>
       >
     ) => {
       state.user.nickname = action.payload.nickname;
       state.user.description = action.payload.description;
       state.user.avatar = action.payload.avatar;
       state.user.avatarKey = action.payload.avatarKey;
+      state.user.githubUsername = action.payload.githubUsername;
+      state.user.twitterUsername = action.payload.twitterUsername;
     },
   },
 });

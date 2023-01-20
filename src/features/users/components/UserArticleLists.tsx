@@ -8,7 +8,6 @@ import {
   Tabs,
 } from '@mantine/core';
 import ArticleItem from 'articles/components/ArticleItem';
-import { ArticleListsProps } from 'articles/types';
 import React, { useEffect, useState } from 'react';
 import {
   useLocation,
@@ -16,17 +15,18 @@ import {
   useParams,
   useSearchParams,
 } from 'react-router-dom';
+import { UserArticleListsType } from 'users/types';
 
 import { useMediaQuery } from '../../../lib/mantine/useMediaQuery';
 
 const ITEMS_PAGE_SIZE = 10;
 
 const UserArticleLists = ({
-  leftGenre,
-  rightGenre,
+  genres,
   articleItems,
   isLoading,
-}: Omit<ArticleListsProps, 'filterInput'>) => {
+  isLoginUser,
+}: UserArticleListsType) => {
   const largerThanSm = useMediaQuery('sm');
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -55,19 +55,24 @@ const UserArticleLists = ({
       <Tabs
         value={params.tab}
         onTabChange={(value) => {
-          navigate(`/dashboards/${value}`);
+          isLoginUser
+            ? navigate(`/dashboards/${value}`)
+            : navigate(`/users/${params.userId}/${value}`);
         }}
       >
         <Tabs.List className="flex justify-around">
           <Tabs.Tab value="all" className="max-sm:text-xs">
             すべて
           </Tabs.Tab>
-          <Tabs.Tab value="bookmarks" className="max-sm:text-xs">
-            {leftGenre}
-          </Tabs.Tab>
-          <Tabs.Tab value="comments" className="max-sm:text-xs">
-            {rightGenre}
-          </Tabs.Tab>
+          {genres.map((genre) => (
+            <Tabs.Tab
+              key={genre.path}
+              value={genre.path}
+              className="max-sm:text-xs"
+            >
+              {genre.name}
+            </Tabs.Tab>
+          ))}
         </Tabs.List>
       </Tabs>
       {isLoading ? (

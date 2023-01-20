@@ -29,7 +29,7 @@ const schema = z.object({
 
 type Form = z.infer<typeof schema>;
 
-const CommentLists = ({ commentLists, article }: CommentListsProps) => {
+const CommentLists = ({ commentLists, article, close }: CommentListsProps) => {
   const currentUser = useAppSelector(selectUser);
   const navigate = useNavigate();
   const location = useLocation();
@@ -49,7 +49,12 @@ const CommentLists = ({ commentLists, article }: CommentListsProps) => {
       <Divider className="my-5 font-bold" />
       <Stack className="space-y-1 px-8">
         {commentLists.map((comment) => (
-          <CommentItem key={comment.id} comment={comment} article={article} />
+          <CommentItem
+            key={comment.id}
+            comment={comment}
+            article={article}
+            close={close}
+          />
         ))}
         <Space h="md" />
         <form

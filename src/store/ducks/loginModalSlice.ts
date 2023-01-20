@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 export const loginModalSlice = createSlice({
-  name: 'category',
+  name: 'loginModal',
   initialState: {
     isLoginOpened: false,
   },
