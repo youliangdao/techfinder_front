@@ -1,27 +1,52 @@
-import { Space } from '@mantine/core';
-import NotFoundTitle from 'components/NotFoundTitle';
+import { Container, Loader, Space } from '@mantine/core';
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import MyArticles from 'users/containers/MyArticles';
+import { Navigate, useParams } from 'react-router-dom';
+import { selectUser } from 'store/ducks/userSlice';
+import { useAppSelector } from 'store/hooks';
+import UserArticlesContainer from 'users/containers/UserArticlesContainer';
 import UserInfo from 'users/containers/UserInfo';
+import { useQueryUser } from 'users/hooks/useQueryUser';
 
 const UserArticles = () => {
   const params = useParams();
-  if (
-    params.tab === 'bookmarks' ||
-    params.tab === 'comments' ||
-    params.tab === 'likes' ||
-    params.tab === 'all'
-  ) {
+  const currentUser = useAppSelector(selectUser);
+  const { data } = useQueryUser(params.userId || '');
+
+  if (currentUser.authChecked) {
+    if (currentUser.apiChecked) {
+      if (currentUser.uid) {
+        return currentUser.uid === data?.uid ? (
+          <Navigate to="/dashboards/all" />
+        ) : (
+          <>
+            <UserInfo id={params.userId || ''} />
+            <Space h="lg" />
+            <UserArticlesContainer id={params.userId || ''} />
+          </>
+        );
+      } else {
+        return (
+          <Container className="flex items-center justify-center py-60">
+            <Loader />
+          </Container>
+        );
+      }
+    } else {
+      return (
+        <>
+          <UserInfo id={params.userId || ''} />
+          <Space h="lg" />
+          <UserArticlesContainer id={params.userId || ''} />
+        </>
+      );
+    }
+  } else {
     return (
-      <>
-        <UserInfo />
-        <Space h="lg" />
-        <MyArticles />
-      </>
+      <Container className="flex items-center justify-center py-60">
+        <Loader />
+      </Container>
     );
   }
-  return <NotFoundTitle />;
 };
 
 export default UserArticles;

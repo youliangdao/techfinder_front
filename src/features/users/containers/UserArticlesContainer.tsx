@@ -1,16 +1,13 @@
-import { useQueryBookmarks } from 'articles/hooks/useQueryBookmarks';
-import { useQueryComments } from 'articles/hooks/useQueryComments';
-import { useQueryLikes } from 'articles/hooks/useQueryLikes';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import UserArticleLists from 'users/components/UserArticleLists';
+import { useQueryUserComments } from 'users/hooks/useQueryUserCommentArticles';
+import { useQueryUserLikes } from 'users/hooks/useQueryUserLikeArticles';
 
-const MyArticles = () => {
-  const userBookmarksQuery = useQueryBookmarks();
-  const userCommentsQuery = useQueryComments();
-  const userLikesQuery = useQueryLikes();
+const UserArticlesContainer = ({ id }: { id: string }) => {
+  const userCommentsQuery = useQueryUserComments(id);
+  const userLikesQuery = useQueryUserLikes(id);
   const userAllArticles = [
-    ...(userBookmarksQuery.data || []),
     ...(userCommentsQuery.data || []),
     ...(userLikesQuery.data || []),
   ];
@@ -29,10 +26,6 @@ const MyArticles = () => {
     <UserArticleLists
       genres={[
         {
-          name: 'ブックマークした記事',
-          path: 'bookmarks',
-        },
-        {
           name: 'コメントした記事',
           path: 'comments',
         },
@@ -42,22 +35,16 @@ const MyArticles = () => {
         },
       ]}
       articleItems={
-        params.tab === 'bookmarks'
-          ? userBookmarksQuery.data || []
-          : params.tab === 'comments'
+        params.tab === 'comments'
           ? uniqueComments
           : params.tab === 'likes'
           ? userLikesQuery.data || []
           : uniqueAllArticles
       }
-      isLoading={
-        userBookmarksQuery.isLoading ||
-        userCommentsQuery.isLoading ||
-        userLikesQuery.isLoading
-      }
-      isLoginUser={true}
+      isLoading={userCommentsQuery.isLoading || userLikesQuery.isLoading}
+      isLoginUser={false}
     />
   );
 };
 
-export default MyArticles;
+export default UserArticlesContainer;

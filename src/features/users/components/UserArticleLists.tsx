@@ -25,6 +25,7 @@ const UserArticleLists = ({
   genres,
   articleItems,
   isLoading,
+  isLoginUser,
 }: UserArticleListsType) => {
   const largerThanSm = useMediaQuery('sm');
   const navigate = useNavigate();
@@ -54,7 +55,9 @@ const UserArticleLists = ({
       <Tabs
         value={params.tab}
         onTabChange={(value) => {
-          navigate(`/dashboards/${value}`);
+          isLoginUser
+            ? navigate(`/dashboards/${value}`)
+            : navigate(`/users/${params.userId}/${value}`);
         }}
       >
         <Tabs.List className="flex justify-around">

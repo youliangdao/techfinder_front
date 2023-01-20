@@ -1,15 +1,16 @@
 import React from 'react';
-import { selectUser } from 'store/ducks/userSlice';
-import { useAppSelector } from 'store/hooks';
 import UserInfoAction from 'users/components/UserInfoAction';
+import { useQueryUser } from 'users/hooks/useQueryUser';
 
-const UserInfo = () => {
-  const user = useAppSelector(selectUser);
+const UserInfo = ({ id }: { id: string }) => {
+  const { data } = useQueryUser(id);
   return (
     <UserInfoAction
-      name={user.nickname}
-      avatar={user.avatar}
-      description={user.description}
+      avatar={data?.avatar || ''}
+      name={data?.nickname || ''}
+      description={data?.description || ''}
+      githubUsername={data?.githubUsername || ''}
+      twitterUsername={data?.twitterUsername || ''}
     />
   );
 };
