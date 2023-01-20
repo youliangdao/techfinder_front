@@ -26,6 +26,7 @@ export const useQueryArticleComments = (id: string) => {
             }
           ),
           author: {
+            id: comment.relationships.user.data.id,
             name:
               res.data.included.find(
                 (user) => user.id === comment.relationships.user.data.id

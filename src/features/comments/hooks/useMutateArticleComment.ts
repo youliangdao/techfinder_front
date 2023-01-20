@@ -46,6 +46,7 @@ const postArticleComment = async ({
       }
     ),
     author: {
+      id: res.data.data.relationships.user.data.id,
       name: nickname,
       image: avatar,
     },
@@ -107,6 +108,7 @@ const updateArticleComment = async ({
       }
     ),
     author: {
+      id: res.data.data.relationships.user.data.id,
       name: nickname,
       image: avatar,
     },
