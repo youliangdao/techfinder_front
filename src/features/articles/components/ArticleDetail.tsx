@@ -13,10 +13,13 @@ import {
   Text,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconBookmark, IconMessageCircle2 } from '@tabler/icons';
+import { IconBookmark, IconMessageCircle2, IconThumbUp } from '@tabler/icons';
 import { useMutateBookmark } from 'articles/hooks/useMutateBookmark';
+import { useMutateLike } from 'articles/hooks/useMutateLike';
 import { useQueryArticleBookmarks } from 'articles/hooks/useQueryArticleBookmarks';
+import { useQueryArticleLikes } from 'articles/hooks/useQueryArticleLikes';
 import { useQueryBookmarks } from 'articles/hooks/useQueryBookmarks';
+import { useQueryLikes } from 'articles/hooks/useQueryLikes';
 import { Article } from 'articles/types';
 import { useQueryArticleComments } from 'comments/hooks/useQueryArticleComments';
 import ArticleComments from 'lib/modal/ArticleComments';
@@ -59,9 +62,12 @@ const ArticleDetail = ({
 
   const articleCommentsQuery = useQueryArticleComments(id);
   const userBookmarksQuery = useQueryBookmarks();
+  const userLikesQuery = useQueryLikes();
   const articleBookmarksQuery = useQueryArticleBookmarks(id);
+  const articleLikesQuery = useQueryArticleLikes(id);
   const { createBookmarkMutation, deleteBookmarkMutation } =
     useMutateBookmark();
+  const { createLikeMutation, deleteLikeMutation } = useMutateLike();
   const curentUser = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
 
@@ -69,11 +75,55 @@ const ArticleDetail = ({
     userBookmarksQuery.data &&
     userBookmarksQuery.data.find((article) => article.id === id);
 
+  const isLike =
+    userLikesQuery.data &&
+    userLikesQuery.data.find((article) => article.id === id);
+
   const bookmark = async () => {
     if (isBookmark) {
-      deleteBookmarkMutation.mutate(id);
+      deleteBookmarkMutation.mutate({
+        id: id,
+        title: title,
+        categories: categories,
+        date: date,
+        image: image,
+        link: link,
+        media: media,
+      });
     } else {
-      createBookmarkMutation.mutate(id);
+      createBookmarkMutation.mutate({
+        id: id,
+        title: title,
+        categories: categories,
+        date: date,
+        image: image,
+        link: link,
+        media: media,
+      });
+    }
+  };
+
+  const like = async () => {
+    if (isLike) {
+      deleteLikeMutation.mutate({
+        id: id,
+        title: title,
+        categories: categories,
+        date: date,
+        image: image,
+        link: link,
+        media: media,
+      });
+    } else {
+      createLikeMutation.mutate({
+        id: id,
+        title: title,
+        categories: categories,
+        date: date,
+        image: image,
+        link: link,
+        media: media,
+      });
     }
   };
 
@@ -129,17 +179,17 @@ const ArticleDetail = ({
                     {isBookmark ? (
                       <IconBookmark
                         size={18}
-                        color={theme.colors.yellow[6]}
+                        color={theme.colors.blue[6]}
                         stroke={1.5}
-                        fill={theme.colors.yellow[6]}
+                        fill={theme.colors.blue[6]}
                       />
                     ) : (
                       <IconBookmark size={18} stroke={1.5} />
                     )}
                   </ActionIcon>
-                  <Text size="sm" className="text-m_dark-2">
+                  {/* <Text size="sm" className="text-m_dark-2">
                     {articleBookmarksQuery.data}
-                  </Text>
+                  </Text> */}
                 </Center>
               ) : (
                 <Center>
@@ -150,9 +200,9 @@ const ArticleDetail = ({
                   >
                     <IconBookmark size={18} stroke={1.5} />
                   </ActionIcon>
-                  <Text size="sm" className="text-m_dark-2">
+                  {/* <Text size="sm" className="text-m_dark-2">
                     {articleBookmarksQuery.data}
-                  </Text>
+                  </Text> */}
                 </Center>
               )}
               <Modal
@@ -178,6 +228,7 @@ const ArticleDetail = ({
                   commentLists={
                     articleCommentsQuery.data ? articleCommentsQuery.data : []
                   }
+                  close={close}
                 />
               </Modal>
               <Center>
@@ -191,6 +242,40 @@ const ArticleDetail = ({
                   {articleCommentsQuery.data?.length}
                 </Text>
               </Center>
+              {curentUser.uid ? (
+                <Center>
+                  <ActionIcon
+                    onClick={like}
+                    loading={articleLikesQuery.isLoading}
+                  >
+                    <IconThumbUp
+                      size={18}
+                      color={isLike && theme.colors.blue[6]}
+                      stroke={1.5}
+                    />
+                  </ActionIcon>
+                  <Text
+                    size="sm"
+                    color={isLike ? theme.colors.blue[6] : theme.colors.dark[2]}
+                  >
+                    {articleLikesQuery.data}
+                  </Text>
+                </Center>
+              ) : (
+                <Center>
+                  <ActionIcon
+                    onClick={() => {
+                      dispatch(openLoginModal());
+                    }}
+                    loading={articleLikesQuery.isLoading}
+                  >
+                    <IconThumbUp size={18} stroke={1.5} />
+                  </ActionIcon>
+                  <Text size="sm" color={theme.colors.dark[2]}>
+                    {articleLikesQuery.data}
+                  </Text>
+                </Center>
+              )}
             </Group>
           </Group>
         </div>

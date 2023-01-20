@@ -64,7 +64,6 @@ const ArticleItem = ({
   const { classes, theme } = useStyles();
   const navigate = useNavigate();
 
-  const [commentOpened, { open, close }] = useDisclosure(false);
   const curentUser = useAppSelector(selectUser);
 
   const articleCommentsQuery = useQueryArticleComments(id);
@@ -75,6 +74,8 @@ const ArticleItem = ({
   const { createBookmarkMutation, deleteBookmarkMutation } =
     useMutateBookmark();
   const { createLikeMutation, deleteLikeMutation } = useMutateLike();
+
+  const [commentOpened, { open, close }] = useDisclosure(false);
 
   const dispatch = useAppDispatch();
 
@@ -201,9 +202,7 @@ const ArticleItem = ({
             ) : (
               <Center>
                 <ActionIcon
-                  onClick={() => {
-                    dispatch(openLoginModal());
-                  }}
+                  onClick={() => dispatch(openLoginModal())}
                   loading={articleBookmarksQuery.isLoading}
                 >
                   <IconBookmark size={18} stroke={1.5} />
@@ -236,6 +235,7 @@ const ArticleItem = ({
                 commentLists={
                   articleCommentsQuery.data ? articleCommentsQuery.data : []
                 }
+                close={close}
               />
             </Modal>
             <Center>
