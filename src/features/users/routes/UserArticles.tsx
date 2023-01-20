@@ -10,6 +10,7 @@ const UserArticles = () => {
   if (
     params.tab === 'bookmarks' ||
     params.tab === 'comments' ||
+    params.tab === 'likes' ||
     params.tab === 'all'
   ) {
     return (
