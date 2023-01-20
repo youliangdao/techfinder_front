@@ -10,6 +10,7 @@ import React, { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Home from 'routes/Home';
 import { RouteAuthGuard } from 'routes/RouteAuthGuard';
+import LoginUserArticles from 'users/routes/LoginUserArticles';
 import UserArticles from 'users/routes/UserArticles';
 import UserProfile from 'users/routes/UserProfile';
 
@@ -45,6 +46,14 @@ const AppRoutes = () => {
         </Route>
         <Route path="*" element={<NotFoundTitle />} />
       </Route>
+      <Route path="users" element={<MainLayout />}>
+        <Route index element={<Navigate to="/" replace />} />
+        <Route path=":userId">
+          <Route index element={<Navigate to="/" replace />} />
+          <Route path=":tab" element={<UserArticles />} />
+        </Route>
+        <Route path="*" element={<NotFoundTitle />} />
+      </Route>
       <Route
         path="profile"
         element={
@@ -56,7 +65,10 @@ const AppRoutes = () => {
         <Route
           path=":tab"
           element={
-            <RouteAuthGuard component={<UserArticles />} redirect="/login" />
+            <RouteAuthGuard
+              component={<LoginUserArticles />}
+              redirect="/login"
+            />
           }
         />
         <Route path="*" element={<NotFoundTitle />} />
