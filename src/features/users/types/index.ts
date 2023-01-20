@@ -1,3 +1,5 @@
+import { Article } from 'articles/types';
+
 export type User = {
   avatar: string;
   description: string;
@@ -14,4 +16,13 @@ export type UserType = {
     nickname: string;
   };
   type: 'user';
+};
+
+export type UserArticleListsType = {
+  articleItems: Article[];
+  genres: {
+    name: string;
+    path: string;
+  }[];
+  isLoading: boolean;
 };
