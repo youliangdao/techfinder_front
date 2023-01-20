@@ -24,6 +24,7 @@ import {
   IconMessageCircle2,
   IconSettings,
   IconThumbUp,
+  IconTrash,
 } from '@tabler/icons';
 import { getAuth } from 'firebase/auth';
 import React, { forwardRef } from 'react';
@@ -284,6 +285,11 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                     }}
                   >
                     ログアウト
+                  </Menu.Item>
+                  <Menu.Divider />
+                  <Menu.Label>Danger zone</Menu.Label>
+                  <Menu.Item color="red" icon={<IconTrash size={14} />}>
+                    退会する
                   </Menu.Item>
                 </Menu.Dropdown>
               </Menu>
