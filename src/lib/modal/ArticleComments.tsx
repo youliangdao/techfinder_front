@@ -3,8 +3,12 @@ import React from 'react';
 
 import { ArticleCommentsProps } from './types';
 
-const ArticleComments = ({ article, commentLists }: ArticleCommentsProps) => {
-  return <CommentLists {...{ commentLists, article }} />;
+const ArticleComments = ({
+  article,
+  commentLists,
+  close,
+}: ArticleCommentsProps) => {
+  return <CommentLists {...{ commentLists, article, close }} />;
 };
 
 export default ArticleComments;
