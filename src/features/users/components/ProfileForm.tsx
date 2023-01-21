@@ -5,10 +5,12 @@ import {
   Group,
   Space,
   Stack,
+  Text,
   Textarea,
   TextInput,
   Title,
 } from '@mantine/core';
+import { GithubIcon, TwitterIcon } from '@mantine/ds';
 import { useForm, zodResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import { IconCheck } from '@tabler/icons';
@@ -42,6 +44,7 @@ const ProfileForm = () => {
   const user = useAppSelector(selectUser);
 
   const largerThanSm = useMediaQuery('sm');
+  const largerThanXs = useMediaQuery('xs');
   const form = useForm<Form>({
     validate: zodResolver(schema),
     initialValues: {
@@ -71,7 +74,7 @@ const ProfileForm = () => {
   }, [user]);
 
   return (
-    <Box sx={{ maxWidth: 500 }} mx="auto">
+    <Box sx={{ maxWidth: 700 }} mx="auto">
       <Title className="max-sm:text-xl sm:text-3xl">プロフィール</Title>
       <Space h={40} />
       <form
@@ -182,61 +185,160 @@ const ProfileForm = () => {
           }
         })}
       >
-        <Stack spacing="lg">
-          <Group position="left">
-            {largerThanSm ? (
+        {largerThanXs ? (
+          <div className="flex space-x-10">
+            <Stack spacing="xs">
               <ImagePreview
                 file={file}
                 imageURL={imageURL}
                 setImageURL={setImageURL}
                 size={120}
               />
-            ) : (
-              <ImagePreview
-                file={file}
-                imageURL={imageURL}
-                setImageURL={setImageURL}
-                size={84}
+              <FileButton
+                onChange={changeFileHandler}
+                accept="image/png,image/jpeg"
+              >
+                {(props) => (
+                  <Button color="gray" variant="subtle" {...props}>
+                    変更する
+                  </Button>
+                )}
+              </FileButton>
+            </Stack>
+            <Stack spacing="lg" className="w-full">
+              <TextInput
+                withAsterisk
+                label="ニックネーム"
+                placeholder="表示名を入力"
+                {...form.getInputProps('nickname')}
               />
-            )}
+              <Textarea
+                label="自己紹介"
+                placeholder="自己紹介を入力"
+                {...form.getInputProps('description')}
+              />
+              <Group>
+                <div className="grow">
+                  <Group spacing="xs" mb={5}>
+                    <GithubIcon size={18} />
+                    <Text
+                      size="sm"
+                      weight={500}
+                      component="label"
+                      htmlFor="github-username"
+                    >
+                      GitHubユーザー名
+                    </Text>
+                  </Group>
+                  <TextInput
+                    placeholder="ユーザー名のみを入力"
+                    id="github-username"
+                    {...form.getInputProps('githubUsername')}
+                  />
+                </div>
+                <div className="grow">
+                  <Group spacing="xs" mb={5}>
+                    <TwitterIcon size={18} color="#00ACEE" />
+                    <Text
+                      size="sm"
+                      weight={500}
+                      component="label"
+                      htmlFor="twitter-username"
+                    >
+                      Twitterユーザー名
+                    </Text>
+                  </Group>
+                  <TextInput
+                    placeholder="@なしで入力"
+                    id="twitter-username"
+                    {...form.getInputProps('twitterUsername')}
+                  />
+                </div>
+              </Group>
+              <Group position="center" className="mt-5">
+                <Button type="submit" radius="xl" size="md" loading={isLoading}>
+                  更新する
+                </Button>
+              </Group>
+            </Stack>
+          </div>
+        ) : (
+          <div>
+            <ImagePreview
+              file={file}
+              imageURL={imageURL}
+              setImageURL={setImageURL}
+              size={100}
+            />
             <FileButton
               onChange={changeFileHandler}
               accept="image/png,image/jpeg"
             >
               {(props) => (
-                <Button variant="outline" {...props}>
-                  画像をアップロード
+                <Button color="gray" variant="subtle" {...props}>
+                  変更する
                 </Button>
               )}
             </FileButton>
-          </Group>
-          <TextInput
-            withAsterisk
-            label="ニックネーム"
-            placeholder="表示名を入力"
-            {...form.getInputProps('nickname')}
-          />
-          <Textarea
-            label="自己紹介"
-            placeholder="自己紹介を入力"
-            {...form.getInputProps('description')}
-          />
-          <TextInput
-            label="GitHubユーザー名"
-            placeholder="ユーザー名のみを入力"
-            {...form.getInputProps('githubUsername')}
-          />
-          <TextInput
-            label="Twitterユーザー名"
-            placeholder="@なしで入力"
-            {...form.getInputProps('twitterUsername')}
-          />
-        </Stack>
-        <Group position="center" className="mt-10">
-          <Button type="submit" radius="xl" size="md" loading={isLoading}>
-            更新する
-          </Button>
-        </Group>
+            <Space h="xl" />
+            <Stack spacing="lg" className="w-full">
+              <TextInput
+                withAsterisk
+                label="ニックネーム"
+                placeholder="表示名を入力"
+                {...form.getInputProps('nickname')}
+              />
+              <Textarea
+                label="自己紹介"
+                placeholder="自己紹介を入力"
+                {...form.getInputProps('description')}
+              />
+              <Group>
+                <div className="grow">
+                  <Group spacing="xs" mb={5}>
+                    <GithubIcon size={18} />
+                    <Text
+                      size="sm"
+                      weight={500}
+                      component="label"
+                      htmlFor="github-username"
+                    >
+                      GitHubユーザー名
+                    </Text>
+                  </Group>
+                  <TextInput
+                    placeholder="ユーザー名のみを入力"
+                    id="github-username"
+                    {...form.getInputProps('githubUsername')}
+                  />
+                </div>
+                <div className="grow">
+                  <Group spacing="xs" mb={5}>
+                    <TwitterIcon size={18} color="#00ACEE" />
+                    <Text
+                      size="sm"
+                      weight={500}
+                      component="label"
+                      htmlFor="twitter-username"
+                    >
+                      Twitterユーザー名
+                    </Text>
+                  </Group>
+                  <TextInput
+                    placeholder="@なしで入力"
+                    id="twitter-username"
+                    {...form.getInputProps('twitterUsername')}
+                  />
+                </div>
+              </Group>
+              <Group position="center" className="mt-5">
+                <Button type="submit" radius="xl" size="md" loading={isLoading}>
+                  更新する
+                </Button>
+              </Group>
+            </Stack>
+          </div>
+        )}
       </form>
     </Box>
   );

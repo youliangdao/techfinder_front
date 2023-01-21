@@ -168,7 +168,7 @@ const RegisterForm = () => {
                     {...props}
                     className="max-xs:mx-auto"
                   >
-                    画像をアップロード
+                    画像を変更する
                   </Button>
                 )}
               </FileButton>
