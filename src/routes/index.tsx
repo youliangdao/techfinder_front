@@ -3,8 +3,10 @@ import FilterableArticles from 'articles/containers/FilterableArticles';
 import RegisterForm from 'auth/components/RegisterForm';
 import LoginImage from 'auth/containers/LoginImage';
 import FilterableCategoryLists from 'categories/containers/FilterableCategoryLists';
+import Abount from 'components/Abount';
 import NotFoundTitle from 'components/NotFoundTitle';
 import MainLayout from 'Layout/MainLayout';
+import UserLayout from 'Layout/UserLayout';
 import { useFirebaseAuth } from 'lib/auth/firebaseAuth';
 import React, { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
@@ -78,6 +80,14 @@ const AppRoutes = () => {
         element={<RouteAuthGuard component={<RegisterForm />} redirect="/" />}
       />
       <Route path="login" element={<LoginImage />} />
+      <Route
+        path="about"
+        element={
+          <UserLayout>
+            <Abount />
+          </UserLayout>
+        }
+      />
       <Route path="/" element={<Home />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
