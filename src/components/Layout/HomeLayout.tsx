@@ -12,31 +12,39 @@ import HeaderAction from '../HeaderAction';
 const links = [
   {
     link: '/about',
-    label: 'About',
+    label: 'TechFinderについて',
   },
   {
-    link: '',
-    label: 'Search',
-    links: [
-      {
-        link: '/categories',
-        label: 'カテゴリから探す',
-      },
-      {
-        link: '/articles/all',
-        label: '記事から探す',
-      },
-    ],
+    link: '/categories',
+    label: 'カテゴリから探す',
   },
+  {
+    link: '/articles/all',
+    label: '記事から探す',
+  },
+  // {
+  //   link: '',
+  //   label: 'Search',
+  //   links: [
+  //     {
+  //       link: '/categories',
+  //       label: 'カテゴリから探す',
+  //     },
+  //     {
+  //       link: '/articles/all',
+  //       label: '記事から探す',
+  //     },
+  //   ],
+  // },
 ];
 
 const data = [
   {
-    link: '#',
+    link: `/privacy-policy`,
     label: 'プライバシーポリシー',
   },
   {
-    link: '#',
+    link: '/terms',
     label: '利用規約',
   },
 ];
