@@ -232,7 +232,7 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
               className="h-8"
               onClick={() => dispatch(openLoginModal())}
             >
-              Login
+              ログイン
             </Button>
           ) : currentUser.uid ? (
             <Group position="center">

@@ -1,4 +1,12 @@
-import { createStyles, Group, Paper, Stack, Text, Title } from '@mantine/core';
+import {
+  Anchor,
+  createStyles,
+  Group,
+  Paper,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core';
 import { GoogleButton } from 'Button/SocialButtons';
 import {
   getAdditionalUserInfo,
@@ -102,7 +110,19 @@ const LoginImage = () => {
 
           <Stack className="space-y-4">
             <Text size="sm" color="dimmed">
-              新規登録、ログインのどちらも以下のリンクから行うことができます。利用規約、プライバシーポリシーに同意したうえでログインしてください。
+              新規登録、ログインのどちらも以下のリンクから行うことができます。
+              <Anchor
+                onClick={() => {
+                  navigate('/terms');
+                }}
+              >
+                利用規約
+              </Anchor>
+              、
+              <Anchor onClick={() => navigate('/privacy-policy')}>
+                プライバシーポリシー
+              </Anchor>
+              に同意したうえでログインしてください。
             </Text>
             <Group grow mb="md" mt="md">
               <GoogleButton
