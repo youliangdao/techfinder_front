@@ -1,4 +1,5 @@
 import { Container, Loader, Space } from '@mantine/core';
+import { Head } from 'components/Head/Head';
 import React from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { selectUser } from 'store/ducks/userSlice';
@@ -19,6 +20,7 @@ const UserArticles = () => {
           <Navigate to="/dashboards/all" />
         ) : (
           <>
+            <Head title={`${data?.nickname}さんのダッシュボード`} />
             <UserInfo id={params.userId || ''} />
             <Space h="lg" />
             <UserArticlesContainer id={params.userId || ''} />
@@ -34,6 +36,7 @@ const UserArticles = () => {
     } else {
       return (
         <>
+          <Head title={`${data?.nickname}さんのダッシュボード`} />
           <UserInfo id={params.userId || ''} />
           <Space h="lg" />
           <UserArticlesContainer id={params.userId || ''} />

@@ -1,5 +1,6 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import { Container, Stack, Text, Title } from '@mantine/core';
+import { Head } from 'components/Head/Head';
 import React, { FC, ReactNode } from 'react';
 import { selectUser } from 'store/ducks/userSlice';
 import { useAppSelector } from 'store/hooks';
@@ -84,6 +85,7 @@ const HomeLayout: FC<MainLayoutProps> = ({ children }) => {
 
   return (
     <>
+      <Head />
       <HeaderAction {...{ links, isLogin }} />
       <HeroContents />
       <Container className="pt-5 pb-10">
