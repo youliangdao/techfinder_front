@@ -47,7 +47,7 @@ const CommentLists = ({ commentLists, article, close }: CommentListsProps) => {
     <Card radius="md" withBorder className="px-0">
       <Text className="text-center text-lg font-bold">コメント一覧</Text>
       <Divider className="my-5 font-bold" />
-      <Stack className="space-y-1 px-8">
+      <Stack className="space-y-1 px-2 sm:px-8">
         {commentLists.map((comment) => (
           <CommentItem
             key={comment.id}
@@ -75,7 +75,7 @@ const CommentLists = ({ commentLists, article, close }: CommentListsProps) => {
                 radius="md"
                 withAsterisk
                 {...form.getInputProps('body')}
-                className="px-5"
+                className="sm:px-5"
               />
               <Group position="right" mt="md" className="xs:px-5">
                 <Button loading={createCommentMutation.isLoading} type="submit">
