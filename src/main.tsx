@@ -1,6 +1,7 @@
 import './lib/tailwind.css';
 
 import firebaseConfig from 'config/firebase-config';
+import { getAnalytics, logEvent } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -17,6 +18,7 @@ const prepare = async () => {
   }
 };
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 // prepareが完了した後にアプリケーションをマウントする
 prepare().then(() => {
@@ -26,3 +28,5 @@ prepare().then(() => {
     </React.StrictMode>
   );
 });
+
+logEvent(analytics, 'notification_received');
