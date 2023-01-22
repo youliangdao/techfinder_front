@@ -3,10 +3,12 @@ import FilterableArticles from 'articles/containers/FilterableArticles';
 import RegisterForm from 'auth/components/RegisterForm';
 import LoginImage from 'auth/containers/LoginImage';
 import FilterableCategoryLists from 'categories/containers/FilterableCategoryLists';
-import Abount from 'components/Abount';
+import About from 'components/About';
+import { Head } from 'components/Head/Head';
 import NotFoundTitle from 'components/NotFoundTitle';
 import PrivacyPolicy from 'components/PrivacyPolicy';
 import Terms from 'components/Terms';
+import { usePageViewsTracking } from 'hooks/usePageViewsTracking';
 import MainLayout from 'Layout/MainLayout';
 import UserLayout from 'Layout/UserLayout';
 import { useFirebaseAuth } from 'lib/auth/firebaseAuth';
@@ -23,6 +25,8 @@ import NotFound from './NotFound';
 const AppRoutes = () => {
   const { hash, pathname } = useLocation();
   const { currentUser } = useFirebaseAuth();
+
+  usePageViewsTracking();
 
   useEffect(() => {
     if (!hash) {
@@ -60,19 +64,14 @@ const AppRoutes = () => {
       </Route>
       <Route
         path="profile"
-        element={
-          <RouteAuthGuard component={<UserProfile />} redirect="/login" />
-        }
+        element={<RouteAuthGuard component={<UserProfile />} redirect="/" />}
       />
       <Route path="dashboards" element={<MainLayout />}>
         <Route index element={<Navigate to="/" replace />} />
         <Route
           path=":tab"
           element={
-            <RouteAuthGuard
-              component={<LoginUserArticles />}
-              redirect="/login"
-            />
+            <RouteAuthGuard component={<LoginUserArticles />} redirect="/" />
           }
         />
         <Route path="*" element={<NotFoundTitle />} />
@@ -86,7 +85,8 @@ const AppRoutes = () => {
         path="about"
         element={
           <UserLayout>
-            <Abount />
+            <Head title="TechFinderについて" />
+            <About />
           </UserLayout>
         }
       />
@@ -94,6 +94,7 @@ const AppRoutes = () => {
         path="/privacy-policy"
         element={
           <UserLayout>
+            <Head title="プライバシーポリシー" />
             <PrivacyPolicy />
           </UserLayout>
         }
@@ -102,6 +103,7 @@ const AppRoutes = () => {
         path="/terms"
         element={
           <UserLayout>
+            <Head title="利用規約" />
             <Terms />
           </UserLayout>
         }
