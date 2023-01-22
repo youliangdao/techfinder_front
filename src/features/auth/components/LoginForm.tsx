@@ -46,7 +46,6 @@ const LoginForm = () => {
             title="Login with Google"
             loading={false}
           />
-          {/* <TwitterButton radius="xl">Twitter</TwitterButton> */}
         </Group>
         <Text size="sm" color="dimmed" className="px-5 text-center">
           <Anchor
