@@ -1,12 +1,16 @@
 import { Space } from '@mantine/core';
+import { Head } from 'components/Head/Head';
 import NotFoundTitle from 'components/NotFoundTitle';
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { selectUser } from 'store/ducks/userSlice';
+import { useAppSelector } from 'store/hooks';
 import LoginUserInfo from 'users/containers/LoginUserInfo';
 import MyArticles from 'users/containers/MyArticles';
 
 const LoginUserArticles = () => {
   const params = useParams();
+  const currentUser = useAppSelector(selectUser);
 
   if (
     params.tab === 'bookmarks' ||
@@ -23,6 +27,7 @@ const LoginUserArticles = () => {
         ) : (
           <MyArticles />
         )} */}
+        <Head title={`${currentUser.nickname}さんのダッシュボード`} />
         <LoginUserInfo />
         <Space h="lg" />
         <MyArticles />

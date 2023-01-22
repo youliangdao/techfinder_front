@@ -1,4 +1,5 @@
 import { useQueryCategories } from 'categories/hooks/useQueryCategories';
+import { Head } from 'components/Head/Head';
 import React, { useState } from 'react';
 
 import SearchInput from '../../../components/SearchInput';
@@ -17,6 +18,7 @@ const FilterableCategoryLists = () => {
 
   return (
     <>
+      <Head title="カテゴリ一覧" />
       <SearchInput {...{ filterInput, setFilterInput }} />
       <br />
       <CategoryLists

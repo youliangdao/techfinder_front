@@ -8,6 +8,7 @@ import {
   Title,
 } from '@mantine/core';
 import { GoogleButton } from 'Button/SocialButtons';
+import { Head } from 'components/Head/Head';
 import {
   getAdditionalUserInfo,
   getAuth,
@@ -102,39 +103,42 @@ const LoginImage = () => {
     return <Navigate to="/" replace />;
   } else {
     return (
-      <div className={classes.wrapper}>
-        <Paper className={classes.form} radius={0} p={30}>
-          <Title order={2} className={classes.title} align="center" my="md">
-            Sign In
-          </Title>
+      <>
+        <Head title="ログイン" />
+        <div className={classes.wrapper}>
+          <Paper className={classes.form} radius={0} p={30}>
+            <Title order={2} className={classes.title} align="center" my="md">
+              Sign In
+            </Title>
 
-          <Stack className="space-y-4">
-            <Text size="sm" color="dimmed">
-              新規登録、ログインのどちらも以下のリンクから行うことができます。
-              <Anchor
-                onClick={() => {
-                  navigate('/terms');
-                }}
-              >
-                利用規約
-              </Anchor>
-              、
-              <Anchor onClick={() => navigate('/privacy-policy')}>
-                プライバシーポリシー
-              </Anchor>
-              に同意したうえでログインしてください。
-            </Text>
-            <Group grow mb="md" mt="md">
-              <GoogleButton
-                onClick={signInWithGoogle}
-                title="Login with Google"
-                loading={isLoading}
-              />
-              {/* <TwitterButton radius="xl">Twitter</TwitterButton> */}
-            </Group>
-          </Stack>
-        </Paper>
-      </div>
+            <Stack className="space-y-4">
+              <Text size="sm" color="dimmed">
+                新規登録、ログインのどちらも以下のリンクから行うことができます。
+                <Anchor
+                  onClick={() => {
+                    navigate('/terms');
+                  }}
+                >
+                  利用規約
+                </Anchor>
+                、
+                <Anchor onClick={() => navigate('/privacy-policy')}>
+                  プライバシーポリシー
+                </Anchor>
+                に同意したうえでログインしてください。
+              </Text>
+              <Group grow mb="md" mt="md">
+                <GoogleButton
+                  onClick={signInWithGoogle}
+                  title="Login with Google"
+                  loading={isLoading}
+                />
+                {/* <TwitterButton radius="xl">Twitter</TwitterButton> */}
+              </Group>
+            </Stack>
+          </Paper>
+        </div>
+      </>
     );
   }
 };

@@ -1,6 +1,7 @@
 import { TextInput } from '@mantine/core';
 import { IconSearch } from '@tabler/icons';
 import { useQueryArticles } from 'articles/hooks/useQueryArticles';
+import { Head } from 'components/Head/Head';
 import NotFoundTitle from 'components/NotFoundTitle';
 import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +15,7 @@ const FilterableArticles = () => {
   if (params.tab === 'all' || params.tab === 'popular') {
     return (
       <>
+        <Head title="記事一覧" />
         <form
           onSubmit={(e) => {
             e.preventDefault();
