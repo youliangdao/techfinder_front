@@ -80,13 +80,13 @@ const About = () => {
                   個人開発やPF作りを始める時にこんなことを思った経験はありませんか？
                 </Text>
                 <Text className="mb-2 font-bold leading-relaxed max-sm:text-sm">
-                  「役立ちそうな記事は色々見つかったけど、結局どの記事を参考にすればいいのかわからない...」
+                  「役立ちそうな資料は色々見つかったけど、結局どれを参考にすればいいのかわからない...」
                 </Text>
                 <Text className="mb-3 font-bold leading-relaxed max-sm:text-sm">
                   「あの技術を使用した記事を見つけたいけど、検索結果がヒットせずなかなか見つからない...」
                 </Text>
                 <Text className="leading-relaxed max-sm:text-sm">
-                  TechFinderはそういった個人開発者のよくある悩みを解決するためのサービスです。この技術記事サイトをチェックするだけで、開発者は自分に合った技術情報を簡単に検索し、ブックマークして保存することができます。
+                  TechFinderはそういった個人開発者のよくある悩みを解決するためのサービスです。このサイトを参考にするだけで開発者は自分に合った技術情報を簡単に検索し、ブックマークして保存することができます。
                 </Text>
               </div>
               <Image src={image1} className="flex-1 max-sm:hidden" />
@@ -98,16 +98,16 @@ const About = () => {
                   お好きなカテゴリから記事を検索することができます。
                 </Title>
                 <Text className="mb-3 leading-relaxed max-sm:text-sm">
-                  当サイトは個人開発に役立つ技術記事をカテゴリ別に分類して収録してあるため、様々な言語やフレームワーク、ライブラリから自分に合った記事を簡単に検索することができます。
+                  TechFinderは個人開発に役立つ技術記事をカテゴリ別に分類して収録してあるため、言語やフレームワーク、ライブラリなどから自分に合った記事を簡単に検索することができます。
                 </Text>
                 <Text className="mb-3 leading-relaxed max-sm:text-sm">
-                  例えば、Reactを使って開発を進めたい場合、Reactでカテゴリを絞り込めば開発に役立つ記事を探しやすくなるでしょう。
+                  例えば、Reactを使って開発を進めたい場合、「React」でカテゴリを絞り込めば記事を探しやすくなるでしょう。
                 </Text>
                 <Text className="mb-4 leading-relaxed max-sm:text-sm">
-                  また各技術に関する最新情報も随時更新しているため、開発者は常に最新の情報にアクセスすることができ、新たな知見を得られるかもしれません。
+                  また各技術に関する最新情報も随時更新しているため、開発者はトレンド技術を簡単にキャッチアップすることができます。
                 </Text>
                 <Text className="leading-relaxed max-sm:text-sm">
-                  TechFinderは個人開発者が開発をより快適に行うためのサポートを行います。
+                  このように、TechFinderは個人開発に携わる全てのエンジニアが快適に開発を行えるようサポートしていきます。
                 </Text>
               </div>
             </div>
@@ -124,7 +124,7 @@ const About = () => {
                   個人開発やPF作りを始める時にこんなことを思った経験はありませんか？
                 </Text>
                 <Text className="mb-2 font-bold leading-relaxed max-sm:text-sm">
-                  「役立ちそうな記事は色々見つかったけど、結局どの記事を参考にすればいいのかわからない...」
+                  「役立ちそうな資料は色々見つかったけど、結局どれを参考にすればいいのかわからない...」
                 </Text>
                 <Text className="mb-3 font-bold leading-relaxed max-sm:text-sm">
                   「あの技術を使用した記事を見つけたいけど、検索結果がヒットせずなかなか見つからない...」
@@ -143,16 +143,16 @@ const About = () => {
                   お好きなカテゴリから記事を検索することができます。
                 </Title>
                 <Text className="mb-3 leading-relaxed max-sm:text-sm">
-                  当サイトは個人開発に役立つ技術記事をカテゴリ別に分類して収録してあるため、様々な言語やフレームワーク、ライブラリから自分に合った記事を簡単に検索することができます。
+                  TechFinderは個人開発に役立つ技術記事をカテゴリ別に分類して収録してあるため、言語やフレームワーク、ライブラリなどから自分に合った記事を簡単に検索することができます。
                 </Text>
                 <Text className="mb-3 leading-relaxed max-sm:text-sm">
-                  例えば、Reactを使って開発を進めたい場合、Reactでカテゴリを絞り込めば開発に役立つ記事を探しやすくなるでしょう。
+                  例えば、Reactを使って開発を進めたい場合、「React」でカテゴリを絞り込めば記事を探しやすくなるでしょう。
                 </Text>
                 <Text className="mb-4 leading-relaxed max-sm:text-sm">
-                  また各技術に関する最新情報も随時更新しているため、開発者は常に最新の情報にアクセスすることができ、新たな知見を得られるかもしれません。
+                  また各技術に関する最新情報も随時更新しているため、開発者はトレンド技術を簡単にキャッチアップすることができます。
                 </Text>
                 <Text className="leading-relaxed max-sm:text-sm">
-                  TechFinderは個人開発者が開発をより快適に行うためのサポートを行います。
+                  このように、TechFinderは個人開発に携わる全てのエンジニアが快適に開発を行えるようサポートしていきます。
                 </Text>
               </div>
               <Group position="center">
