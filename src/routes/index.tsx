@@ -5,6 +5,8 @@ import LoginImage from 'auth/containers/LoginImage';
 import FilterableCategoryLists from 'categories/containers/FilterableCategoryLists';
 import Abount from 'components/Abount';
 import NotFoundTitle from 'components/NotFoundTitle';
+import PrivacyPolicy from 'components/PrivacyPolicy';
+import Terms from 'components/Terms';
 import MainLayout from 'Layout/MainLayout';
 import UserLayout from 'Layout/UserLayout';
 import { useFirebaseAuth } from 'lib/auth/firebaseAuth';
@@ -85,6 +87,22 @@ const AppRoutes = () => {
         element={
           <UserLayout>
             <Abount />
+          </UserLayout>
+        }
+      />
+      <Route
+        path="/privacy-policy"
+        element={
+          <UserLayout>
+            <PrivacyPolicy />
+          </UserLayout>
+        }
+      />
+      <Route
+        path="/terms"
+        element={
+          <UserLayout>
+            <Terms />
           </UserLayout>
         }
       />

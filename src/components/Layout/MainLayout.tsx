@@ -38,11 +38,11 @@ const links = [
 
 const data = [
   {
-    link: '#',
+    link: '/privacy-policy',
     label: 'プライバシーポリシー',
   },
   {
-    link: '#',
+    link: '/terms',
     label: '利用規約',
   },
 ];

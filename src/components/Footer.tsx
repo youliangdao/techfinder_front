@@ -113,12 +113,12 @@ interface FooterLinksProps {
 
 const FooterLinks = ({ data }: FooterLinksProps) => {
   const navigate = useNavigate();
+
   const links = data.map((link) => (
     <Anchor<'a'>
       color="dimmed"
       key={link.label}
-      href={link.link}
-      onClick={(event) => event.preventDefault()}
+      onClick={() => navigate(link.link)}
       size="sm"
       underline={false}
       className="hover:bg-m_gray-2"

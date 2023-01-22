@@ -49,8 +49,23 @@ const LoginForm = () => {
           {/* <TwitterButton radius="xl">Twitter</TwitterButton> */}
         </Group>
         <Text size="sm" color="dimmed" className="px-5 text-center">
-          <Anchor href="/">利用規約</Anchor>、
-          <Anchor href="/">プライバシーポリシー</Anchor>
+          <Anchor
+            onClick={() => {
+              dispatch(closeLoginModal());
+              navigate('/terms');
+            }}
+          >
+            利用規約
+          </Anchor>
+          、
+          <Anchor
+            onClick={() => {
+              dispatch(closeLoginModal());
+              navigate('/privacy-policy');
+            }}
+          >
+            プライバシーポリシー
+          </Anchor>
           に同意したうえでログインしてください。
         </Text>
       </Stack>
