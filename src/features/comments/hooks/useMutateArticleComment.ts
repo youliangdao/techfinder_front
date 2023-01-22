@@ -162,6 +162,9 @@ export const useMutateArticleComment = () => {
         'userComments',
         currentUser.uid,
       ]);
+      queryClient.invalidateQueries({
+        queryKey: ['articleComments', variables.article.id],
+      });
       if (previousArticleComments) {
         queryClient.setQueryData<Comment[]>(
           ['articleComments', variables.article.id],
