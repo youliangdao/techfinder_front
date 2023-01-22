@@ -164,7 +164,7 @@ export const useMutateArticleComment = () => {
       ]);
       if (previousArticleComments) {
         queryClient.setQueryData<Comment[]>(
-          ['articleComments', variables],
+          ['articleComments', variables.article.id],
           previousArticleComments.filter(
             (articleComment) => variables.id !== articleComment.id
           )
