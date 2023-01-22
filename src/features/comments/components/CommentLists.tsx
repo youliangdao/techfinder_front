@@ -103,7 +103,7 @@ const CommentLists = ({ commentLists, article, close }: CommentListsProps) => {
                     });
                   }}
                 >
-                  Login
+                  ログイン
                 </Button>
               </Center>
             </>
