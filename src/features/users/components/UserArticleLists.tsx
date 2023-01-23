@@ -61,14 +61,14 @@ const UserArticleLists = ({
         }}
       >
         <Tabs.List className="flex justify-around">
-          <Tabs.Tab value="all" className="max-sm:text-xs">
+          <Tabs.Tab value="all" className="max-sm:px-0 max-sm:text-xs">
             すべて
           </Tabs.Tab>
           {genres.map((genre) => (
             <Tabs.Tab
               key={genre.path}
               value={genre.path}
-              className="max-sm:text-xs"
+              className="max-sm:px-1 max-sm:text-xs"
             >
               {genre.name}
             </Tabs.Tab>

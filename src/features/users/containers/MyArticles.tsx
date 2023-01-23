@@ -29,15 +29,15 @@ const MyArticles = () => {
     <UserArticleLists
       genres={[
         {
-          name: 'ブックマークした記事',
+          name: 'ブックマーク',
           path: 'bookmarks',
         },
         {
-          name: 'コメントした記事',
+          name: 'コメント',
           path: 'comments',
         },
         {
-          name: 'いいねした記事',
+          name: 'いいね',
           path: 'likes',
         },
       ]}
