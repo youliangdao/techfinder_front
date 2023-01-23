@@ -1,4 +1,4 @@
-import { Divider, Group, Space, Text, Title } from '@mantine/core';
+import { Divider, Group, Space, Title } from '@mantine/core';
 import { useMediaQuery } from 'lib/mantine/useMediaQuery';
 import React from 'react';
 
@@ -13,11 +13,13 @@ const PrivacyPolicy = () => {
           <Title order={3}>プライバシーポリシー</Title>
         )}
       </Group>
-      <Divider mt="lg" mb={50} />
-      <Text className="max-sm:text-sm max-sm:leading-relaxed">
-        TechFinder（以下、「当方」といいます。）は、本ウェブサイト上で提供するサービス（以下、「本サービス」といいます。）におけるユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めます。
-      </Text>
-      <Space h={50} />
+      <Divider mt="lg" mb={30} />
+      <article className="prose max-sm:prose-sm max-w-none">
+        <p>
+          この利用規約（以下、「本規約」といいます。）は、TechFinder（以下、「当方」といいます。）がこのウェブサイト上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下、「ユーザー」といいます。）には、本規約に従って、本サービスをご利用いただきます。
+        </p>
+      </article>
+      <Space h={30} />
       <article className="prose max-sm:prose-sm">
         <h3>お客様から取得する情報</h3>
         <p>当方は、お客様から以下の情報を取得します。</p>
