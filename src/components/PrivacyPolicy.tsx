@@ -1,26 +1,24 @@
-import { Divider, Group, Space, Title } from '@mantine/core';
+import { Divider, Space, Title } from '@mantine/core';
 import { useMediaQuery } from 'lib/mantine/useMediaQuery';
 import React from 'react';
 
 const PrivacyPolicy = () => {
   const largerThanSm = useMediaQuery('sm');
   return (
-    <div>
-      <Group position="center">
-        {largerThanSm ? (
-          <Title order={1}>プライバシーポリシー</Title>
-        ) : (
-          <Title order={3}>プライバシーポリシー</Title>
-        )}
-      </Group>
-      <Divider mt="lg" mb={30} />
-      <article className="prose max-sm:prose-sm max-w-none">
+    <div className="px-8 py-5">
+      {largerThanSm ? (
+        <Title order={2}>プライバシーポリシー</Title>
+      ) : (
+        <Title order={3}>プライバシーポリシー</Title>
+      )}
+      <Divider mb={30} mt={10} />
+      <article className="prose prose-sm max-w-none">
         <p>
           TechFinder（以下、「当方」といいます。）は、本ウェブサイト上で提供するサービス（以下、「本サービス」といいます。）におけるユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めます。
         </p>
       </article>
       <Space h={30} />
-      <article className="prose max-sm:prose-sm">
+      <article className="prose prose-sm">
         <h3>お客様から取得する情報</h3>
         <p>当方は、お客様から以下の情報を取得します。</p>
         <ul>
