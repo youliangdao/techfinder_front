@@ -87,12 +87,12 @@ const GenreArticlesHeader = () => {
 
   switch (params.genre) {
     case 'beginner':
-      background = '/src/assets/background-beginner.jpg';
+      background = '/background-beginner.jpg';
       message =
         '個人開発が初めての人はまずはここからチェックしましょう。個人開発の全体像や注意すべき点などについて学ぶことができます。';
       break;
     case 'idea':
-      background = '/src/assets/background-idea.jpg';
+      background = '/background-idea.jpg';
       genreCategories = ['アイデア', 'まとめ', 'ポエム'];
 
       message =
@@ -100,12 +100,12 @@ const GenreArticlesHeader = () => {
       break;
     case 'design':
       genreCategories = ['ui', 'design'];
-      background = '/src/assets/background-design.jpg';
+      background = '/background-design.jpg';
       message =
         'アプリのデザインやレイアウトにお困りの人はこちらの記事をチェックしましょう。個人開発に役立つデザインサイトやツールがまとまっています。';
       break;
     case 'architecture':
-      background = '/src/assets/background-architecture.jpg';
+      background = '/background-architecture.jpg';
       genreCategories = [
         'aws',
         'gcp',
@@ -126,7 +126,7 @@ const GenreArticlesHeader = () => {
         'インフラや技術選定に困ったらこちらの記事をチェックしましょう。個人開発におけるインフラや技術選定のポイントがまとまっています。';
       break;
     case 'backend':
-      background = '/src/assets/background-programming.jpg';
+      background = '/background-programming.jpg';
       genreCategories = [
         'rails',
         'laravel',
@@ -145,7 +145,7 @@ const GenreArticlesHeader = () => {
         'バックエンド側の構成や設計に困ったらこちらの記事をチェックしてみましょう。よく使用される技術スタックや実装例が紹介されています。';
       break;
     case 'frontend':
-      background = '/src/assets/background-programming.jpg';
+      background = '/background-programming.jpg';
       genreCategories = [
         'javascript',
         'typescript',
@@ -162,7 +162,7 @@ const GenreArticlesHeader = () => {
         'フロントエンド側の構成や設計に困ったらこちらの記事はチェックしてみましょう。よく使用される技術スタックや実装例が紹介されています。';
       break;
     case 'release':
-      background = '/src/assets/background-release.jpg';
+      background = '/background-release.jpg';
       message =
         'リリースや運用に困ったらこちらの記事をチェックしてみましょう。アプリを実際にリリースし、運用していく上での注意点などがまとまっています。';
       break;
