@@ -10,8 +10,6 @@ import FooterLinks from 'components/Footer';
 import HeaderAction from 'components/HeaderAction';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { selectUser } from 'store/ducks/userSlice';
-import { useAppSelector } from 'store/hooks';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -54,6 +52,37 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+const tabs = [
+  {
+    link: 'beginner',
+    label: '個人開発の基本',
+  },
+  {
+    link: 'idea',
+    label: 'アイデア',
+  },
+  {
+    link: 'design',
+    label: 'デザイン',
+  },
+  {
+    link: 'architecture',
+    label: 'インフラ・アーキテクチャ',
+  },
+  {
+    link: 'backend',
+    label: 'バックエンド',
+  },
+  {
+    link: 'frontend',
+    label: 'フロントエンド',
+  },
+  {
+    link: 'release',
+    label: 'リリース・運用',
+  },
+];
+
 const links = [
   {
     link: '/about',
@@ -77,23 +106,25 @@ const links = [
 
 const data = [
   {
-    link: '#',
+    link: '/about',
+    label: 'TechFinderについて',
+  },
+  {
+    link: '/privacy-policy',
     label: 'プライバシーポリシー',
   },
   {
-    link: '#',
+    link: '/terms',
     label: '利用規約',
   },
 ];
 
 const NotFound = () => {
   const { classes } = useStyles();
-  const user = useAppSelector(selectUser);
-  const isLogin = user.uid ? true : false;
   const navigate = useNavigate();
   return (
     <>
-      <HeaderAction {...{ links, isLogin }} />
+      <HeaderAction {...{ tabs }} />
       <Container className="py-10">
         <Container className={classes.root}>
           <div className={classes.label}>404</div>
