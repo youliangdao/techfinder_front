@@ -1,4 +1,4 @@
-import { Card, createStyles, Image, Skeleton, Text } from '@mantine/core';
+import { Card, createStyles, Image, Text } from '@mantine/core';
 import { CategoryItemProps } from 'categories/types';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const CategoryItem = ({ isLoading, category }: CategoryItemProps) => {
+const CategoryItem = ({ category }: CategoryItemProps) => {
   const { classes } = useStyles();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -45,16 +45,10 @@ const CategoryItem = ({ isLoading, category }: CategoryItemProps) => {
         navigate(`/categories/${category.path}/all`);
       }}
     >
-      {!isLoading ? (
-        <>
-          <Image src={category.image} height={50} fit="contain" />
-          <Text size="xs" mt={7}>
-            {category.title}
-          </Text>
-        </>
-      ) : (
-        <Skeleton height={50} circle radius="xl" />
-      )}
+      <Image src={category.image} height={50} fit="contain" />
+      <Text size="xs" className="font-semibold" mt={7}>
+        {category.title}
+      </Text>
     </Card>
   );
 };
