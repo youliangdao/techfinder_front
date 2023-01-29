@@ -141,14 +141,12 @@ const HeaderAction = ({ tabs }: HeaderActionProps) => {
     <Header height={largerThanMd ? 110 : 60} className="sticky top-0 z-50">
       <Container className="flex h-14 items-center justify-between" size="lg">
         {largerThanMd ? (
-          <Group>
-            <Image
-              src={logo}
-              height={60}
-              fit="contain"
-              onClick={() => navigate('/')}
-            />
-          </Group>
+          <Image
+            src={logo}
+            width={180}
+            fit="contain"
+            onClick={() => navigate('/')}
+          />
         ) : (
           <Group>
             <>
