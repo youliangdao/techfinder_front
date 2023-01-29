@@ -1,6 +1,7 @@
 import { Container } from '@mantine/core';
+import GenreArticlesHeader from 'features/genre/components/GenreArticlesHeader';
 import React from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 import FooterLinks from '../Footer';
 import HeaderAction from '../HeaderAction';
@@ -51,28 +52,17 @@ const data = [
   },
 ];
 
-const MainLayout = () => {
-  const location = useLocation();
-
+const GenreLayout = () => {
   return (
     <>
       <HeaderAction {...{ tabs }} />
-      {location.pathname === '/categories' ||
-      location.pathname === '/dashboards/all' ||
-      location.pathname === '/dashboards/bookmarks' ||
-      location.pathname === '/dashboards/comments' ||
-      location.pathname === '/dashboards/likes' ? (
-        <Container className="py-10">
-          <Outlet />
-        </Container>
-      ) : (
-        <Container className="py-10" size="lg">
-          <Outlet />
-        </Container>
-      )}
+      <GenreArticlesHeader />
+      <Container className="py-10">
+        <Outlet />
+      </Container>
       <FooterLinks {...{ data }} />
     </>
   );
 };
 
-export default MainLayout;
+export default GenreLayout;
