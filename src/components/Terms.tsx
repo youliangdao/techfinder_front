@@ -1,26 +1,24 @@
-import { Divider, Group, Space, Title } from '@mantine/core';
+import { Divider, Space, Title } from '@mantine/core';
 import { useMediaQuery } from 'lib/mantine/useMediaQuery';
 import React from 'react';
 
 const Terms = () => {
   const largerThanSm = useMediaQuery('sm');
   return (
-    <div>
-      <Group position="center">
-        {largerThanSm ? (
-          <Title order={1}>利用規約</Title>
-        ) : (
-          <Title order={3}>利用規約</Title>
-        )}
-      </Group>
-      <Divider mt="lg" mb={30} />
-      <article className="prose max-sm:prose-sm max-w-none">
+    <div className="px-8 py-5">
+      {largerThanSm ? (
+        <Title order={2}>利用規約</Title>
+      ) : (
+        <Title order={3}>利用規約</Title>
+      )}
+      <Divider mb={30} mt={10} />
+      <article className="prose prose-sm max-w-none">
         <p>
           この利用規約（以下、「本規約」といいます。）は、TechFinder（以下、「当方」といいます。）がこのウェブサイト上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下、「ユーザー」といいます。）には、本規約に従って、本サービスをご利用いただきます。
         </p>
       </article>
       <Space h={30} />
-      <article className="prose max-sm:prose-sm">
+      <article className="prose prose-sm">
         <h3>第1条（適用）</h3>
         <ol>
           <li>

@@ -8,7 +8,9 @@ import { Head } from 'components/Head/Head';
 import NotFoundTitle from 'components/NotFoundTitle';
 import PrivacyPolicy from 'components/PrivacyPolicy';
 import Terms from 'components/Terms';
+import GenreFilterableArticles from 'features/genre/containers/GenreFilterableArticles';
 import { usePageViewsTracking } from 'hooks/usePageViewsTracking';
+import GenreLayout from 'Layout/GenreLayout';
 import MainLayout from 'Layout/MainLayout';
 import UserLayout from 'Layout/UserLayout';
 import { useFirebaseAuth } from 'lib/auth/firebaseAuth';
@@ -108,6 +110,10 @@ const AppRoutes = () => {
           </UserLayout>
         }
       />
+      <Route path="/genres" element={<GenreLayout />}>
+        <Route index element={<Navigate to="/" replace />} />
+        <Route path=":genre" element={<GenreFilterableArticles />} />
+      </Route>
       <Route path="/" element={<Home />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

@@ -1,13 +1,5 @@
 /* eslint-disable tailwindcss/no-custom-classname */
-import {
-  Anchor,
-  Card,
-  Center,
-  Group,
-  Loader,
-  SimpleGrid,
-  Text,
-} from '@mantine/core';
+import { Anchor, Card, Group, SimpleGrid, Skeleton, Text } from '@mantine/core';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -37,9 +29,86 @@ const TrendArticleLists = ({
         </Anchor>
       </Group>
       {isLoading ? (
-        <Center className="py-20">
-          <Loader />
-        </Center>
+        largerThanSm ? (
+          <SimpleGrid mt="md" className="grid-cols-2">
+            {[...Array(10)].map((_, index) => {
+              if (index < 2) {
+                return (
+                  <Skeleton key={index} visible={true} height={300}>
+                    <ArticleDetail
+                      image=""
+                      categories={[
+                        {
+                          title: '',
+                          path: '',
+                        },
+                      ]}
+                      title=""
+                      date=""
+                      media={{
+                        name: '',
+                        image: '',
+                      }}
+                      link=""
+                      id="1"
+                    />
+                  </Skeleton>
+                );
+              } else {
+                return (
+                  <Skeleton key={index} visible={true} height={170}>
+                    <ArticleItem
+                      image=""
+                      categories={[
+                        {
+                          title: '',
+                          path: '',
+                        },
+                      ]}
+                      title=""
+                      date=""
+                      media={{
+                        name: '',
+                        image: '',
+                      }}
+                      link=""
+                      id="1"
+                    />
+                  </Skeleton>
+                );
+              }
+            })}
+          </SimpleGrid>
+        ) : (
+          <SimpleGrid
+            my="md"
+            className="mx-auto grid-cols-1 place-items-center"
+          >
+            {[...Array(18)].map((_, index) => {
+              return (
+                <Skeleton key={index} visible={true} height={150}>
+                  <ArticleItem
+                    image=""
+                    categories={[
+                      {
+                        title: '',
+                        path: '',
+                      },
+                    ]}
+                    title=""
+                    date=""
+                    media={{
+                      name: '',
+                      image: '',
+                    }}
+                    link=""
+                    id="1"
+                  />
+                </Skeleton>
+              );
+            })}
+          </SimpleGrid>
+        )
       ) : largerThanSm ? (
         <SimpleGrid mt="md" className="grid-cols-2">
           {articleItems.map((articleItem, index) => {

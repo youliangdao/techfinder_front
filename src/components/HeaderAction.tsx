@@ -1,9 +1,9 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import {
+  ActionIcon,
   Avatar,
   Burger,
   Button,
-  Center,
   Container,
   createStyles,
   Group,
@@ -12,23 +12,25 @@ import {
   Menu,
   Paper,
   Skeleton,
+  Space,
+  Tabs,
   Transition,
   UnstyledButton,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
   IconBookmark,
-  IconChevronDown,
   IconChevronRight,
   IconLogout,
   IconMessageCircle2,
+  IconSearch,
   IconSettings,
   IconThumbUp,
   IconTrash,
 } from '@tabler/icons';
 import { getAuth } from 'firebase/auth';
 import React, { forwardRef } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { openLoginModal } from 'store/ducks/loginModalSlice';
 import { selectUser } from 'store/ducks/userSlice';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
@@ -46,21 +48,15 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.sm,
     textDecoration: 'none',
     cursor: 'pointer',
-    color:
-      theme.colorScheme === 'dark'
-        ? theme.colors.dark[0]
-        : theme.colors.gray[7],
+    color: theme.colors.gray[7],
     fontSize: theme.fontSizes.sm,
     fontWeight: 500,
 
     '&:hover': {
-      backgroundColor:
-        theme.colorScheme === 'dark'
-          ? theme.colors.dark[6]
-          : theme.colors.gray[0],
+      backgroundColor: theme.colors.gray[0],
     },
 
-    [theme.fn.smallerThan('sm')]: {
+    [theme.fn.smallerThan('md')]: {
       borderRadius: 0,
       padding: theme.spacing.md,
     },
@@ -73,6 +69,25 @@ const useStyles = createStyles((theme) => ({
       }).background,
       color: theme.fn.variant({ variant: 'light', color: theme.primaryColor })
         .color,
+    },
+  },
+  tabs: {
+    [theme.fn.smallerThan('md')]: {
+      display: 'none',
+    },
+  },
+
+  tabsList: {
+    borderBottom: '0 !important',
+  },
+
+  tab: {
+    fontWeight: 600,
+    height: 38,
+    backgroundColor: 'transparent',
+
+    '&:hover': {
+      backgroundColor: theme.colors.gray[0],
     },
   },
 }));
@@ -99,75 +114,33 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
 );
 
 type HeaderActionProps = {
-  isLogin: boolean;
-  links: {
+  tabs: {
     label: string;
     link: string;
-    links?: { label: string; link: string }[];
   }[];
 };
 
-const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
+const HeaderAction = ({ tabs }: HeaderActionProps) => {
   const largerThanSm = useMediaQuery('sm');
+  const largerThanMd = useMediaQuery('md');
   const navigate = useNavigate();
   const currentUser = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
+  const params = useParams();
 
   const [sidebarOpened, { toggle }] = useDisclosure(false);
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
 
-  const items = links.map((link) => {
-    const menuItems = link.links?.map((item) => (
-      <NavLink
-        key={item.label}
-        to={item.link}
-        className="text-m_gray-7  hover:bg-m_gray-0 no-underline"
-      >
-        <Menu.Item>{item.label}</Menu.Item>
-      </NavLink>
-    ));
-
-    if (menuItems) {
-      return (
-        <Menu key={link.label} exitTransitionDuration={0}>
-          <Menu.Target>
-            <NavLink
-              to={link.link}
-              // eslint-disable-next-line tailwindcss/no-custom-classname
-              className="text-m_gray-7  hover:bg-m_gray-0 block rounded-sm py-2 px-3 text-sm font-medium leading-none no-underline"
-              onClick={(event) => event.preventDefault()}
-            >
-              <Center>
-                <span className="mr-3">{link.label}</span>
-                <IconChevronDown size={12} stroke={1.5} />
-              </Center>
-            </NavLink>
-          </Menu.Target>
-          <Menu.Dropdown>{menuItems}</Menu.Dropdown>
-        </Menu>
-      );
-    }
-
-    return (
-      <NavLink
-        key={link.label}
-        to={link.link}
-        // eslint-disable-next-line tailwindcss/no-custom-classname
-        className="text-m_gray-7  hover:bg-m_gray-0 block rounded-sm py-2 px-3 text-sm font-medium leading-none no-underline"
-        // onClick={(event) => event.preventDefault()}
-      >
-        {link.label}
-      </NavLink>
-    );
-  });
+  const tabItems = tabs.map((tab) => (
+    <Tabs.Tab value={tab.link} key={tab.label}>
+      {tab.label}
+    </Tabs.Tab>
+  ));
 
   return (
-    <Header height={60} className="sticky top-0 z-50">
-      <Container
-        className="flex h-14 items-center justify-between sm:px-10"
-        fluid
-      >
-        {largerThanSm ? (
+    <Header height={largerThanMd ? 110 : 60} className="sticky top-0 z-50">
+      <Container className="flex h-14 items-center justify-between" size="lg">
+        {largerThanMd ? (
           <Group>
             <Image
               src={logo}
@@ -191,27 +164,20 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
                     withBorder
                     style={styles}
                   >
-                    <NavLink
-                      className={classes.link}
-                      to="/about"
-                      onClick={toggle}
-                    >
-                      TechFinderについて
-                    </NavLink>
-                    <NavLink
-                      className={classes.link}
-                      to="/categories"
-                      onClick={toggle}
-                    >
-                      カテゴリから探す
-                    </NavLink>
-                    <NavLink
-                      className={classes.link}
-                      to="/articles/all"
-                      onClick={toggle}
-                    >
-                      記事から探す
-                    </NavLink>
+                    {tabs.map((tab) => (
+                      <NavLink
+                        key={tab.label}
+                        className={cx(classes.link, {
+                          [classes.linkActive]: params.genre === tab.link,
+                        })}
+                        to={`/genres/${tab.link}`}
+                        onClick={(e) => {
+                          toggle();
+                        }}
+                      >
+                        {tab.label}
+                      </NavLink>
+                    ))}
                   </Paper>
                 )}
               </Transition>
@@ -225,7 +191,9 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
           </Group>
         )}
         <Group className="mr-2 sm:mr-4">
-          {largerThanSm && <Group spacing={5}>{items}</Group>}
+          <ActionIcon onClick={() => navigate('/categories')}>
+            <IconSearch />
+          </ActionIcon>
           {!currentUser.apiChecked ? (
             <Button
               radius="xl"
@@ -299,6 +267,25 @@ const HeaderAction = ({ isLogin, links }: HeaderActionProps) => {
           )}
           <LoginForm />
         </Group>
+      </Container>
+      <Space h="xs" />
+      <Container size="lg">
+        <div className="flex justify-around">
+          <Tabs
+            value={params.genre || ''}
+            onTabChange={(value) => {
+              navigate(`/genres/${value}`);
+            }}
+            variant="pills"
+            classNames={{
+              root: classes.tabs,
+              tabsList: classes.tabsList,
+              tab: classes.tab,
+            }}
+          >
+            <Tabs.List>{tabItems}</Tabs.List>
+          </Tabs>
+        </div>
       </Container>
     </Header>
   );

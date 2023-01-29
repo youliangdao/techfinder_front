@@ -1,10 +1,10 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import {
   Card,
-  Center,
-  Loader,
   Pagination,
   SimpleGrid,
+  Skeleton,
+  Space,
   Tabs,
 } from '@mantine/core';
 import { useQueryBookmarks } from 'articles/hooks/useQueryBookmarks';
@@ -21,7 +21,7 @@ import { ArticleListsProps } from '../types';
 import ArticleDetail from './ArticleDetail';
 import ArticleItem from './ArticleItem';
 
-const ITEMS_PAGE_SIZE = 10;
+const ITEMS_PAGE_SIZE = 18;
 
 const ArticleLists = ({
   leftGenre,
@@ -67,16 +67,105 @@ const ArticleLists = ({
         onTabChange={(value) => {
           navigate(`/articles/${value}`);
         }}
+        variant="pills"
       >
-        <Tabs.List className="flex justify-around">
-          <Tabs.Tab value="all">{leftGenre}</Tabs.Tab>
-          <Tabs.Tab value="popular">{rightGenre}</Tabs.Tab>
+        <Tabs.List className="ml-5 flex max-md:justify-center">
+          <Tabs.Tab
+            value="all"
+            className="bg-m_gray-1 font-semibold max-sm:h-8"
+          >
+            {leftGenre}
+          </Tabs.Tab>
+          <Tabs.Tab
+            value="popular"
+            className="bg-m_gray-1 font-semibold max-sm:h-8"
+          >
+            {rightGenre}
+          </Tabs.Tab>
         </Tabs.List>
       </Tabs>
+      <Space h="lg" />
       {isLoading || userBookmarksQuery.isLoading ? (
-        <Center className="py-20">
-          <Loader />
-        </Center>
+        largerThanSm ? (
+          <SimpleGrid mt="md" className="grid-cols-2">
+            {[...Array(18)].map((_, index) => {
+              if (index < 2) {
+                return (
+                  <Skeleton key={index} visible={true} height={300}>
+                    <ArticleDetail
+                      image=""
+                      categories={[
+                        {
+                          title: '',
+                          path: '',
+                        },
+                      ]}
+                      title=""
+                      date=""
+                      media={{
+                        name: '',
+                        image: '',
+                      }}
+                      link=""
+                      id="1"
+                    />
+                  </Skeleton>
+                );
+              } else {
+                return (
+                  <Skeleton key={index} visible={true} height={170}>
+                    <ArticleItem
+                      image=""
+                      categories={[
+                        {
+                          title: '',
+                          path: '',
+                        },
+                      ]}
+                      title=""
+                      date=""
+                      media={{
+                        name: '',
+                        image: '',
+                      }}
+                      link=""
+                      id="1"
+                    />
+                  </Skeleton>
+                );
+              }
+            })}
+          </SimpleGrid>
+        ) : (
+          <SimpleGrid
+            my="md"
+            className="mx-auto grid-cols-1 place-items-center"
+          >
+            {[...Array(18)].map((_, index) => {
+              return (
+                <Skeleton key={index} visible={true} height={150}>
+                  <ArticleItem
+                    image=""
+                    categories={[
+                      {
+                        title: '',
+                        path: '',
+                      },
+                    ]}
+                    title=""
+                    date=""
+                    media={{
+                      name: '',
+                      image: '',
+                    }}
+                    link=""
+                    id="1"
+                  />
+                </Skeleton>
+              );
+            })}
+          </SimpleGrid>
+        )
       ) : largerThanSm ? (
         <>
           <SimpleGrid mt="md" className="grid-cols-2">

@@ -10,7 +10,6 @@ export type Categories = {
 };
 export type CategoryItemProps = {
   category: Category;
-  isLoading: boolean;
 };
 
 export type PopularCategoryListsType = Pick<

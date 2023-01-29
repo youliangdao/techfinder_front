@@ -1,5 +1,5 @@
 /* eslint-disable tailwindcss/no-custom-classname */
-import { Card, SimpleGrid } from '@mantine/core';
+import { Card, SimpleGrid, Skeleton } from '@mantine/core';
 import { CategoryListsType } from 'categories/types';
 import React from 'react';
 
@@ -12,15 +12,27 @@ const CategoryLists = ({
 }: CategoryListsType) => {
   return (
     <Card radius="md">
-      <SimpleGrid my="md" className="xs:grid-cols-4 grid-cols-3 sm:grid-cols-6">
-        {categories.map((category) => {
-          if (new RegExp(filterInput, 'i').test(category.title)) {
-            return (
-              <CategoryItem key={category.title} {...{ category, isLoading }} />
-            );
-          }
-        })}
-      </SimpleGrid>
+      {isLoading ? (
+        <SimpleGrid
+          my="md"
+          className="xs:grid-cols-4 grid-cols-3 sm:grid-cols-6"
+        >
+          {[...Array(74)].map((_, index) => (
+            <Skeleton height={100} visible={true} key={index} />
+          ))}
+        </SimpleGrid>
+      ) : (
+        <SimpleGrid
+          my="md"
+          className="xs:grid-cols-4 grid-cols-3 sm:grid-cols-6"
+        >
+          {categories.map((category) => {
+            if (new RegExp(filterInput, 'i').test(category.title)) {
+              return <CategoryItem key={category.title} {...{ category }} />;
+            }
+          })}
+        </SimpleGrid>
+      )}
     </Card>
   );
 };

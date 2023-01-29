@@ -13,6 +13,20 @@ export type Article = {
   };
 };
 
+export type StockArticle = {
+  id: string;
+  title: string;
+  categories: Pick<Category, 'title' | 'path'>[];
+  date: string;
+  image: string;
+  link: string;
+  media: {
+    name: string;
+    image: string;
+  };
+  stock: number;
+};
+
 export type ArticleListsProps = {
   articleItems: Article[];
   isLoading: boolean;

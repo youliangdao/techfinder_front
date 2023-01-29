@@ -86,7 +86,7 @@ const About = () => {
                   「あの技術を使用した記事を見つけたいけど、検索結果がヒットせずなかなか見つからない...」
                 </Text>
                 <Text className="leading-relaxed max-sm:text-sm">
-                  TechFinderはそういった個人開発者のよくある悩みを解決するためのサービスです。このサイトを参考にするだけで開発者は自分に合った技術情報を簡単に検索し、ブックマークして保存することができます。
+                  TechFinderはそういった個人開発者のよくある悩みを解決するためのサービスです。このサイトを見るだけで開発者は自分に合った技術情報を簡単に検索し、ブックマークして保存することができます。
                 </Text>
               </div>
               <Image src={image1} className="flex-1 max-sm:hidden" />
@@ -98,7 +98,7 @@ const About = () => {
                   お好きなカテゴリから記事を検索することができます。
                 </Title>
                 <Text className="mb-3 leading-relaxed max-sm:text-sm">
-                  TechFinderは個人開発に役立つ技術記事をカテゴリ別に分類して収録してあるため、言語やフレームワーク、ライブラリなどから自分に合った記事を簡単に検索することができます。
+                  TechFinderは個人開発に役立つ技術記事をカテゴリ別に分類して収録してあるため、言語やフレームワーク、ライブラリなどから自分に合った記事を検索することができます。
                 </Text>
                 <Text className="mb-3 leading-relaxed max-sm:text-sm">
                   例えば、Reactを使って開発を進めたい場合、「React」でカテゴリを絞り込めば記事を探しやすくなるでしょう。

@@ -1,42 +1,46 @@
 import { Container } from '@mantine/core';
 import React from 'react';
-import { Outlet } from 'react-router-dom';
-import { selectUser } from 'store/ducks/userSlice';
-import { useAppSelector } from 'store/hooks';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import FooterLinks from '../Footer';
 import HeaderAction from '../HeaderAction';
 
-const links = [
+const tabs = [
+  {
+    link: 'beginner',
+    label: '個人開発の基本',
+  },
+  {
+    link: 'idea',
+    label: 'アイデア',
+  },
+  {
+    link: 'design',
+    label: 'デザイン',
+  },
+  {
+    link: 'architecture',
+    label: 'インフラ・アーキテクチャ',
+  },
+  {
+    link: 'backend',
+    label: 'バックエンド',
+  },
+  {
+    link: 'frontend',
+    label: 'フロントエンド',
+  },
+  {
+    link: 'release',
+    label: 'リリース・運用',
+  },
+];
+
+const data = [
   {
     link: '/about',
     label: 'TechFinderについて',
   },
-  {
-    link: '/categories',
-    label: 'カテゴリから探す',
-  },
-  {
-    link: '/articles/all',
-    label: '記事から探す',
-  },
-  // {
-  //   link: '',
-  //   label: 'Search',
-  //   links: [
-  //     {
-  //       link: '/categories',
-  //       label: 'カテゴリから探す',
-  //     },
-  //     {
-  //       link: '/articles/all',
-  //       label: '記事から探す',
-  //     },
-  //   ],
-  // },
-];
-
-const data = [
   {
     link: '/privacy-policy',
     label: 'プライバシーポリシー',
@@ -48,14 +52,24 @@ const data = [
 ];
 
 const MainLayout = () => {
-  const user = useAppSelector(selectUser);
-  const isLogin = user.uid ? true : false;
+  const location = useLocation();
+
   return (
     <>
-      <HeaderAction {...{ links, isLogin }} />
-      <Container className="py-10">
-        <Outlet />
-      </Container>
+      <HeaderAction {...{ tabs }} />
+      {location.pathname === '/categories' ||
+      location.pathname === '/dashboards/all' ||
+      location.pathname === '/dashboards/bookmarks' ||
+      location.pathname === '/dashboards/comments' ||
+      location.pathname === '/dashboards/likes' ? (
+        <Container className="py-10">
+          <Outlet />
+        </Container>
+      ) : (
+        <Container className="py-10" size="lg">
+          <Outlet />
+        </Container>
+      )}
       <FooterLinks {...{ data }} />
     </>
   );

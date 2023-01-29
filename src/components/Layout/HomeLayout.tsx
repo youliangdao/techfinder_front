@@ -1,45 +1,49 @@
 /* eslint-disable tailwindcss/no-custom-classname */
-import { Container, Stack, Text, Title } from '@mantine/core';
+import { Center, Container, Stack, Title } from '@mantine/core';
 import { Head } from 'components/Head/Head';
 import React, { FC, ReactNode } from 'react';
-import { selectUser } from 'store/ducks/userSlice';
-import { useAppSelector } from 'store/hooks';
 
 import { ReactComponent as HeroSVG } from '/src/assets/hero.svg';
 
 import FooterLinks from '../Footer';
 import HeaderAction from '../HeaderAction';
 
-const links = [
+const tabs = [
+  {
+    link: 'beginner',
+    label: '個人開発の基本',
+  },
+  {
+    link: 'idea',
+    label: 'アイデア',
+  },
+  {
+    link: 'design',
+    label: 'デザイン',
+  },
+  {
+    link: 'architecture',
+    label: 'インフラ・アーキテクチャ',
+  },
+  {
+    link: 'backend',
+    label: 'バックエンド',
+  },
+  {
+    link: 'frontend',
+    label: 'フロントエンド',
+  },
+  {
+    link: 'release',
+    label: 'リリース・運用',
+  },
+];
+
+const data = [
   {
     link: '/about',
     label: 'TechFinderについて',
   },
-  {
-    link: '/categories',
-    label: 'カテゴリから探す',
-  },
-  {
-    link: '/articles/all',
-    label: '記事から探す',
-  },
-  // {
-  //   link: '',
-  //   label: 'Search',
-  //   links: [
-  //     {
-  //       link: '/categories',
-  //       label: 'カテゴリから探す',
-  //     },
-  //     {
-  //       link: '/articles/all',
-  //       label: '記事から探す',
-  //     },
-  //   ],
-  // },
-];
-
-const data = [
   {
     link: `/privacy-policy`,
     label: 'プライバシーポリシー',
@@ -53,24 +57,21 @@ const data = [
 const HeroContents = () => {
   return (
     <div className="bg-m_gray-0">
-      <Container>
-        <div className="flex justify-between py-10">
-          <HeroSVG className="h-28 sm:h-40" />
-          <div className="mr-0 max-w-full max-sm:my-auto md:mr-16 md:max-w-md">
-            <Title
-              className="max-xs:text-xl text-2xl font-extrabold"
-              style={{ color: '#228BE6' }}
-            >
-              個人開発者のための技術記事データベース
-            </Title>
-            <Text className="max-sm:hidden sm:mt-4">
-              「アイデアが思い浮かばない」「どんな技術を使って開発すればいいのかわからない」
-              <br />
-              そんな個人開発者のよくある悩みをTechFinderは解決します。
-            </Text>
-          </div>
-        </div>
-      </Container>
+      <div className="flex justify-center space-x-1">
+        <HeroSVG className="max-xs:h-40 h-52" />
+        <Center>
+          <Title
+            className="max-xs:text-base max-xs:font-bold text-2xl font-extrabold"
+            sx={(theme) => ({
+              color: '#228BE6',
+            })}
+          >
+            個人開発者のための技術記事
+            <br />
+            データベース
+          </Title>
+        </Center>
+      </div>
     </div>
   );
 };
@@ -80,13 +81,10 @@ type MainLayoutProps = {
 };
 
 const HomeLayout: FC<MainLayoutProps> = ({ children }) => {
-  const user = useAppSelector(selectUser);
-  const isLogin = user.uid ? true : false;
-
   return (
     <>
       <Head />
-      <HeaderAction {...{ links, isLogin }} />
+      <HeaderAction {...{ tabs }} />
       <HeroContents />
       <Container className="pt-5 pb-10">
         <Stack spacing="xl">{children}</Stack>

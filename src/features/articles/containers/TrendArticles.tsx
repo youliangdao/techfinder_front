@@ -6,7 +6,11 @@ const TrendArticles = () => {
   const { articleItems, status } = useQueryTrendArticles();
   return (
     <TrendArticleLists
-      articleItems={articleItems ? articleItems : []}
+      articleItems={
+        articleItems
+          ? articleItems.slice().sort((a, b) => (a.date > b.date ? 1 : -1))
+          : []
+      }
       isLoading={status === 'loading'}
     />
   );
