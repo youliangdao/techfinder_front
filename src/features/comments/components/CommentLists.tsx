@@ -17,6 +17,8 @@ import { selectUser } from 'store/ducks/userSlice';
 import { useAppSelector } from 'store/hooks';
 import { z } from 'zod';
 
+import { ReactComponent as DiscussionSVG } from '/public/Discussion-rafiki.svg';
+
 import { CommentListsProps } from '../types';
 import CommentItem from './CommentItem';
 
@@ -43,72 +45,75 @@ const CommentLists = ({ commentLists, article, close }: CommentListsProps) => {
       body: '',
     },
   });
+
   return (
     <Card radius="md" withBorder className="px-0">
       <Text className="text-center text-lg font-bold">コメント一覧</Text>
-      <Divider className="my-5 font-bold" />
+      {commentLists.length !== 0 && <Divider className="my-5 font-bold" />}
       <Stack className="space-y-1 px-2 sm:px-8">
-        {commentLists.map((comment) => (
-          <CommentItem
-            key={comment.id}
-            comment={comment}
-            article={article}
-            close={close}
-          />
-        ))}
+        {commentLists.length === 0 ? (
+          <DiscussionSVG className="h-80 object-contain" />
+        ) : (
+          commentLists.map((comment) => (
+            <CommentItem
+              key={comment.id}
+              comment={comment}
+              article={article}
+              close={close}
+            />
+          ))
+        )}
         <Space h="md" />
-        <form
-          onSubmit={form.onSubmit(async (values) => {
-            createCommentMutation.mutate({
-              article: article,
-              body: values.body,
-              nickname: currentUser.nickname,
-              avatar: currentUser.avatar,
-            });
-            form.setFieldValue('body', '');
-          })}
-        >
-          {currentUser.uid ? (
-            <>
-              <Textarea
-                placeholder="コメントを書く（任意）"
-                radius="md"
-                withAsterisk
-                {...form.getInputProps('body')}
-                className="sm:px-5"
-              />
-              <Group position="right" mt="md" className="xs:px-5">
-                <Button loading={createCommentMutation.isLoading} type="submit">
-                  投稿する
-                </Button>
-              </Group>
-            </>
-          ) : (
-            <>
-              <Center className="mt-5">
-                <Text color="dimmed">ログインするとコメントできます</Text>
-              </Center>
-              <Space h="md" />
-              <Center>
-                <Button
-                  radius="xl"
-                  className="h-8"
-                  onClick={() => {
-                    navigate('/login', {
-                      state: {
-                        from: {
-                          pathname: fromPathName,
-                        },
+        {currentUser.uid ? (
+          <form
+            onSubmit={form.onSubmit(async (values) => {
+              createCommentMutation.mutate({
+                article: article,
+                body: values.body,
+                nickname: currentUser.nickname,
+                avatar: currentUser.avatar,
+              });
+              form.setFieldValue('body', '');
+            })}
+          >
+            <Textarea
+              placeholder="コメントを書く（任意）"
+              radius="md"
+              withAsterisk
+              {...form.getInputProps('body')}
+              className="sm:px-5"
+            />
+            <Group position="right" mt="md" className="xs:px-5">
+              <Button loading={createCommentMutation.isLoading} type="submit">
+                投稿する
+              </Button>
+            </Group>
+          </form>
+        ) : (
+          <>
+            <Divider className="my-5 font-bold" />
+            <Center className="mt-5">
+              <Text color="dimmed">ログインするとコメントできます</Text>
+            </Center>
+            <Center>
+              <Button
+                radius="xl"
+                className="h-8"
+                onClick={() => {
+                  navigate('/login', {
+                    state: {
+                      from: {
+                        pathname: fromPathName,
                       },
-                    });
-                  }}
-                >
-                  ログイン
-                </Button>
-              </Center>
-            </>
-          )}
-        </form>
+                    },
+                  });
+                }}
+              >
+                ログイン
+              </Button>
+            </Center>
+          </>
+        )}
       </Stack>
     </Card>
   );
