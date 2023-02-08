@@ -119,9 +119,8 @@ const FooterLinks = ({ data }: FooterLinksProps) => {
       color="dimmed"
       key={link.label}
       onClick={() => navigate(link.link)}
-      size="sm"
       underline={false}
-      className="hover:bg-m_gray-2"
+      className="hover:bg-m_gray-2 text-sm max-sm:text-xs"
     >
       {link.label}
     </Anchor>

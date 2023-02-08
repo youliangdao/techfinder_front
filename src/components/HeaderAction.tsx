@@ -248,6 +248,7 @@ const HeaderAction = ({ tabs }: HeaderActionProps) => {
                     onClick={() => {
                       const auth = getAuth();
                       auth.signOut();
+                      navigate('/');
                     }}
                   >
                     ログアウト

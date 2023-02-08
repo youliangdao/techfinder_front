@@ -17,27 +17,6 @@ const FilterableArticles = () => {
     return (
       <>
         <Head title="記事一覧" />
-        {/* <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (inputRef.current?.value) {
-              navigate(
-                `/articles/${params.tab}/search?q=${inputRef.current?.value}`
-              );
-            } else {
-              navigate(`/articles/${params.tab}`);
-            }
-          }}
-        >
-          <TextInput
-            icon={<IconSearch size={18} stroke={1.5} />}
-            radius="lg"
-            size="sm"
-            placeholder="キーワードを入力..."
-            ref={inputRef}
-          />
-        </form>
-        <Space h="xl" /> */}
         {largerThanMd ? (
           <div className="flex justify-start space-x-14">
             <div className="md:w-3/4">

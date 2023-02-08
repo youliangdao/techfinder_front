@@ -58,7 +58,7 @@ const CategoryFilterableArticles = () => {
           <div className="flex justify-start space-x-14">
             <div className="md:w-3/4">
               <CategoryArticleLists
-                leftGenre="すべての記事"
+                leftGenre="新着記事"
                 rightGenre="人気記事"
                 articleItems={data ? data : []}
                 isLoading={
@@ -70,7 +70,7 @@ const CategoryFilterableArticles = () => {
           </div>
         ) : (
           <CategoryArticleLists
-            leftGenre="すべての記事"
+            leftGenre="新着記事"
             rightGenre="人気記事"
             articleItems={data ? data : []}
             isLoading={

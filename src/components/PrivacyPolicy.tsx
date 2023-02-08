@@ -68,15 +68,17 @@ const PrivacyPolicy = () => {
         </ul>
         <h3>アクセス解析ツール</h3>
         <p>
-          当方は、お客様のアクセス解析のために、「Googleアナリティクス」を利用しています。Googleアナリティクスは、トラフィックデータの収集のためにCookieを使用しています。トラフィックデータは匿名で収集されており、個人を特定するものではありません。Cookieを無効にすれば、これらの情報の収集を拒否することができます。詳しくはお使いのブラウザの設定をご確認ください。Googleアナリティクスについて、詳しくは以下からご確認ください。
+          当方は、お客様のアクセス解析のために、「Googleアナリティクス」を利用しています。Googleアナリティクスは、トラフィックデータの収集のためにCookieを使用しています。トラフィックデータは匿名で収集されており、個人を特定するものではありません。Cookieを無効にすれば、これらの情報の収集を拒否することができます。詳しくはお使いのブラウザの設定をご確認ください。
+          Googleアナリティクスについて、詳しくは
+          <a
+            href="https://marketingplatform.google.com/about/analytics/terms/jp/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            こちら
+          </a>
+          からご確認ください。
         </p>
-        <a
-          href="https://marketingplatform.google.com/about/analytics/terms/jp/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          https://marketingplatform.google.com/about/analytics/terms/jp/
-        </a>
         <h3>プライバシーポリシーの変更</h3>
         <p>
           当方は、必要に応じて、このプライバシーポリシーの内容を変更します。この場合、変更後のプライバシーポリシーの施行時期と内容を適切な方法により周知または通知します。

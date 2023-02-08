@@ -12,7 +12,7 @@ export const useQueryBookmarks = () => {
     queryFn: getBookmarks,
     staleTime: Infinity,
     onError: (error) => {
-      alert(`ブックマーク情報の取得に失敗しました。`);
+      console.error('ブックマーク情報の取得に失敗しました。');
     },
   });
 };

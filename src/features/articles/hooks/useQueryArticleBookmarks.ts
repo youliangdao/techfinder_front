@@ -8,7 +8,7 @@ export const useQueryArticleBookmarks = (id: string) => {
     staleTime: 0,
     refetchOnWindowFocus: true,
     onError: (error) => {
-      alert('ブックマーク数の取得に失敗しました');
+      console.error('ブックマーク数の取得に失敗しました');
     },
   });
 };

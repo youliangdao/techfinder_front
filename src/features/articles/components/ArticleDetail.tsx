@@ -161,7 +161,7 @@ const ArticleDetail = ({
           >
             {title}
           </Anchor>
-          <Group noWrap spacing="xs" className="mt-2 justify-between">
+          <Group spacing="xs" className="mt-2 justify-between">
             <Group spacing="xs" noWrap>
               <Image src={media.image} fit="contain" width={20} />
               <Text size="xs">{media.name}</Text>
