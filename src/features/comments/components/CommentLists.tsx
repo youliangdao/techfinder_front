@@ -91,7 +91,6 @@ const CommentLists = ({ commentLists, article, close }: CommentListsProps) => {
           </form>
         ) : (
           <>
-            <Divider className="my-5 font-bold" />
             <Center className="mt-5">
               <Text color="dimmed">ログインするとコメントできます</Text>
             </Center>

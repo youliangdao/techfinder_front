@@ -60,15 +60,15 @@ const UserArticleLists = ({
             : navigate(`/users/${params.userId}/${value}`);
         }}
       >
-        <Tabs.List className="flex justify-around">
-          <Tabs.Tab value="all" className="max-sm:px-0 max-sm:text-xs">
+        <Tabs.List className="flex max-sm:justify-around">
+          <Tabs.Tab value="all" className="font-semibold max-sm:px-0">
             すべて
           </Tabs.Tab>
           {genres.map((genre) => (
             <Tabs.Tab
               key={genre.path}
               value={genre.path}
-              className="max-sm:px-1 max-sm:text-xs"
+              className="font-semibold max-sm:px-1"
             >
               {genre.name}
             </Tabs.Tab>

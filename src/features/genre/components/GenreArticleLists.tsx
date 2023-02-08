@@ -222,13 +222,13 @@ const GenreArticleLists = () => {
             <Tabs.List position="center" grow>
               <Tabs.Tab
                 value="new"
-                className="bg-m_gray-1 text-base max-sm:h-8"
+                className="bg-m_gray-1 text-base font-bold max-sm:h-8"
               >
                 新着
               </Tabs.Tab>
               <Tabs.Tab
                 value="popular"
-                className="bg-m_gray-1 text-base max-sm:h-8"
+                className="bg-m_gray-1 text-base font-bold max-sm:h-8"
               >
                 人気
               </Tabs.Tab>
