@@ -12,7 +12,7 @@ export const useQueryLikes = () => {
     queryFn: getLikes,
     staleTime: Infinity,
     onError: (error) => {
-      alert(`いいね情報の取得に失敗しました。`);
+      console.error(`いいね情報の取得に失敗しました。`);
     },
   });
 };

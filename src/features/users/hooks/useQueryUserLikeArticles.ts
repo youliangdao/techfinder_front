@@ -9,7 +9,7 @@ export const useQueryUserLikes = (id: string) => {
     staleTime: 0,
     refetchOnWindowFocus: true,
     onError: () => {
-      alert('ユーザーのコメント情報の取得に失敗しました');
+      alert('ユーザーのいいね情報の取得に失敗しました');
     },
   });
 };

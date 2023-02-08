@@ -8,7 +8,7 @@ export const useQueryArticleLikes = (id: string) => {
     staleTime: 0,
     refetchOnWindowFocus: true,
     onError: (error) => {
-      alert('いいね数の取得に失敗しました');
+      console.error('いいね数の取得に失敗しました');
     },
   });
 };

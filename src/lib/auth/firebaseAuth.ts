@@ -73,7 +73,7 @@ export const useFirebaseAuth = () => {
           );
         }
       } catch (error: any) {
-        alert(`ユーザー情報の取得に失敗しました\n${error.messages}`);
+        console.error(`ユーザー情報の取得に失敗しました\n${error.messages}`);
       }
     } else {
       dispatch(logout());

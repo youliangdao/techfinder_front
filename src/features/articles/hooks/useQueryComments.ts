@@ -10,6 +10,6 @@ export const useQueryComments = () => {
     queryKey: ['userComments', currentUser.uid ? currentUser.uid : ''],
     queryFn: getComments,
     staleTime: Infinity,
-    onError: (error) => alert('コメントした記事の取得に失敗しました'),
+    onError: (error) => console.error('コメントした記事の取得に失敗しました'),
   });
 };

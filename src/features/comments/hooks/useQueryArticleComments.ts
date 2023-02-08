@@ -46,7 +46,7 @@ export const useQueryArticleComments = (id: string) => {
     staleTime: 0,
     refetchOnWindowFocus: true,
     onError: (error) => {
-      alert(`コメント情報の取得に失敗しました。\n${error.message}`);
+      console.error(`コメント情報の取得に失敗しました。\n${error.message}`);
     },
   });
 };
