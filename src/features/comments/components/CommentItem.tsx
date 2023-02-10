@@ -48,7 +48,6 @@ const CommentItem = ({
   });
 
   const deleteCommentHandler = async () => {
-    confirm('コメントを削除してよろしいですか？');
     deleteCommentMutation.mutate({ id, article });
   };
 
